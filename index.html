@@ -4,44 +4,44 @@
 <meta charset="UTF-8">
 <title>P&amp;L Recast — SDE / EBITDA Tool</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F6F3EC;
-    --paper-dark:#EDE8DB;
-    --ink:#1F2A38;
-    --ink-soft:#4A5568;
-    --ledger-green:#2F5233;
-    --ledger-green-bg:#E7EEE4;
-    --rust:#A85C32;
-    --rust-bg:#F3E4D6;
-    --muted-red:#8B3A3A;
-    --muted-red-bg:#F5E6E1;
-    --hairline:#D8D2C2;
-    --gold:#B08D57;
+    --paper:#FFFFFF;
+    --paper-dark:#F7F8FA;
+    --ink:#0B0E14;
+    --ink-soft:#5B6470;
+    --ledger-green:#2454FF;
+    --ledger-green-bg:#EEF2FF;
+    --rust:#2454FF;
+    --rust-bg:#EEF2FF;
+    --muted-red:#DC2626;
+    --muted-red-bg:#FEE2E2;
+    --hairline:#E6E8EC;
+    --gold:#2454FF;
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;}
   .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px;}
 
   header.top{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:28px;}
-  header.top h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0;letter-spacing:-.01em;}
+  header.top h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin:0;letter-spacing:-.01em;}
   header.top .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;}
 
   .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;}
   @media(max-width:900px){.grid{grid-template-columns:1fr;}}
 
-  .card{background:#fff;border:1px solid var(--hairline);border-radius:2px;padding:20px 22px;margin-bottom:20px;}
-  .card h2{font-family:'Source Serif 4',serif;font-size:16px;margin:0 0 4px;color:var(--ink);}
+  .card{background:#fff;border:1px solid var(--hairline);border-radius:10px;padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 3px rgba(11,14,20,0.04);}
+  .card h2{font-family:'Space Grotesk',sans-serif;font-size:16px;margin:0 0 4px;color:var(--ink);}
   .card .sub{font-size:12.5px;color:var(--ink-soft);margin:0 0 16px;line-height:1.5;}
 
-  textarea{width:100%;min-height:150px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:12px;border:1px solid var(--hairline);border-radius:2px;background:var(--paper);resize:vertical;color:var(--ink);}
+  textarea{width:100%;min-height:150px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:12px;border:1px solid var(--hairline);border-radius:6px;background:var(--paper);resize:vertical;color:var(--ink);}
 
-  .dropzone{border:1.5px dashed var(--hairline);border-radius:3px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .15s, background .15s;background:var(--paper);}
+  .dropzone{border:1.5px dashed var(--hairline);border-radius:8px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .15s, background .15s;background:var(--paper);}
   .dropzone:hover, .dropzone.drag{border-color:var(--rust);background:var(--rust-bg);}
   .dropzone .dz-main{font-size:13px;font-weight:600;color:var(--ink);}
   .dropzone .dz-sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-top:4px;letter-spacing:.04em;}
-  button{cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;border-radius:2px;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 16px;transition:opacity .15s;}
+  button{cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 16px;transition:opacity .15s;}
   button:hover{opacity:.85;}
   button.ghost{background:transparent;color:var(--ink);}
   button.small{padding:5px 10px;font-size:11.5px;}
@@ -63,15 +63,15 @@
   .section-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin:14px 0 6px;}
 
   /* Ledger tape - the signature element */
-  .tape{background:var(--ink);color:var(--paper);border-radius:2px;padding:20px 20px 8px;font-family:'IBM Plex Mono',monospace;}
-  .tape h2{font-family:'Source Serif 4',serif;color:#fff;font-size:15px;margin:0 0 14px;}
+  .tape{background:var(--ink);color:var(--paper);border-radius:14px;padding:20px 20px 8px;font-family:'IBM Plex Mono',monospace;box-shadow:0 20px 40px -20px rgba(11,14,20,0.4);}
+  .tape h2{font-family:'Space Grotesk',sans-serif;color:#fff;font-size:15px;margin:0 0 14px;}
   .tape .line{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dotted rgba(255,255,255,.18);}
   .tape .line.total{border-bottom:none;border-top:1px solid rgba(255,255,255,.4);margin-top:6px;padding-top:9px;font-weight:600;font-size:14px;}
   .tape .line .lbl{color:rgba(255,255,255,.75);}
   .tape .line.total .lbl{color:#fff;}
   .tape .line .val{font-variant-numeric:tabular-nums;}
   .tape .divider{height:1px;background:rgba(255,255,255,.25);margin:12px 0;}
-  .tape .result{background:rgba(255,255,255,.08);border-radius:2px;padding:12px 14px;margin:10px 0;}
+  .tape .result{background:rgba(255,255,255,.08);border-radius:6px;padding:12px 14px;margin:10px 0;}
   .tape .result .k{font-family:'Inter',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);}
   .tape .result .v{font-size:22px;font-weight:600;margin-top:2px;}
 
@@ -79,11 +79,11 @@
   .toggle-row input[type=checkbox]{accent-color:var(--rust);}
 
   .comp-row{display:grid;grid-template-columns:1fr 70px 70px 24px;gap:8px;align-items:center;margin-bottom:6px;}
-  .comp-row input{border:1px solid var(--hairline);border-radius:2px;padding:5px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .comp-row input{border:1px solid var(--hairline);border-radius:6px;padding:5px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
   .comp-row input[type=text]{font-family:'Inter',sans-serif;}
 
-  .valbox{border:1px solid var(--hairline);border-radius:2px;padding:14px;margin-top:10px;}
-  .valbox .range{font-family:'Source Serif 4',serif;font-size:22px;color:var(--ledger-green);}
+  .valbox{border:1px solid var(--hairline);border-radius:6px;padding:14px;margin-top:10px;}
+  .valbox .range{font-family:'Space Grotesk',sans-serif;font-size:22px;color:var(--ledger-green);}
   .valbox .lbl{font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
   .bar-wrap{margin-top:10px;}
   .bar-track{position:relative;height:8px;background:var(--paper-dark);border-radius:4px;}
@@ -98,10 +98,14 @@
 
   .factor-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:3px 0;}
   .factor-row label{flex:1;}
-  .factor-row input[type=number]{width:58px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 3px;text-align:right;}
+  .factor-row input[type=number]{width:58px;border:1px solid var(--hairline);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 3px;text-align:right;}
 </style>
 </head>
 <body>
+<nav style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1180px;margin:0 auto;">
+  <a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.3px;text-decoration:none;color:var(--ink);">Prime<span style="color:var(--ledger-green);">BizValue</span></a>
+  <a href="/" style="font-size:13.5px;color:var(--ink-soft);text-decoration:none;font-weight:500;">← Back to site</a>
+</nav>
 <div class="wrap">
 
   <header class="top">
@@ -119,10 +123,10 @@
         <h2>0 · Report details</h2>
         <p class="sub">Used only for the itemized report header — none of this affects the math.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Batteries Plus — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
-          <div><div class="section-label">Prepared for</div><input type="text" id="rdPreparedFor" placeholder="Client name" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
-          <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
-          <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
+          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Batteries Plus — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Prepared for</div><input type="text" id="rdPreparedFor" placeholder="Client name" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
         </div>
       </div>
 
@@ -210,10 +214,10 @@
         <div id="compsList"></div>
 
         <div class="section-label">Base multiple for this deal</div>
-        <select id="baseCompSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;"></select>
+        <select id="baseCompSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;"></select>
 
         <div class="section-label" style="margin-top:16px;">Earnings trend</div>
-        <select id="trendSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
+        <select id="trendSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;">
           <option value="decline_no_turn">Declining ~20%/yr, no turnaround yet</option>
           <option value="decline_turn">Declining ~20%/yr, turnaround started</option>
           <option value="steady" selected>Steady, sustainable revenue</option>
@@ -230,11 +234,11 @@
         <p class="sub" style="margin-top:12px;">This adjustment layer mirrors how Main Street brokers (e.g. BizEx's valuation tool) qualitatively move a multiple around a base — industry-specific base multiples aren't public data, so plug in your own comp above and let these factors do the adjusting. Each weight is editable.</p>
 
         <div class="section-label" style="margin-top:16px;">Inventory at cost <span style="text-transform:none;letter-spacing:0;">(sold separately, on top of the multiple)</span></div>
-        <input type="number" id="inventoryInput" value="0" placeholder="0.00" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;">
+        <input type="number" id="inventoryInput" value="0" placeholder="0.00" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;">
         <p class="sub" style="margin-top:6px;">Main Street deals almost always sell saleable inventory at cost, separately from the SDE/EBITDA multiple — it's cash the seller collects on top of the business value, not baked into the multiple.</p>
 
         <div class="section-label" style="margin-top:16px;">Remaining lease term</div>
-        <input type="text" id="leaseTermInput" placeholder="e.g. 3 years remaining, two 5-year options" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
+        <input type="text" id="leaseTermInput" placeholder="e.g. 3 years remaining, two 5-year options" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;">
         <p class="sub" style="margin-top:6px;">Informational — a short remaining term with no renewal options is a real transferability risk buyers and lenders will flag; factor it into the risk checkboxes above if it applies.</p>
 
         <div class="section-label" style="margin-top:16px;">Anticipated costs at closing <span style="text-transform:none;letter-spacing:0;">(reduce net cash to seller)</span></div>
@@ -279,9 +283,9 @@
   </div></div>
 
   <div id="reportOverlay" style="display:none;position:fixed;inset:0;background:rgba(31,42,56,.6);z-index:1000;">
-    <div style="position:absolute;inset:20px;background:#fff;border-radius:4px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="position:absolute;inset:20px;background:#fff;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #D8D2C2;flex-shrink:0;">
-        <span style="font-family:'Source Serif 4',serif;font-size:15px;">Itemized report</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;">Itemized report</span>
         <div>
           <button class="small" id="reportPrintBtn">Print / Save as PDF</button>
           <button class="small ghost" id="reportCloseBtn">Close</button>
