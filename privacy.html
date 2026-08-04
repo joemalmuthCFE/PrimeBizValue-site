@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — PrimeBizValue</title>
+<meta name="description" content="Privacy Policy for PrimeBizValue.com — what we collect and how we use it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F7F8FA;
+    --border:#E6E8EC;
+    --text:#0B0E14;
+    --text-secondary:#5B6470;
+    --text-muted:#8A93A0;
+    --accent:#2454FF;
+    --accent-2:#0033B8;
+    --accent-bg:#EEF2FF;
+    --on-accent:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter', -apple-system, sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  .wrap-wide{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 24px; max-width:1080px; margin:0 auto;}
+  .brand{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.3px; text-decoration:none; color:var(--text);}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex; gap:26px; align-items:center;}
+  .nav-links a{font-size:14px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{background:var(--text); color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:600; transition:background .15s ease;}
+  .nav-cta:hover{background:#000;}
+  @media (max-width:760px){.nav-links{display:none;}}
+
+  main{padding:24px 0 72px;}
+  h1{font-family:'Space Grotesk', sans-serif; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:700; letter-spacing:-0.02em; margin:0 0 12px;}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
+  .updated{font-size:13px; color:var(--text-muted); margin-bottom:36px;}
+  h2{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; margin:34px 0 12px; letter-spacing:-0.01em;}
+  p{font-size:15px; color:var(--text-secondary); margin:0 0 16px;}
+  ul, ol{font-size:15px; color:var(--text-secondary); padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--text);}
+  .lede{font-size:17px; color:var(--text-secondary); max-width:60ch;}
+
+  details{border:1px solid var(--border); border-radius:10px; padding:16px 18px; margin-bottom:12px; background:var(--surface);}
+  summary{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+'; font-size:20px; color:var(--accent); font-weight:400; margin-left:12px;}
+  details[open] summary::after{content:'−';}
+  details p{margin-top:12px; margin-bottom:0;}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 26px; margin-bottom:20px;}
+
+  form .field{margin-bottom:16px;}
+  form label{display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px;}
+  form input, form select{width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-family:'Inter',sans-serif; background:#fff;}
+  form input:focus, form select:focus{border-color:var(--accent);}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:600px){.field-row{grid-template-columns:1fr;}}
+  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:18px 0 20px;}
+  .consent-row input{width:auto; margin-top:3px;}
+  .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
+  .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-weight:600; font-size:15px; cursor:pointer; transition:background .15s ease;}
+  .submit-btn:hover{background:var(--accent-2);}
+
+  .contact-card{display:flex; align-items:center; justify-content:space-between; background:var(--text); color:#fff; border-radius:14px; padding:30px 32px; flex-wrap:wrap; gap:16px;}
+  .contact-card h3{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
+  .contact-card p{color:rgba(255,255,255,.7); margin:0; font-size:14px;}
+  .contact-card a.email-btn{background:var(--accent); color:#fff; padding:12px 24px; border-radius:9px; text-decoration:none; font-weight:600; font-size:14.5px; white-space:nowrap;}
+
+  footer{padding:32px 0 44px; border-top:1px solid var(--border); margin-top:40px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:18px; max-width:1080px; margin:0 auto; padding:0 24px;}
+  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .foot-links a{font-size:13px; color:var(--text-secondary); text-decoration:none;}
+  .foot-links a:hover{color:var(--text);}
+  footer p{margin:0; font-size:12.5px; color:var(--text-muted);}
+</style>
+
+</head>
+<body>
+<nav>
+  <a href="/" class="brand">Prime<span>BizValue</span></a>
+  <div class="nav-links">
+    <a href="/#how-it-works">How it works</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/join.html">Join our list</a>
+  </div>
+  <a href="/tool.html" class="nav-cta">Get your valuation</a>
+</nav>
+
+<main>
+  <div class="wrap">
+    <span class="kicker">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: August 2026</p>
+
+    <p class="lede">This policy explains what information PrimeBizValue.com (operated by Rebellious Franchising LLC) collects, how we use it, and the choices you have. We built this tool to help people get a real number about their business — not to build a data business on the side, so we keep collection to what the Service actually needs.</p>
+
+    <h2>1. Information We Collect</h2>
+    <p><strong>Financial information you submit.</strong> When you use the valuation tool, you provide financial details (such as a P&amp;L statement) so the Service can generate your report. This is the core input the Service needs to function.</p>
+    <p><strong>Contact information.</strong> If you purchase a report, join our list, or contact us, we collect details like your name, email, and phone number.</p>
+    <p><strong>Payment information.</strong> Payments are processed by Stripe. We do not receive or store your full card number — Stripe handles that directly under its own security standards.</p>
+    <p><strong>Usage data.</strong> Like most websites, we may collect basic technical data (browser type, pages visited) to keep the Site running smoothly.</p>
+
+    <h2>2. How We Use Information</h2>
+    <ul>
+      <li>To generate and deliver your valuation report</li>
+      <li>To process payment for a report</li>
+      <li>To respond to questions you send us</li>
+      <li>To send updates if you've opted in to our list — and never otherwise</li>
+      <li>To improve the accuracy and usefulness of the Service over time</li>
+    </ul>
+
+    <h2>3. AI Processing Disclosure</h2>
+    <p>To read and structure the financial data you submit, the Service uses Anthropic's Claude AI. Your submitted financial data is sent to Anthropic's API for this processing. We do not use your data to train any AI model — it's used solely to generate your report.</p>
+
+    <h2>4. How We Share Information</h2>
+    <p>We don't sell your personal information. We share information only with the service providers who help us operate:</p>
+    <ul>
+      <li><strong>Stripe</strong> — payment processing</li>
+      <li><strong>Anthropic</strong> — AI-assisted parsing of financial data, as described above</li>
+      <li><strong>Our hosting and database providers</strong> — to run the Site and store order/report records securely</li>
+    </ul>
+    <p>We may also disclose information if required by law, or to protect the rights, property, or safety of Rebellious Franchising LLC or others.</p>
+
+    <h2>5. Data Retention</h2>
+    <p>We retain your report and associated financial submission for as long as reasonably needed to provide the Service and meet our own business and legal record-keeping needs. You can request deletion at any time (see Section 7).</p>
+
+    <h2>6. SMS &amp; Email Consent (Join Our List)</h2>
+    <p>If you opt in through our "Join our list" form, you agree that Rebellious Franchising LLC may contact you by call, text, or email at the number and address you provided, including for business purposes related to your inquiry. This contact may use automated dialing or messaging technology. Message and data rates may apply. Consent is never a condition of purchase, and you can opt out at any time by replying STOP to a text, unsubscribing from an email, or contacting us directly.</p>
+
+    <h2>7. Your Rights</h2>
+    <p>You can request access to, correction of, or deletion of your personal information at any time by emailing <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a>. We'll respond as promptly as we can.</p>
+
+    <h2>8. Cookies</h2>
+    <p>The Site may use minimal cookies or similar technology for basic functionality and analytics. We don't use cookies for third-party advertising.</p>
+
+    <h2>9. Children's Privacy</h2>
+    <p>The Service is intended for business owners, buyers, and professionals, and is not directed at children. We don't knowingly collect information from anyone under 18.</p>
+
+    <h2>10. Security</h2>
+    <p>We use reasonable technical and organizational measures to protect the information you share with us. No system is 100% secure, but we take that responsibility seriously given the sensitivity of financial data.</p>
+
+    <h2>11. Changes to This Policy</h2>
+    <p>We may update this policy from time to time. We'll update the "Last updated" date above when we do.</p>
+
+    <h2>12. Contact</h2>
+    <p>Questions about this policy or your data? Reach us at <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-row">
+    <p>© 2026 Rebellious Franchising LLC — PrimeBizValue.com</p>
+    <div class="foot-links">
+      <a href="/faq.html">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/join.html">Join our list</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
