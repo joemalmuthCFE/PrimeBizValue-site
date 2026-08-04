@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — PrimeBizValue</title>
-<meta name="description" content="Frequently asked questions about PrimeBizValue business valuation reports.">
+<title>Join Our List — PrimeBizValue</title>
+<meta name="description" content="Join the PrimeBizValue list for updates on valuation tools and franchise partner offers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -100,61 +100,106 @@
 
 <main>
   <div class="wrap">
-    <span class="kicker">FAQ</span>
-    <h1>Frequently asked questions</h1>
-    <p class="lede" style="margin-bottom:32px;">Everything people usually want to know before they submit their numbers.</p>
+    <span class="kicker">Join our list</span>
+    <h1>Stay ahead of your next deal</h1>
+    <p class="lede" style="margin-bottom:32px;">Get notified about new valuation features, franchise partner discounts, and updates that help you buy, sell, or finance with better numbers.</p>
 
-    <details open>
-      <summary>What is SDE, and how is it different from EBITDA?</summary>
-      <p>Seller's Discretionary Earnings (SDE) is the standard way small, owner-operated businesses are valued. It starts with your business's net income, then adds back the owner's salary, personal perks run through the business, depreciation, interest, and other one-time or discretionary costs — arriving at the true cash benefit available to a single owner-operator. Adjusted EBITDA is used instead for larger businesses that already have a management team in place, since a buyer in that situation isn't stepping in to do the owner's job themselves.</p>
-    </details>
+    <div class="card">
+      <form id="joinForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="firstName">First Name*</label>
+            <input type="text" id="firstName" name="firstName" required>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name*</label>
+            <input type="text" id="lastName" name="lastName" required>
+          </div>
+        </div>
 
-    <details>
-      <summary>Is this a certified appraisal or an official business valuation?</summary>
-      <p>No. This is an informational, directional estimate — not a certified appraisal, formal valuation, or fairness opinion, and it hasn't been reviewed by a CPA, licensed business appraiser, or lender. It's built to give you a real, defensible starting number using the same methodology brokers use, but for an SBA loan application, a formal sale, or a legal matter, you'll want a credentialed appraiser to sign off.</p>
-    </details>
+        <div class="field-row">
+          <div class="field">
+            <label for="email">Email*</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">Mobile Phone*</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+        </div>
 
-    <details>
-      <summary>How is the valuation multiple determined?</summary>
-      <p>We use four fixed Main Street SDE-size tiers, based on published industry transaction data (BizBuySell, IBBA/M&amp;A Source Market Pulse), and the tool automatically selects the tier that matches your business's calculated SDE. From there, adjustment factors for earnings trend, risk, and upside move the multiple within a realistic range for your specific situation.</p>
-    </details>
+        <div class="field-row">
+          <div class="field">
+            <label for="interest">What best describes you?*</label>
+            <select id="interest" name="interest" required>
+              <option value="">Please select</option>
+              <option>I'm thinking about selling my business</option>
+              <option>I'm looking to buy a business</option>
+              <option>I'm a franchisor or franchise brand</option>
+              <option>I'm a lender or financial professional</option>
+              <option>Just exploring</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="state">State*</label>
+            <select id="state" name="state" required>
+              <option value="">Please select</option>
+              <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+              <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+              <option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option>
+              <option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option>
+              <option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option>
+              <option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
+              <option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option>
+              <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option>
+              <option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
+              <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+              <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option>
+              <option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option>
+              <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+            </select>
+          </div>
+        </div>
 
-    <details>
-      <summary>How accurate is the estimate?</summary>
-      <p>As accurate as the financial information you provide and the assumptions that go into any rule-of-thumb, multiple-based valuation. It's the same core methodology a business broker uses for an informal opinion of value — genuinely useful for planning, negotiating, or sanity-checking an asking price, but it isn't a substitute for a professional appraisal when real money and legal paperwork are on the line.</p>
-    </details>
+        <div class="consent-row">
+          <input type="checkbox" id="consent" name="consent" required>
+          <p>By pressing Submit, you agree that Rebellious Franchising LLC / PrimeBizValue may call, text, or email you at the number and address provided, including for business purposes related to your inquiry. This contact may use automated or pre-recorded/artificial voice technology. Message and data rates may apply. You don't need to consent as a condition of any purchase, and you may opt out at any time. You also agree to our <a href="/privacy.html" target="_blank">Privacy Policy</a>.</p>
+        </div>
 
-    <details>
-      <summary>Who is this for?</summary>
-      <p>Owners thinking about selling, buyers evaluating an asking price, anyone heading into an SBA financing conversation who wants to know if a deal actually services the debt, and franchisors who want their franchisees walking into resale conversations with real numbers instead of guesses.</p>
-    </details>
-
-    <details>
-      <summary>How long does it take?</summary>
-      <p>A few minutes. Upload or paste in your financials, the tool reads and recasts them automatically, and your report is ready to review on screen and delivered to your inbox right away.</p>
-    </details>
-
-    <details>
-      <summary>What happens to my financial data?</summary>
-      <p>It's used to generate your report and nothing else. We don't sell your data, and we don't use it to train any AI model. See our <a href="/privacy.html">Privacy Policy</a> for the full detail, including which service providers help us process it.</p>
-    </details>
-
-    <details>
-      <summary>What's your refund policy?</summary>
-      <p>Because your report generates and delivers instantly, purchases are generally final. If something breaks on our end and your report doesn't generate properly, contact us and we'll fix it or refund you — just reach out at <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a>.</p>
-    </details>
-
-    <details>
-      <summary>I'm a franchisor — can my franchisees get a discount?</summary>
-      <p>Yes, we offer partner discount codes for franchise brands who want to make this available to their network. <a href="/contact.html">Get in touch</a> and mention your brand.</p>
-    </details>
-
-    <details>
-      <summary>My business doesn't fit the "Main Street" size range — can I still use this?</summary>
-      <p>The tool is built and calibrated specifically for businesses valued under about $2M — the range where SDE-based, broker-style valuation is the standard approach. If your business is meaningfully larger, an EBITDA-based valuation from a lower-middle-market advisor will generally serve you better than this tool.</p>
-    </details>
+        <button type="submit" class="submit-btn">Join the list</button>
+        <p id="joinStatus" style="font-size:13px;color:var(--text-muted);margin-top:14px;"></p>
+      </form>
+    </div>
   </div>
 </main>
+<script>
+  document.getElementById('joinForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const f = e.target;
+    const data = {
+      firstName: f.firstName.value,
+      lastName: f.lastName.value,
+      email: f.email.value,
+      phone: f.phone.value,
+      interest: f.interest.value,
+      state: f.state.value
+    };
+    // Interim capture method — no database wired up yet (that's Stage 4).
+    // This sends the submission straight to your inbox until real backend
+    // storage is built, at which point this should POST to an API route instead.
+    const subject = encodeURIComponent('New PrimeBizValue list signup: ' + data.firstName + ' ' + data.lastName);
+    const body = encodeURIComponent(
+      'First Name: ' + data.firstName + '\n' +
+      'Last Name: ' + data.lastName + '\n' +
+      'Email: ' + data.email + '\n' +
+      'Phone: ' + data.phone + '\n' +
+      'Interest: ' + data.interest + '\n' +
+      'State: ' + data.state
+    );
+    window.location.href = 'mailto:hello@primebizvalue.com?subject=' + subject + '&body=' + body;
+    document.getElementById('joinStatus').textContent = 'Opening your email client to send this in — if nothing opens, email us directly at hello@primebizvalue.com.';
+  });
+</script>
 
 <footer>
   <div class="foot-row">
@@ -164,6 +209,7 @@
       <a href="/faq.html">FAQ</a>
       <a href="/contact.html">Contact</a>
       <a href="/join.html">Join our list</a>
+      <a href="/confidentiality.html">Confidentiality</a>
       <a href="/terms.html">Terms of Service</a>
       <a href="/privacy.html">Privacy Policy</a>
     </div>
