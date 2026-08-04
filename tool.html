@@ -4,104 +4,125 @@
 <meta charset="UTF-8">
 <title>P&amp;L Recast — SDE / EBITDA Tool</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F6F3EC;
-    --paper-dark:#EDE8DB;
-    --ink:#1F2A38;
-    --ink-soft:#4A5568;
-    --ledger-green:#2F5233;
-    --ledger-green-bg:#E7EEE4;
-    --rust:#A85C32;
-    --rust-bg:#F3E4D6;
-    --muted-red:#8B3A3A;
-    --muted-red-bg:#F5E6E1;
-    --hairline:#D8D2C2;
-    --gold:#B08D57;
+    --paper:#FFFFFF;
+    --paper-dark:#F7F8FA;
+    --ink:#0B0E14;
+    --ink-soft:#5B6470;
+    --ink-muted:#8A93A0;
+    --ledger-green:#2454FF;
+    --ledger-green-bg:#EEF2FF;
+    --rust:#2454FF;
+    --rust-bg:#EEF2FF;
+    --accent-2:#0033B8;
+    --muted-red:#DC2626;
+    --muted-red-bg:#FEE2E2;
+    --hairline:#E6E8EC;
+    --gold:#2454FF;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;}
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:var(--paper-dark);color:var(--ink);font-family:'Inter',sans-serif;font-size:14.5px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:8px 24px 90px;}
+  :focus-visible{outline:2px solid var(--ledger-green);outline-offset:2px;}
 
-  header.top{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:28px;}
-  header.top h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0;letter-spacing:-.01em;}
-  header.top .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;}
+  header.top{display:flex;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--hairline);padding-bottom:22px;margin-bottom:30px;flex-wrap:wrap;gap:10px;}
+  header.top h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:29px;margin:0;letter-spacing:-.015em;}
+  header.top .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);letter-spacing:.07em;text-transform:uppercase;}
 
-  .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;}
+  .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start;}
   @media(max-width:900px){.grid{grid-template-columns:1fr;}}
 
-  .card{background:#fff;border:1px solid var(--hairline);border-radius:2px;padding:20px 22px;margin-bottom:20px;}
-  .card h2{font-family:'Source Serif 4',serif;font-size:16px;margin:0 0 4px;color:var(--ink);}
-  .card .sub{font-size:12.5px;color:var(--ink-soft);margin:0 0 16px;line-height:1.5;}
+  .card{background:#fff;border:1px solid var(--hairline);border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 1px 2px rgba(11,14,20,0.03), 0 8px 24px -18px rgba(11,14,20,0.18);}
+  .card h2{font-family:'Space Grotesk',sans-serif;font-size:17.5px;margin:0 0 6px;color:var(--ink);display:flex;align-items:center;gap:10px;letter-spacing:-.01em;}
+  .step-badge{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;border-radius:8px;background:var(--ink);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0;}
+  .card .sub{font-size:13px;color:var(--ink-soft);margin:0 0 18px;line-height:1.6;}
 
-  textarea{width:100%;min-height:150px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:12px;border:1px solid var(--hairline);border-radius:2px;background:var(--paper);resize:vertical;color:var(--ink);}
+  textarea{width:100%;min-height:150px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:14px;border:1px solid var(--hairline);border-radius:8px;background:#fff;resize:vertical;color:var(--ink);transition:border-color .15s;}
+  textarea:hover{border-color:#C7CCD4;}
 
-  .dropzone{border:1.5px dashed var(--hairline);border-radius:3px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .15s, background .15s;background:var(--paper);}
+  .dropzone{border:1.5px dashed #C7CCD4;border-radius:10px;padding:30px 18px;text-align:center;cursor:pointer;transition:border-color .15s, background .15s;background:var(--paper-dark);}
+  .dropzone::before{content:'↑';display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--ledger-green-bg);color:var(--ledger-green);font-size:15px;font-weight:700;margin-bottom:10px;}
   .dropzone:hover, .dropzone.drag{border-color:var(--rust);background:var(--rust-bg);}
-  .dropzone .dz-main{font-size:13px;font-weight:600;color:var(--ink);}
-  .dropzone .dz-sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-top:4px;letter-spacing:.04em;}
-  button{cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;border-radius:2px;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 16px;transition:opacity .15s;}
-  button:hover{opacity:.85;}
-  button.ghost{background:transparent;color:var(--ink);}
-  button.small{padding:5px 10px;font-size:11.5px;}
-  button:disabled{opacity:.4;cursor:default;}
+  .dropzone .dz-main{font-size:13.5px;font-weight:600;color:var(--ink);margin-top:2px;}
+  .dropzone .dz-sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-top:5px;letter-spacing:.04em;}
 
-  .row-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
-  .status{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--rust);margin-top:8px;min-height:14px;}
+  button{cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;border-radius:9px;border:none;background:linear-gradient(135deg, var(--ledger-green), var(--accent-2));color:#fff;padding:11px 20px;transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;box-shadow:0 8px 20px -8px rgba(36,84,255,0.45);}
+  button:hover{transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(36,84,255,0.55);}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--hairline);box-shadow:none;}
+  button.ghost:hover{transform:none;background:var(--paper-dark);box-shadow:none;}
+  button.small{padding:6px 12px;font-size:12px;border-radius:7px;}
+  button:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none;}
 
-  table{width:100%;border-collapse:collapse;font-size:13px;}
-  th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);border-bottom:1px solid var(--ink);padding:6px 4px;}
-  td{padding:5px 4px;border-bottom:1px dotted var(--hairline);}
+  .row-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+  .status{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin-top:9px;min-height:14px;line-height:1.5;}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);border-bottom:1.5px solid var(--ink);padding:8px 6px;}
+  td{padding:8px 6px;border-bottom:1px solid var(--hairline);}
   td.num, th.num{text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;}
-  td input[type=text]{width:100%;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13px;padding:2px;}
-  td input[type=number]{width:100%;border:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;padding:2px;}
-  td input:focus, textarea:focus{outline:1px solid var(--gold);}
-  .del{cursor:pointer;color:var(--muted-red);font-size:13px;padding:0 6px;}
-  .addline{font-size:12px;color:var(--rust);cursor:pointer;font-weight:600;display:inline-block;margin-top:8px;}
+  td input[type=text]{width:100%;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13.5px;padding:3px;}
+  td input[type=number]{width:100%;border:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:13.5px;text-align:right;padding:3px;}
+  td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px;}
+  .del{cursor:pointer;color:var(--muted-red);font-size:14px;padding:0 6px;transition:opacity .15s;}
+  .del:hover{opacity:.65;}
+  .addline{font-size:12.5px;color:var(--rust);cursor:pointer;font-weight:600;display:inline-block;margin-top:10px;}
 
-  .section-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin:14px 0 6px;}
+  .section-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin:16px 0 7px;}
 
   /* Ledger tape - the signature element */
-  .tape{background:var(--ink);color:var(--paper);border-radius:2px;padding:20px 20px 8px;font-family:'IBM Plex Mono',monospace;}
-  .tape h2{font-family:'Source Serif 4',serif;color:#fff;font-size:15px;margin:0 0 14px;}
-  .tape .line{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dotted rgba(255,255,255,.18);}
-  .tape .line.total{border-bottom:none;border-top:1px solid rgba(255,255,255,.4);margin-top:6px;padding-top:9px;font-weight:600;font-size:14px;}
-  .tape .line .lbl{color:rgba(255,255,255,.75);}
+  .tape{background:var(--ink);color:var(--paper);border-radius:16px;padding:24px 24px 10px;font-family:'IBM Plex Mono',monospace;box-shadow:0 24px 48px -20px rgba(11,14,20,0.45);position:relative;overflow:hidden;}
+  .tape::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 200px at 85% -10%, rgba(36,84,255,0.28), transparent 70%);pointer-events:none;}
+  .tape > *{position:relative;}
+  .tape h2{font-family:'Space Grotesk',sans-serif;color:#fff;font-size:15.5px;margin:0 0 16px;display:flex;align-items:center;gap:8px;}
+  .tape h2::before{content:'';width:7px;height:7px;border-radius:50%;background:#3D8B5F;display:inline-block;animation:tapePulse 1.8s ease infinite;}
+  @keyframes tapePulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  .tape .line{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px dotted rgba(255,255,255,.16);}
+  .tape .line.total{border-bottom:none;border-top:1px solid rgba(255,255,255,.4);margin-top:6px;padding-top:10px;font-weight:600;font-size:14px;}
+  .tape .line .lbl{color:rgba(255,255,255,.72);}
   .tape .line.total .lbl{color:#fff;}
-  .tape .line .val{font-variant-numeric:tabular-nums;}
-  .tape .divider{height:1px;background:rgba(255,255,255,.25);margin:12px 0;}
-  .tape .result{background:rgba(255,255,255,.08);border-radius:2px;padding:12px 14px;margin:10px 0;}
-  .tape .result .k{font-family:'Inter',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);}
-  .tape .result .v{font-size:22px;font-weight:600;margin-top:2px;}
+  .tape .line .val{font-variant-numeric:tabular-nums;color:#fff;}
+  .tape .divider{height:1px;background:rgba(255,255,255,.2);margin:14px 0;}
+  .tape .result{background:rgba(255,255,255,.07);border-radius:9px;padding:14px 16px;margin:11px 0;}
+  .tape .result .k{font-family:'Inter',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#8FADFF;}
+  .tape .result .v{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;margin-top:3px;}
 
-  .toggle-row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 0;}
-  .toggle-row input[type=checkbox]{accent-color:var(--rust);}
+  .toggle-row{display:flex;align-items:center;gap:9px;font-size:13px;padding:5px 0;}
+  .toggle-row input[type=checkbox]{accent-color:var(--rust);width:15px;height:15px;}
 
-  .comp-row{display:grid;grid-template-columns:1fr 70px 70px 24px;gap:8px;align-items:center;margin-bottom:6px;}
-  .comp-row input{border:1px solid var(--hairline);border-radius:2px;padding:5px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .comp-row{display:grid;grid-template-columns:1fr 70px 70px 24px;gap:8px;align-items:center;margin-bottom:7px;}
+  .comp-row input{border:1px solid var(--hairline);border-radius:7px;padding:6px 7px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
   .comp-row input[type=text]{font-family:'Inter',sans-serif;}
 
-  .valbox{border:1px solid var(--hairline);border-radius:2px;padding:14px;margin-top:10px;}
-  .valbox .range{font-family:'Source Serif 4',serif;font-size:22px;color:var(--ledger-green);}
-  .valbox .lbl{font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
-  .bar-wrap{margin-top:10px;}
-  .bar-track{position:relative;height:8px;background:var(--paper-dark);border-radius:4px;}
-  .bar-fill{position:absolute;height:8px;background:var(--gold);border-radius:4px;}
+  /* Valuation result — the trust centerpiece: hero-style dark panel, not a plain box */
+  .valbox{background:var(--ink);color:#fff;border-radius:16px;padding:26px 26px 22px;margin-top:14px;position:relative;overflow:hidden;box-shadow:0 24px 48px -22px rgba(11,14,20,0.4);}
+  .valbox::before{content:'';position:absolute;inset:0;background:radial-gradient(380px 220px at 15% -15%, rgba(36,84,255,0.3), transparent 70%);pointer-events:none;}
+  .valbox > *{position:relative;}
+  .valbox .range{font-family:'Space Grotesk',sans-serif;font-size:27px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+  .valbox .lbl{font-size:11.5px;color:rgba(255,255,255,.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;font-family:'IBM Plex Mono',monospace;}
+  .bar-wrap{margin-top:12px;}
+  .bar-track{position:relative;height:7px;background:rgba(255,255,255,.15);border-radius:6px;}
+  .bar-fill{position:absolute;height:7px;background:linear-gradient(90deg, var(--ledger-green), #8FADFF);border-radius:6px;}
 
-  .disclaimer{font-size:11px;color:var(--ink-soft);border-top:1px solid var(--hairline);padding-top:12px;margin-top:20px;line-height:1.6;}
-  .savebar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px;flex-wrap:wrap;}
-  .deal-list{max-height:180px;overflow-y:auto;margin-top:8px;}
-  .deal-item{display:flex;justify-content:space-between;font-size:12px;padding:6px 4px;border-bottom:1px dotted var(--hairline);cursor:pointer;}
+  .disclaimer{font-size:11.5px;color:var(--ink-soft);border-top:1px solid var(--hairline);padding-top:14px;margin-top:22px;line-height:1.65;}
+  .savebar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap;}
+  .deal-list{max-height:180px;overflow-y:auto;margin-top:9px;}
+  .deal-item{display:flex;justify-content:space-between;font-size:12.5px;padding:7px 5px;border-bottom:1px solid var(--hairline);cursor:pointer;border-radius:6px;transition:background .1s;}
   .deal-item:hover{background:var(--paper-dark);}
-  .pill{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--rust-bg);color:var(--rust);padding:2px 6px;border-radius:8px;}
+  .pill{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--rust-bg);color:var(--rust);padding:3px 8px;border-radius:8px;font-weight:600;}
 
-  .factor-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:3px 0;}
+  .factor-row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 0;}
   .factor-row label{flex:1;}
-  .factor-row input[type=number]{width:48px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 4px;text-align:right;}
+  .factor-row input[type=number]{width:58px;border:1px solid var(--hairline);border-radius:7px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 3px;text-align:right;}
 </style>
 </head>
 <body>
+<nav style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;max-width:1180px;margin:0 auto;">
+  <a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.3px;text-decoration:none;color:var(--ink);">Prime<span style="color:var(--ledger-green);">BizValue</span></a>
+  <a href="/" style="font-size:13.5px;color:var(--ink-soft);text-decoration:none;font-weight:500;">← Back to site</a>
+</nav>
 <div class="wrap">
 
   <header class="top">
@@ -116,18 +137,18 @@
     <div>
 
       <div class="card">
-        <h2>0 · Report details</h2>
+        <h2><span class="step-badge">0</span> Report details</h2>
         <p class="sub">Used only for the itemized report header — none of this affects the math.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Batteries Plus — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
-          <div><div class="section-label">Prepared for</div><input type="text" id="rdPreparedFor" placeholder="Client name" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
-          <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
-          <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
+          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Batteries Plus — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Prepared for</div><input type="text" id="rdPreparedFor" placeholder="Client name" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
         </div>
       </div>
 
       <div class="card">
-        <h2>1 · Bring in the P&amp;L</h2>
+        <h2><span class="step-badge">1</span> Bring in the P&amp;L</h2>
         <p class="sub">Drop in the file however you have it — a PDF, a Word doc, a CSV, or an Excel export — or paste text straight from a tax-return summary. Claude will read it and sort it into revenue, COGS, and expense lines below for you to check.</p>
         <div class="dropzone" id="dropzone">
           <div class="dz-main">Drop a PDF, Word (.docx), CSV, or Excel file here — or click to browse</div>
@@ -146,7 +167,7 @@
       </div>
 
       <div class="card" id="lineItemsCard" style="display:none;">
-        <h2>2 · Line items</h2>
+        <h2><span class="step-badge">2</span> Line items</h2>
         <p class="sub">Edit anything Claude got wrong. Mark whichever expense lines are add-back candidates over on the right — owner comp, personal perks, one-time items, non-cash charges.</p>
 
         <div class="section-label">Revenue</div>
@@ -169,7 +190,7 @@
       </div>
 
       <div class="card" id="sdeWorksheetCard" style="display:none;">
-        <h2>2b · Discretionary Earnings Worksheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— Batteries Plus SDE standard</span></h2>
+        <h2><span class="step-badge">2b</span> Discretionary Earnings Worksheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— Batteries Plus SDE standard</span></h2>
         <p class="sub">Matches the franchise system's official Seller's Discretionary Earnings Worksheet line for line, so the recast lines up with what buyers and franchisees already expect. Fill in whatever applies — everything defaults to $0.</p>
         <table>
           <thead><tr><th>Line</th><th class="num" style="width:110px;">Amount</th><th></th></tr></thead>
@@ -180,13 +201,13 @@
       </div>
 
       <div class="card" id="balanceSheetCard" style="display:none;">
-        <h2>2c · Balance sheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— optional, powers Cash to Seller &amp; Net Tangible Assets</span></h2>
+        <h2><span class="step-badge">2c</span> Balance sheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— optional, powers Cash to Seller &amp; Net Tangible Assets</span></h2>
         <p class="sub">Most recent balance sheet snapshot. Skip anything you don't have — the report will just leave that line out of the math.</p>
         <table><tbody id="balanceSheetBody"></tbody></table>
       </div>
 
       <div class="card" id="financingCard" style="display:none;">
-        <h2>2d · Buyer financing <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— SBA 7(a) bankability check</span></h2>
+        <h2><span class="step-badge">2d</span> Buyer financing <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— SBA 7(a) bankability check</span></h2>
         <p class="sub">A rough DSCR check on whether the estimated price is financeable — not a lender underwrite.</p>
         <table><tbody id="financingBody"></tbody></table>
       </div>
@@ -200,21 +221,20 @@
       </div>
 
       <div class="card" style="margin-top:20px;">
-        <h2>3 · Multiples &amp; comps</h2>
-        <p class="sub">Defaults are generic Main Street rules of thumb. Overwrite them with your own comps as you close deals — they're saved on this device for next time.</p>
+        <h2><span class="step-badge">3</span> Valuation multiple</h2>
+        <p class="sub">Four fixed Main Street SDE tiers — the brackets are locked, but you can fine-tune the multiple on each one. The tool auto-selects the right tier for this business's SDE; use the dropdown below to override it for this deal.</p>
         <div class="section-label">Valuation basis</div>
         <div class="toggle-row"><input type="radio" name="basis" value="sde" id="basisSDE" checked><label for="basisSDE">SDE (owner-operator businesses, roughly &lt;$1M cash flow)</label></div>
         <div class="toggle-row"><input type="radio" name="basis" value="ebitda" id="basisEBITDA"><label for="basisEBITDA">Adjusted EBITDA (roughly $1M+ cash flow, management team in place)</label></div>
 
-        <div class="section-label">Multiple comps (name / low / high)</div>
+        <div class="section-label">Multiple tiers (name / low / high)</div>
         <div id="compsList"></div>
-        <div class="addline" id="addComp">+ add comp</div>
 
         <div class="section-label">Base multiple for this deal</div>
-        <select id="baseCompSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;"></select>
+        <select id="baseCompSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;"></select>
 
         <div class="section-label" style="margin-top:16px;">Earnings trend</div>
-        <select id="trendSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
+        <select id="trendSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;">
           <option value="decline_no_turn">Declining ~20%/yr, no turnaround yet</option>
           <option value="decline_turn">Declining ~20%/yr, turnaround started</option>
           <option value="steady" selected>Steady, sustainable revenue</option>
@@ -231,11 +251,11 @@
         <p class="sub" style="margin-top:12px;">This adjustment layer mirrors how Main Street brokers (e.g. BizEx's valuation tool) qualitatively move a multiple around a base — industry-specific base multiples aren't public data, so plug in your own comp above and let these factors do the adjusting. Each weight is editable.</p>
 
         <div class="section-label" style="margin-top:16px;">Inventory at cost <span style="text-transform:none;letter-spacing:0;">(sold separately, on top of the multiple)</span></div>
-        <input type="number" id="inventoryInput" value="0" placeholder="0.00" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;">
+        <input type="number" id="inventoryInput" value="0" placeholder="0.00" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;">
         <p class="sub" style="margin-top:6px;">Main Street deals almost always sell saleable inventory at cost, separately from the SDE/EBITDA multiple — it's cash the seller collects on top of the business value, not baked into the multiple.</p>
 
         <div class="section-label" style="margin-top:16px;">Remaining lease term</div>
-        <input type="text" id="leaseTermInput" placeholder="e.g. 3 years remaining, two 5-year options" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
+        <input type="text" id="leaseTermInput" placeholder="e.g. 3 years remaining, two 5-year options" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;">
         <p class="sub" style="margin-top:6px;">Informational — a short remaining term with no renewal options is a real transferability risk buyers and lenders will flag; factor it into the risk checkboxes above if it applies.</p>
 
         <div class="section-label" style="margin-top:16px;">Anticipated costs at closing <span style="text-transform:none;letter-spacing:0;">(reduce net cash to seller)</span></div>
@@ -247,7 +267,7 @@
 
         <div class="valbox">
           <div class="lbl">Adjusted multiple applied</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-soft);" id="multRange">—</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(255,255,255,.65);" id="multRange">—</div>
           <div class="lbl" style="margin-top:10px;">Estimated business value range</div>
           <div class="range" id="valRange">—</div>
           <div class="bar-wrap">
@@ -258,11 +278,11 @@
           <div class="lbl" style="margin-top:12px;">+ Cash − long-term debt (from balance sheet)</div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;" id="debtCashOut">—</div>
           <div class="lbl" style="margin-top:12px;">− Anticipated closing costs</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted-red);" id="closingCostsOut">—</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#FF8A8A;" id="closingCostsOut">—</div>
           <div class="lbl" style="margin-top:12px;">− Capital gains &amp; transaction fees</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted-red);" id="pctCostsOut">—</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#FF8A8A;" id="pctCostsOut">—</div>
           <div class="lbl" style="margin-top:12px;">= Possible net cash to seller at closing</div>
-          <div class="range" id="totalRange" style="color:var(--gold);">—</div>
+          <div class="range" id="totalRange" style="color:#8FADFF;">—</div>
         </div>
 
         <div class="savebar">
@@ -276,13 +296,13 @@
   </div>
 
   <div class="disclaimer">
-    This is an unofficial, directional estimate built from the numbers entered, a base multiple you choose (generic Main Street defaults, or your own saved comps), and adjustment factors for earnings trend and risk/upside — a methodology modeled on how brokers like BizEx qualitatively move a multiple, not a reproduction of any firm's proprietary industry-multiple data. It is not a business valuation, appraisal, or offer of financing, and it hasn't been reviewed by a CPA or business appraiser. Add-back judgment calls (owner comp, perks, one-time items) and the adjustment weights materially change the result and should be backed by documentation before being used in a negotiation. Nothing here is legal, tax, or financial advice.
+    This is an unofficial, directional estimate built from the numbers entered, a fixed set of Main Street SDE-based multiple tiers auto-selected by this business's size, and adjustment factors for earnings trend and risk/upside — a methodology modeled on how brokers like BizEx qualitatively move a multiple, not a reproduction of any firm's proprietary industry-multiple data. It is not a business valuation, appraisal, or offer of financing, and it hasn't been reviewed by a CPA or business appraiser. Add-back judgment calls (owner comp, perks, one-time items) and the adjustment weights materially change the result and should be backed by documentation before being used in a negotiation. Nothing here is legal, tax, or financial advice.
   </div></div>
 
   <div id="reportOverlay" style="display:none;position:fixed;inset:0;background:rgba(31,42,56,.6);z-index:1000;">
-    <div style="position:absolute;inset:20px;background:#fff;border-radius:4px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="position:absolute;inset:20px;background:#fff;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;">
       <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #D8D2C2;flex-shrink:0;">
-        <span style="font-family:'Source Serif 4',serif;font-size:15px;">Itemized report</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;">Itemized report</span>
         <div>
           <button class="small" id="reportPrintBtn">Print / Save as PDF</button>
           <button class="small ghost" id="reportCloseBtn">Close</button>
@@ -364,7 +384,7 @@ function defaultSdeWorksheetValues(){
 
 let state = {
   rev: [], cogs: [], opex: [], below: {ownerSalary:0, ownerPayrollTax:0, dep:0, amort:0, interest:0, taxes:0, replacementSalary:0},
-  comps: [], inventory: 0, leaseTerm: '',
+  comps: [], baseCompIndex: 0, baseCompManual: false, inventory: 0, leaseTerm: '',
   sdeWorksheet: defaultSdeWorksheetValues(),
   sdeWorksheetCustom: [],
   closingCosts: [
@@ -545,6 +565,7 @@ function applyParsed(parsed, statusMsg){
   state.below.ownerSalary = Number(parsed.owner_salary_candidate)||0;
   if(!state.rev.length) state.rev = [{name:'Total revenue', amount:0}];
   if(!state.cogs.length) state.cogs = [{name:'COGS', amount:0}];
+  state.baseCompManual = false; // fresh P&L — re-auto-select the tier for its SDE
   $('parseStatus').textContent = statusMsg || 'Parsed — check the lines below.';
   render();
 }
@@ -722,6 +743,7 @@ $('startOverBtn').addEventListener('click', () => {
   state.sdeWorksheetCustom = [];
   state._computed = null;
   state._valuation = null;
+  state.baseCompManual = false;
   state.inventory = 0;
   state.leaseTerm = '';
   state.closingCosts = [
@@ -920,18 +942,43 @@ function computeAndRenderTape(){
 }
 
 // ---------- Comps / valuation ----------
+// The four SDE-size tiers are fixed — a broker can fine-tune the low/high
+// multiple on each tier, but can't add a 5th tier or delete one of the four.
+// The size brackets themselves (which SDE falls into which tier) are locked
+// and not exposed in the UI. The tool auto-selects the matching tier for a
+// freshly-parsed P&L; the dropdown lets a broker override that choice.
+const LOCKED_COMPS = [
+  {name:'Main Street — Low',      low:0.0, high:1.5, sdeMin:0,       sdeMax:75000,      basis:'sde'},
+  {name:'Main Street — Typical',  low:1.6, high:3.4, sdeMin:75000,   sdeMax:250000,     basis:'sde'},
+  {name:'Main Street — High',     low:3.4, high:4.0, sdeMin:250000,  sdeMax:2000000,    basis:'sde'},
+  {name:'Main Street — Top Tier', low:4.1, high:5.0, sdeMin:2000000, sdeMax:Infinity,   basis:'sde'},
+];
 function defaultComps(){
-  return [
-    {name:'Main Street — low', low:1.8, high:2.5, basis:'sde'},
-    {name:'Main Street — typical', low:2.2, high:3.0, basis:'sde'},
-    {name:'Lower middle market', low:3.0, high:5.0, basis:'ebitda'},
-  ];
+  return LOCKED_COMPS.map(c => ({...c}));
+}
+// Picks the tier matching a given SDE figure.
+function pickCompForSDE(sde){
+  const s = Number(sde) || 0;
+  for(const c of state.comps){
+    if(s >= c.sdeMin && s < c.sdeMax) return c;
+  }
+  return state.comps[state.comps.length - 1];
 }
 
 async function loadComps(){
   try{
     const r = await appStorage.get('pnl-recast:comps', false);
-    state.comps = r ? JSON.parse(r.value) : defaultComps();
+    let loaded = r ? JSON.parse(r.value) : null;
+    // Guard against a stale saved set from before tiers were locked to 4 —
+    // if it doesn't look like our 4 fixed tiers, reset to defaults.
+    if(!Array.isArray(loaded) || loaded.length !== 4){
+      loaded = defaultComps();
+    } else {
+      // Keep any broker-edited low/high, but always keep the locked
+      // sdeMin/sdeMax boundaries so tier selection can't drift.
+      loaded = loaded.map((c,i) => ({...LOCKED_COMPS[i], low:c.low, high:c.high, name:c.name || LOCKED_COMPS[i].name}));
+    }
+    state.comps = loaded;
   }catch(e){ state.comps = defaultComps(); }
   renderComps();
 }
@@ -945,10 +992,10 @@ function renderComps(){
   state.comps.forEach((c,i)=>{
     const row = document.createElement('div');
     row.className = 'comp-row';
+    row.style.gridTemplateColumns = '1fr 70px 70px';
     row.innerHTML = `<input type="text" value="${escapeHtml(c.name)}" data-ci="${i}" data-cf="name">
       <input type="number" step="0.1" value="${c.low}" data-ci="${i}" data-cf="low">
-      <input type="number" step="0.1" value="${c.high}" data-ci="${i}" data-cf="high">
-      <span class="del" data-cdel="${i}">✕</span>`;
+      <input type="number" step="0.1" value="${c.high}" data-ci="${i}" data-cf="high">`;
     list.appendChild(row);
   });
   list.querySelectorAll('input').forEach(inp=>inp.addEventListener('input', (e)=>{
@@ -958,17 +1005,8 @@ function renderComps(){
     renderBaseCompSelect();
     renderValuation();
   }));
-  list.querySelectorAll('.del').forEach(d=>d.addEventListener('click',(e)=>{
-    state.comps.splice(Number(e.target.dataset.cdel),1);
-    if(state.baseCompIndex >= state.comps.length) state.baseCompIndex = 0;
-    saveComps(); renderComps(); renderBaseCompSelect(); renderValuation();
-  }));
   renderBaseCompSelect();
 }
-$('addComp').addEventListener('click', ()=>{
-  state.comps.push({name:'New comp', low:2.0, high:3.0});
-  saveComps(); renderComps(); renderBaseCompSelect(); renderValuation();
-});
 document.querySelectorAll('input[name=basis]').forEach(r=>r.addEventListener('change', renderValuation));
 
 function renderBaseCompSelect(){
@@ -980,6 +1018,7 @@ function renderBaseCompSelect(){
 }
 $('baseCompSelect').addEventListener('change', (e)=>{
   state.baseCompIndex = Number(e.target.value)||0;
+  state.baseCompManual = true;
   renderValuation();
 });
 
@@ -1101,6 +1140,15 @@ function renderValuation(){
   const basis = document.querySelector('input[name=basis]:checked').value;
   const figure = basis==='sde' ? state._computed.sde : state._computed.ebitda;
 
+  // Auto-select the tier matching this business's SDE, unless the broker has
+  // manually overridden the dropdown for this deal (reset on each fresh parse).
+  if(!state.baseCompManual){
+    const autoComp = pickCompForSDE(state._computed.sde);
+    const autoIdx = state.comps.indexOf(autoComp);
+    state.baseCompIndex = autoIdx >= 0 ? autoIdx : 0;
+    const sel = $('baseCompSelect');
+    if(sel) sel.value = state.baseCompIndex;
+  }
   const base = state.comps[state.baseCompIndex] || state.comps[0];
   let lowMult = base.low, highMult = base.high;
 
@@ -1124,7 +1172,8 @@ function renderValuation(){
   const p = state.pctCosts || {};
   const pctCostsTotal = midVal * ((Number(p.brokerFeePct)||0) + (Number(p.fedCapGainsPct)||0) + (Number(p.stateCapGainsPct)||0) + (Number(p.ddHaircutPct)||0)) / 100;
 
-  $('multRange').textContent = `${base.name}: ${base.low}x–${base.high}x, adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
+  const pickNote = state.baseCompManual ? 'Manually selected' : 'Auto-selected';
+  $('multRange').textContent = `${pickNote} tier: ${base.name} (SDE ${fmt(state._computed.sde)} → ${base.low}x–${base.high}x), adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
   $('valRange').textContent = figure > 0 ? `${fmt(lowVal)} – ${fmt(highVal)}` : '—';
   $('inventoryOut').textContent = fmt(inv);
   $('debtCashOut').textContent = fmt(debtCashNet);
@@ -1161,7 +1210,7 @@ function renderDscrPreview(){
 // ---------- Itemized report ----------
 $('genReport').addEventListener('click', () => {
   if(!state._computed){ $('parseStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
-  if(!state._valuation){ $('parseStatus').textContent = 'Add at least one multiple comp before generating a report.'; return; }
+  if(!state._valuation){ $('parseStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
   const html = buildReportHTML();
   $('reportFrame').srcdoc = html;
   $('reportOverlay').style.display = 'block';
@@ -1220,19 +1269,10 @@ function buildReportHTML(){
   const levelMark = {ok:'✓', warn:'●', bad:'✕'};
 
   // ---- Deal reality mini-checks ----
-  const compMids = state.comps.map(cm=>(Number(cm.low)+Number(cm.high))/2).filter(x=>x>0);
-  const compRatio = compMids.length ? Math.max(...compMids)/Math.min(...compMids) : null;
   const earningsYield = v.midVal > 0 ? ((v.figure - (basis==='ebitda'?0:0)) / v.midVal) * 100 : 0;
   const dscrCalc = computeDSCR();
 
   const dealChecks = [];
-  if(compMids.length >= 2){
-    dealChecks.push({
-      label: 'Multiple source agreement', level: compRatio<=1.3?'ok':compRatio<=1.6?'warn':'bad',
-      detail: `Comp midpoints range ${Math.min(...compMids).toFixed(2)}x–${Math.max(...compMids).toFixed(2)}x (max/min ratio ${compRatio.toFixed(2)}).`,
-      note: compRatio<=1.3?'Tight agreement across your saved comps — supports confidence in the applied multiple.':'Wider spread across comps — worth double-checking which one actually fits this business before leaning on it.'
-    });
-  }
   dealChecks.push({
     label: 'Earnings yield on purchase', level: earningsYield>=20?'ok':earningsYield>=12?'warn':'bad',
     detail: `${basis.toUpperCase()} of ${fmt(v.figure)} on an estimated value of ${fmt(v.midVal)} ≈ ${earningsYield.toFixed(1)}% unlevered yield.`,
@@ -1410,7 +1450,7 @@ function buildReportHTML(){
   </table>
 
   <div class="disc">
-    This is an unofficial, directional estimate — not a certified business valuation, formal appraisal, or fairness opinion, and it hasn't been reviewed by a CPA, business appraiser, or lender. It does not incorporate live third-party comparable-transaction databases, public reputation data, or an industry-multiple benchmark service — the multiple applied comes from the comps you've saved in the tool, not a licensed data feed. Add-back judgment calls, adjustment weights, and financing assumptions materially change the result and should be backed by documentation before use in a negotiation, financing application, or any tax, legal, or regulatory matter.
+    This is an unofficial, directional estimate — not a certified business valuation, formal appraisal, or fairness opinion, and it hasn't been reviewed by a CPA, business appraiser, or lender. It does not incorporate live third-party comparable-transaction databases, public reputation data, or an industry-multiple benchmark service — the multiple applied comes from a fixed set of Main Street SDE-size tiers built into the tool, not a licensed data feed. Add-back judgment calls, adjustment weights, and financing assumptions materially change the result and should be backed by documentation before use in a negotiation, financing application, or any tax, legal, or regulatory matter.
   </div>
   </body></html>`;
 }
@@ -1455,7 +1495,7 @@ async function loadDealList(){
 }
 
 $('resetDataBtn').addEventListener('click', async () => {
-  if(!confirm('This clears your saved comps, adjustment weights, and saved deals from this device. Continue?')) return;
+  if(!confirm('This clears your saved multiple-tier edits, adjustment weights, and saved deals from this device. Continue?')) return;
   try{
     await appStorage.delete('pnl-recast:comps', false).catch(()=>{});
     await appStorage.delete('pnl-recast:adjustments', false).catch(()=>{});
@@ -1464,7 +1504,7 @@ $('resetDataBtn').addEventListener('click', async () => {
     for(const k of keys){ await appStorage.delete(k, false).catch(()=>{}); }
 
     state.comps = defaultComps();
-    state.baseCompIndex = 0;
+    state.baseCompManual = false;
     state.weights = defaultWeights();
     state.adjustments = {trend:'steady', risk:{}, upside:{}};
     $('trendSelect').value = 'steady';
@@ -1473,7 +1513,7 @@ $('resetDataBtn').addEventListener('click', async () => {
     renderValuation();
     $('dealList').innerHTML = '';
     $('dealName').textContent = '';
-    $('parseStatus').textContent = 'Saved data cleared — comps, adjustments, and deals reset to defaults.';
+    $('parseStatus').textContent = 'Saved data cleared — multiple tiers, adjustments, and deals reset to defaults.';
   }catch(e){
     $('parseStatus').textContent = 'Could not clear saved data: ' + (e.message || e);
   }
