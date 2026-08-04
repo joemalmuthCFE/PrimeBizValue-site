@@ -145,7 +145,7 @@
         <h2><span class="step-badge">0</span> Report details</h2>
         <p class="sub">Used for the itemized report header and to send your receipt and report.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Batteries Plus — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Main Street Auto — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
           <div><div class="section-label">Prepared for</div><input type="text" id="rdPreparedFor" placeholder="Client name" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
           <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
           <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
@@ -200,7 +200,7 @@
       </div>
 
       <div class="card" id="sdeWorksheetCard" style="display:none;">
-        <h2><span class="step-badge">2b</span> Discretionary Earnings Worksheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— Batteries Plus SDE standard</span></h2>
+        <h2><span class="step-badge">2b</span> Discretionary Earnings Worksheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— Standard SDE worksheet</span></h2>
         <p class="sub">Matches the franchise system's official Seller's Discretionary Earnings Worksheet line for line, so the recast lines up with what buyers and franchisees already expect. Fill in whatever applies — everything defaults to $0.</p>
         <table>
           <thead><tr><th>Line</th><th class="num" style="width:110px;">Amount</th><th></th></tr></thead>
@@ -991,7 +991,7 @@ function computeAndRenderTape(){
   const netIncome = grossProfit - totalOpex - state.below.ownerSalary - (state.below.ownerPayrollTax||0) - state.below.dep - state.below.interest - state.below.taxes;
 
   const b = state.below;
-  // Batteries Plus SDE Worksheet structure:
+  // Standard SDE Worksheet structure:
   // "Equals Basic SBA Discretionary Earnings" = Net Profit + D&A + Interest + Owner Salary + Payroll Tax on Owner Salary
   const basicSBA = netIncome + b.dep + b.interest + b.ownerSalary + (b.ownerPayrollTax||0);
   // "Sum of Discretionary Earnings Additions/Deletions" — the worksheet's 17 standard lines + any custom rows
@@ -1537,7 +1537,7 @@ function buildReportHTML(tier){
     <tr class="total"><td>Net income (as reported)</td><td class="num">${fmt(c.netIncome)}</td></tr>
   </table>
 
-  <h2>Basic SBA Discretionary Earnings <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— Batteries Plus SDE Worksheet, line 9</span></h2>
+  <h2>Basic SBA Discretionary Earnings <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— Standard SDE Worksheet, line 9</span></h2>
   <table>
     <tr><td>Net Profit (Loss) from Owner Provided P&amp;L</td><td class="num">${fmt(c.netIncome)}</td></tr>
     <tr><td>Plus Depreciation &amp; Amortization</td><td class="num">${fmt(state.below.dep)}</td></tr>
@@ -1547,7 +1547,7 @@ function buildReportHTML(tier){
     <tr class="result"><td>Equals Basic SBA Discretionary Earnings</td><td class="num">${fmt(c.basicSBA)}</td></tr>
   </table>
 
-  <h2>Discretionary Earnings Additions/Deletions <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— Batteries Plus SDE Worksheet, lines 10–33</span></h2>
+  <h2>Discretionary Earnings Additions/Deletions <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— Standard SDE Worksheet, lines 10–33</span></h2>
   <table>
     ${SDE_WORKSHEET_FIXED.map(f=>`<tr><td>${escapeHtml(f.label)}</td><td class="num">${fmt(state.sdeWorksheet[f.key]||0)}</td></tr>`).join('')}
     ${(state.sdeWorksheetCustom||[]).map(r=>`<tr><td>${escapeHtml(r.name)}</td><td class="num">${fmt(r.amount||0)}</td></tr>`).join('')}
