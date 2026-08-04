@@ -1440,8 +1440,8 @@ function buildReportHTML(tier){
   const checksBad = checks.filter(x=>x.level==='bad').length;
   const checksWarn = checks.filter(x=>x.level==='warn').length;
   const checksOk = checks.filter(x=>x.level==='ok').length;
-  const levelColor = {ok:'#2F5233', warn:'#B08D57', bad:'#8B3A3A'};
-  const levelBg = {ok:'#E7EEE4', warn:'#F3E4D6', bad:'#F5E6E1'};
+  const levelColor = {ok:'#15803D', warn:'#B45309', bad:'#DC2626'};
+  const levelBg = {ok:'#F0FDF4', warn:'#FFFBEB', bad:'#FEF2F2'};
   const levelMark = {ok:'✓', warn:'●', bad:'✕'};
 
   // ---- Deal reality mini-checks ----
@@ -1465,14 +1465,14 @@ function buildReportHTML(tier){
   const presentedBy = state.reportInfo.presentedBy;
   const reportDate = state.reportInfo.reportDate ? new Date(state.reportInfo.reportDate+'T00:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : new Date().toLocaleDateString();
 
-  const checkRow = (chk) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px dotted #D8D2C2;">
-    <div style="width:20px;height:20px;border-radius:50%;background:${levelBg[chk.level]};color:${levelColor[chk.level]};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">${levelMark[chk.level]}</div>
-    <div><div style="font-weight:700;font-size:12.5px;">${escapeHtml(chk.label)}</div><div style="font-size:12px;color:#4A5568;">${escapeHtml(chk.detail)}</div><div style="font-size:11.5px;color:${levelColor[chk.level]};margin-top:2px;">${escapeHtml(chk.note)}</div></div>
+  const checkRow = (chk) => `<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #E6E8EC;">
+    <div style="width:22px;height:22px;border-radius:50%;background:${levelBg[chk.level]};color:${levelColor[chk.level]};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">${levelMark[chk.level]}</div>
+    <div><div style="font-weight:700;font-size:12.5px;color:#0B0E14;">${escapeHtml(chk.label)}</div><div style="font-size:12px;color:#5B6470;">${escapeHtml(chk.detail)}</div><div style="font-size:11.5px;color:${levelColor[chk.level]};margin-top:2px;">${escapeHtml(chk.note)}</div></div>
   </div>`;
 
-  const sectionBanner = (letter, title) => `<div style="background:#4A1A24;color:#fff;border-radius:3px;padding:14px 18px;margin-top:32px;display:flex;align-items:center;gap:12px;">
-    <span style="font-size:22px;font-weight:800;color:#D9754F;">${letter}</span>
-    <span style="font-size:16px;font-weight:700;letter-spacing:.02em;">${title}</span>
+  const sectionBanner = (letter, title) => `<div style="background:#0B0E14;color:#fff;border-radius:10px;padding:14px 20px;margin-top:36px;display:flex;align-items:center;gap:14px;">
+    <span style="display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:8px;background:#2454FF;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;">${letter}</span>
+    <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.01em;">${title}</span>
   </div>`;
 
   const sectionARecast = isDetailed ? `
@@ -1501,7 +1501,7 @@ function buildReportHTML(tier){
     <tr class="total"><td>Net income (as reported)</td><td class="num">${fmt(c.netIncome)}</td></tr>
   </table>
 
-  <h2>Basic SBA Discretionary Earnings <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#4A5568;">— Batteries Plus SDE Worksheet, line 9</span></h2>
+  <h2>Basic SBA Discretionary Earnings <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— Batteries Plus SDE Worksheet, line 9</span></h2>
   <table>
     <tr><td>Net Profit (Loss) from Owner Provided P&amp;L</td><td class="num">${fmt(c.netIncome)}</td></tr>
     <tr><td>Plus Depreciation &amp; Amortization</td><td class="num">${fmt(state.below.dep)}</td></tr>
@@ -1511,7 +1511,7 @@ function buildReportHTML(tier){
     <tr class="result"><td>Equals Basic SBA Discretionary Earnings</td><td class="num">${fmt(c.basicSBA)}</td></tr>
   </table>
 
-  <h2>Discretionary Earnings Additions/Deletions <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#4A5568;">— Batteries Plus SDE Worksheet, lines 10–33</span></h2>
+  <h2>Discretionary Earnings Additions/Deletions <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— Batteries Plus SDE Worksheet, lines 10–33</span></h2>
   <table>
     ${SDE_WORKSHEET_FIXED.map(f=>`<tr><td>${escapeHtml(f.label)}</td><td class="num">${fmt(state.sdeWorksheet[f.key]||0)}</td></tr>`).join('')}
     ${(state.sdeWorksheetCustom||[]).map(r=>`<tr><td>${escapeHtml(r.name)}</td><td class="num">${fmt(r.amount||0)}</td></tr>`).join('')}
@@ -1536,7 +1536,7 @@ function buildReportHTML(tier){
   </table>
 
 ` : `
-  <h2>Recast summary</h2>
+  ${sectionBanner('A','RECAST SUMMARY')}
   <table>
     <tr><td>Total revenue</td><td class="num">${fmt(c.revenue)}</td></tr>
     <tr><td>Gross profit</td><td class="num">${fmt(c.grossProfit)}</td></tr>
@@ -1544,7 +1544,9 @@ function buildReportHTML(tier){
     <tr class="result"><td>Total Seller's Discretionary Earnings (SDE)</td><td class="num">${fmt(c.sde)}</td></tr>
     <tr class="result"><td>Adjusted EBITDA</td><td class="num">${fmt(c.ebitda)}</td></tr>
   </table>
-  <p style="font-size:12px;color:#4A5568;">This is your top-line summary. The Detailed Report ($799) adds the full itemized recast worksheet with every add-back explained and documented, SBA financing/DSCR analysis, and a closing cash-to-seller breakdown.</p>
+  <div class="upgrade-box">
+    <p><strong>This is your top-line summary.</strong> The Detailed Report ($799) adds the full itemized recast worksheet with every add-back explained and documented, a sanity-check panel, SBA financing/DSCR analysis, and a closing cash-to-seller breakdown.</p>
+  </div>
 `;
   const sectionCFinancing = isDetailed ? `
   ${sectionBanner('C','BUYER FINANCING & SBA BANKABILITY')}
@@ -1559,10 +1561,10 @@ function buildReportHTML(tier){
     <tr><td>Available SDE</td><td class="num">${fmt(dscrCalc.availableSDE)}</td></tr>
     <tr><td>− Replacement salary</td><td class="num">${fmt(state.below.replacementSalary)}</td></tr>
     <tr class="total"><td>Post-close cash flow</td><td class="num">${fmt(dscrCalc.postCloseCF)}</td></tr>
-    <tr class="result" style="background:${dscrLevel==='ok'?'#E7EEE4':dscrLevel==='warn'?'#F3E4D6':'#F5E6E1'};"><td>DSCR</td><td class="num">${dscrCalc.dscr!=null?dscrCalc.dscr.toFixed(2)+'x':'—'}</td></tr>
+    <tr class="result" style="background:${dscrLevel==='ok'?'#F0FDF4':dscrLevel==='warn'?'#FFFBEB':'#FEF2F2'};"><td>DSCR</td><td class="num">${dscrCalc.dscr!=null?dscrCalc.dscr.toFixed(2)+'x':'—'}</td></tr>
   </table>
-  <p style="font-size:11.5px;color:${levelColor[dscrLevel]||'#4A5568'};">${dscrLevel==='ok'?'≥ 1.25x meets typical SBA 7(a) underwriting preference.':dscrLevel==='warn'?'1.15–1.25x is marginal — expect a lender to want a larger down payment, seller note, or price concession.':dscrLevel==='bad'?'Below 1.15x — not financeable as structured without restructuring the deal.':''}</p>`
-  : '<p style="font-size:12px;color:#4A5568;">Enter financing assumptions in card 2d to see a DSCR estimate.</p>'}
+  <p style="font-size:11.5px;color:${levelColor[dscrLevel]||'#5B6470'};">${dscrLevel==='ok'?'≥ 1.25x meets typical SBA 7(a) underwriting preference.':dscrLevel==='warn'?'1.15–1.25x is marginal — expect a lender to want a larger down payment, seller note, or price concession.':dscrLevel==='bad'?'Below 1.15x — not financeable as structured without restructuring the deal.':''}</p>`
+  : '<p style="font-size:12px;color:#5B6470;">Enter financing assumptions in card 2d to see a DSCR estimate.</p>'}
 
 ` : '';
   const sectionDClosing = isDetailed ? `
@@ -1577,7 +1579,7 @@ function buildReportHTML(tier){
     <tr class="result"><td>Possible net cash to seller at closing</td><td class="num">${fmt(v.netLow)} – ${fmt(v.netHigh)}</td></tr>
   </table>
 
-  <h2>Net tangible assets &amp; working capital <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#4A5568;">— from balance sheet, card 2c</span></h2>
+  <h2>Net tangible assets &amp; working capital <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#5B6470;">— from balance sheet, card 2c</span></h2>
   <table>
     <tr><td>Cash &amp; equivalents</td><td class="num">${fmt(state.balanceSheet.cash||0)}</td></tr>
     <tr><td>Accounts receivable</td><td class="num">${fmt(state.balanceSheet.ar||0)}</td></tr>
@@ -1591,35 +1593,54 @@ function buildReportHTML(tier){
   </table>
 
 ` : `
-  <p style="font-size:12px;color:#4A5568;margin-top:20px;">Want the SBA financing analysis and a closing cash-to-seller breakdown? Upgrade to the Detailed Report.</p>
+  <div class="upgrade-box" style="margin-top:20px;">
+    <p>Want the SBA financing analysis and a closing cash-to-seller breakdown? Upgrade to the Detailed Report.</p>
+  </div>
 `;
 
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escapeHtml(businessName)} — Preliminary Recast &amp; Valuation</title>
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escapeHtml(businessName)} — ${isDetailed?'Detailed':'Basic'} Valuation Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    body{font-family:Georgia,'Times New Roman',serif;color:#1F2A38;max-width:820px;margin:0 auto;padding:0 24px 60px;line-height:1.5;}
-    h1{font-size:24px;margin:0;}
-    h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:#4A1A24;margin-top:26px;border-bottom:2px solid #4A1A24;padding-bottom:5px;}
-    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
-    td{padding:4px 2px;border-bottom:1px dotted #D8D2C2;}
-    td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
-    tr.total td{font-weight:700;border-top:1px solid #1F2A38;border-bottom:none;}
-    tr.result td{font-weight:700;font-size:14.5px;background:#F3E4D6;}
-    .reason{font-size:11px;color:#8B3A3A;font-style:italic;}
-    .meta{font-size:12px;color:#4A5568;margin-top:2px;}
-    .disc{font-size:10.5px;color:#4A5568;border-top:1px solid #D8D2C2;margin-top:30px;padding-top:10px;}
-    .cover{background:#F6F3EC;border:1px solid #D8D2C2;border-radius:4px;padding:26px 28px;margin-top:20px;}
-    .hero{background:#fff;border:1px solid #D8D2C2;border-radius:4px;padding:20px 24px;margin-top:16px;text-align:center;}
-    .hero .num{font-size:30px;font-weight:800;color:#4A1A24;}
-    .hero .range{font-size:13px;color:#4A5568;margin-top:4px;}
-    .capsule{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#8B3A3A;font-weight:700;}
-    @media print{ .noprint{display:none;} body{padding:0 10px;} }
+    *{box-sizing:border-box;}
+    body{font-family:'Inter',-apple-system,sans-serif;color:#0B0E14;max-width:820px;margin:0 auto;padding:0 24px 60px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+    h1{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin:0;letter-spacing:-.01em;}
+    h2{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#0B0E14;margin-top:28px;border-bottom:2px solid #0B0E14;padding-bottom:6px;}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+    td{padding:6px 3px;border-bottom:1px solid #E6E8EC;font-family:'Inter',sans-serif;}
+    td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-family:'IBM Plex Mono',monospace;}
+    tr.total td{font-weight:700;border-top:1.5px solid #0B0E14;border-bottom:none;}
+    tr.result td{font-weight:700;font-size:14.5px;background:#EEF2FF;color:#0B0E14;}
+    .reason{font-size:11px;color:#5B6470;font-style:italic;}
+    .meta{font-size:12.5px;color:#5B6470;margin-top:4px;}
+    .disc{font-size:10.5px;color:#8A93A0;border-top:1px solid #E6E8EC;margin-top:34px;padding-top:14px;line-height:1.7;}
+    .brandbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px;border-bottom:1px solid #E6E8EC;margin-bottom:8px;}
+    .brandbar .word{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.01em;}
+    .brandbar .word span{color:#2454FF;}
+    .tierbadge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:${isDetailed?'#0B0E14':'#EEF2FF'};color:${isDetailed?'#fff':'#2454FF'};}
+    .cover{background:#F7F8FA;border:1px solid #E6E8EC;border-radius:14px;padding:30px 32px;margin-top:20px;}
+    .hero{background:#0B0E14;border-radius:12px;padding:26px 28px;margin-top:18px;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 200px at 50% -20%, rgba(36,84,255,0.35), transparent 70%);}
+    .hero > *{position:relative;}
+    .hero .num{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+    .hero .range{font-size:13px;color:rgba(255,255,255,0.65);margin-top:6px;}
+    .capsule{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#2454FF;font-weight:700;}
+    .hero .capsule{color:#8FADFF;}
+    .upgrade-box{background:#EEF2FF;border:1px solid #C9D6FF;border-radius:12px;padding:18px 20px;margin-top:20px;}
+    .upgrade-box p{margin:0;font-size:13px;color:#1F3A8F;}
+    @media print{ .noprint{display:none;} body{padding:0 10px;} .hero{background:#0B0E14 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;} }
   </style></head><body>
-  <div class="noprint" style="position:sticky;top:0;background:#fff;padding:10px 0;text-align:right;border-bottom:1px solid #D8D2C2;">
-    <button onclick="window.print()" style="padding:6px 14px;">Print / Save as PDF</button>
+  <div class="noprint" style="position:sticky;top:0;background:#fff;padding:10px 0;text-align:right;border-bottom:1px solid #E6E8EC;">
+    <button onclick="window.print()" style="padding:8px 16px;border-radius:8px;border:none;background:#2454FF;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Print / Save as PDF</button>
+  </div>
+
+  <div class="brandbar">
+    <div class="word">Prime<span>BizValue</span></div>
+    <span class="tierbadge">${isDetailed?'Detailed Report':'Basic Report'}</span>
   </div>
 
   <div class="cover">
-    <div class="capsule">Preliminary Recast &amp; Estimate of Value</div>
+    <div class="capsule">${isDetailed?'Detailed':'Preliminary'} Recast &amp; Estimate of Value</div>
     <h1>${escapeHtml(businessName)}</h1>
     <div class="meta">${reportDate}${preparedFor?' · Prepared for '+escapeHtml(preparedFor):''}${presentedBy?' · Presented by '+escapeHtml(presentedBy):''}${state.leaseTerm?' · Lease: '+escapeHtml(state.leaseTerm):''}</div>
     <div class="hero">
@@ -1650,6 +1671,10 @@ ${sectionCFinancing}
 ${sectionDClosing}
   <div class="disc">
     This is an unofficial, directional estimate — not a certified business valuation, formal appraisal, or fairness opinion, and it hasn't been reviewed by a CPA, business appraiser, or lender. It does not incorporate live third-party comparable-transaction databases, public reputation data, or an industry-multiple benchmark service — the multiple applied comes from a fixed set of Main Street SDE-size tiers built into the tool, not a licensed data feed. Add-back judgment calls, adjustment weights, and financing assumptions materially change the result and should be backed by documentation before use in a negotiation, financing application, or any tax, legal, or regulatory matter.
+  </div>
+  <div style="text-align:center;margin-top:26px;padding-top:16px;">
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#0B0E14;">Prime<span style="color:#2454FF;">BizValue</span></div>
+    <div style="font-size:10.5px;color:#8A93A0;margin-top:3px;">primebizvalue.com &middot; Rebellious Franchising LLC</div>
   </div>
   </body></html>`;
 }
