@@ -1293,11 +1293,18 @@ function renderDscrPreview(){
 }
 
 // ---------- Itemized report ----------
+// TEMPORARY TESTING BYPASS — remove before real launch. When true, the
+// Detailed ($799) button skips Stripe checkout entirely and opens the
+// report directly, so the report itself can be tested without running
+// real (or even test-mode) payments each time. Does NOT affect Basic.
+const TESTING_FREE_DETAILED = true;
+
 document.querySelectorAll('#genReportBasic, #genReportDetailed').forEach(btn => {
   btn.addEventListener('click', (e) => {
     const tier = e.currentTarget.dataset.tier; // 'basic' or 'detailed'
     if(!state._computed){ $('parseStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
     if(!state._valuation){ $('parseStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
+    if(TESTING_FREE_DETAILED && tier === 'detailed'){ openReportOverlay('detailed'); return; }
     if(isPaidThisSession && paidTier === tier){ openReportOverlay(tier); return; }
     if(isPaidThisSession && paidTier === 'detailed' && tier === 'basic'){ openReportOverlay('detailed'); return; } // already own the bigger tier
     startCheckout(tier);
@@ -1388,6 +1395,7 @@ let paidTier = null;
       }catch(e){ console.error('Could not restore pending deal after payment', e); }
       $('parseStatus').textContent = 'Payment confirmed — here\'s your report.';
       openReportOverlay(paidTier);
+      sendReportEmail(paidTier);
     } else {
       $('parseStatus').textContent = 'We could not confirm payment for that session. If you were charged, contact hello@primebizvalue.com.';
     }
@@ -1396,6 +1404,34 @@ let paidTier = null;
     $('parseStatus').textContent = 'Could not confirm payment — contact hello@primebizvalue.com if you were charged.';
   }
 })();
+
+let reportEmailSent = false; // guard against re-sending if the report gets reopened
+async function sendReportEmail(tier){
+  if(reportEmailSent || !state._computed || !state._valuation) return;
+  const email = (state.reportInfo.email || '').trim();
+  if(!email) return;
+  reportEmailSent = true;
+  try{
+    const html = buildReportHTML(tier);
+    const resp = await fetch('/api/send-report-email', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        customerEmail: email,
+        reportHtml: html,
+        businessName: state.reportInfo.businessName || '',
+        tier: tier,
+      })
+    });
+    if(!resp.ok){
+      const bodyText = await resp.text().catch(()=> '');
+      console.error('Report email send failed:', resp.status, bodyText);
+      $('parseStatus').textContent = 'Payment confirmed — your report is open below. (We couldn\'t email a copy just now — you can still print/save it from the report window.)';
+    }
+  }catch(e){
+    console.error('sendReportEmail error:', e);
+  }
+}
 
 function buildReportHTML(tier){
   const isDetailed = tier === 'detailed';
@@ -1674,7 +1710,7 @@ ${sectionDClosing}
   </div>
   <div style="text-align:center;margin-top:26px;padding-top:16px;">
     <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#0B0E14;">Prime<span style="color:#2454FF;">BizValue</span></div>
-    <div style="font-size:10.5px;color:#8A93A0;margin-top:3px;">primebizvalue.com &middot; Rebellious Franchising LLC</div>
+    <div style="font-size:10.5px;color:#8A93A0;margin-top:3px;">primebizvalue.com &middot; PrimeBizValue</div>
   </div>
   </body></html>`;
 }
