@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrimeBizValue — Know what your business is really worth</title>
+<meta name="description" content="Upload your financials and get a professional-grade SDE and EBITDA valuation, built for franchise buyers and sellers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F7F8FA;
+    --border:#E6E8EC;
+    --text:#14171C;
+    --text-secondary:#5B6470;
+    --text-muted:#8A93A0;
+    --accent:#2454FF;
+    --accent-bg:#EEF2FF;
+    --on-accent:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  /* Nav */
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 24px; max-width:1080px; margin:0 auto;
+  }
+  .brand{font-size:19px; font-weight:700; letter-spacing:-0.3px;}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex; gap:28px; align-items:center;}
+  .nav-links a{font-size:14.5px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{
+    background:var(--text); color:#fff; padding:10px 18px; border-radius:8px;
+    text-decoration:none; font-size:14px; font-weight:600;
+  }
+  .nav-cta:hover{background:#000;}
+
+  /* Hero */
+  header.hero{padding:64px 0 56px; text-align:center;}
+  .eyebrow{
+    display:inline-block; background:var(--accent-bg); color:var(--accent);
+    font-size:13px; font-weight:600; padding:6px 14px; border-radius:20px; margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(2.1rem, 4.2vw, 3.2rem); line-height:1.12; font-weight:700; margin:0 0 18px;
+    letter-spacing:-0.02em; max-width:20ch; margin-left:auto; margin-right:auto;
+  }
+  .sub{
+    font-size:17.5px; line-height:1.6; color:var(--text-secondary); max-width:46ch; margin:0 auto 30px;
+  }
+  .cta-primary{
+    display:inline-block; background:var(--accent); color:#fff; padding:14px 30px; border-radius:9px;
+    text-decoration:none; font-weight:600; font-size:15.5px; transition:background .15s ease;
+  }
+  .cta-primary:hover{background:#1a41d6;}
+  .cta-note{display:block; font-size:13.5px; color:var(--text-muted); margin-top:14px;}
+
+  /* Stats row */
+  .stats{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    padding:28px 0; margin-bottom:64px;
+  }
+  .stat{text-align:center; padding:0 20px;}
+  .stat + .stat{border-left:1px solid var(--border);}
+  .stat .num{font-size:22px; font-weight:700; margin:0;}
+  .stat .lbl{font-size:13.5px; color:var(--text-secondary); margin:4px 0 0;}
+
+  /* How it works */
+  section{padding:0 0 64px;}
+  h2{font-size:clamp(1.5rem,2.6vw,1.9rem); font-weight:700; text-align:center; margin:0 0 36px; letter-spacing:-0.01em;}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .step{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:26px 22px;}
+  .step .icon{
+    width:36px; height:36px; border-radius:8px; background:var(--accent-bg); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; margin-bottom:16px;
+  }
+  .step h3{font-size:16px; font-weight:600; margin:0 0 8px;}
+  .step p{font-size:14px; line-height:1.6; color:var(--text-secondary); margin:0;}
+
+  /* Pricing */
+  .price-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:44px 36px; text-align:center;
+  }
+  .price-card .p-lbl{font-size:14px; color:var(--text-secondary); margin:0 0 8px;}
+  .price-card .p-amt{font-size:40px; font-weight:700; margin:0 0 10px; letter-spacing:-0.02em;}
+  .price-card .p-compare{font-size:14px; color:var(--text-secondary); margin:0 0 26px;}
+
+  footer{padding:32px 0 44px; border-top:1px solid var(--border);}
+  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+  footer p{margin:0; font-size:12.5px; color:var(--text-muted);}
+
+  @media (max-width:760px){
+    .stats{grid-template-columns:1fr; gap:16px;}
+    .stat + .stat{border-left:none; border-top:1px solid var(--border); padding-top:16px;}
+    .steps{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Prime<span>BizValue</span></div>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <a href="#get-report" class="nav-cta">Get your valuation</a>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Built for franchise buyers and sellers</span>
+    <h1>Know what your business is really worth</h1>
+    <p class="sub">Upload your financials and get a professional-grade SDE and EBITDA valuation in minutes, not weeks.</p>
+    <a href="#get-report" class="cta-primary">Start my valuation</a>
+    <span class="cta-note">One-time report. No subscription. Delivered to your inbox.</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat">
+      <p class="num">SDE + EBITDA</p>
+      <p class="lbl">Dual methodology</p>
+    </div>
+    <div class="stat">
+      <p class="num">SBA DSCR</p>
+      <p class="lbl">Bankability check</p>
+    </div>
+    <div class="stat">
+      <p class="num">Under 10 min</p>
+      <p class="lbl">Upload to report</p>
+    </div>
+  </div>
+</div>
+
+<section id="how-it-works">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="icon">1</div>
+        <h3>Upload financials</h3>
+        <p>P&amp;L, tax returns, or a simple spreadsheet — whatever you've got on hand.</p>
+      </div>
+      <div class="step">
+        <div class="icon">2</div>
+        <h3>We recast and value</h3>
+        <p>Add-backs, multiples, and buyer financing, run through the same logic a broker uses.</p>
+      </div>
+      <div class="step">
+        <div class="icon">3</div>
+        <h3>Get your report</h3>
+        <p>On screen and in your inbox, instantly, with a defensible valuation range.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="get-report">
+  <div class="wrap">
+    <div class="price-card">
+      <p class="p-lbl">One-time report</p>
+      <p class="p-amt">$799</p>
+      <p class="p-compare">Compare to a broker opinion of value: typically $2,500&ndash;$10,000+</p>
+      <a href="mailto:hello@primebizvalue.com?subject=Get%20my%20valuation%20report" class="cta-primary">Get your valuation</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <p>© 2026 Rebellious Franchising LLC — PrimeBizValue.com</p>
+    <p>For informational purposes only. Not certified appraisal, financial, legal, or investment advice.</p>
+  </div>
+</footer>
+
+</body>
+</html>
