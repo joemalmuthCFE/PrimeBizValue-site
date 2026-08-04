@@ -301,6 +301,7 @@
           <button class="small" id="genReportDetailed" data-tier="detailed">Detailed report — $799</button>
           <span style="font-size:11px;color:var(--ink-soft);" id="dealName"></span>
         </div>
+        <div class="status" id="checkoutStatus" style="margin-top:6px;"></div>
         <div class="deal-list" id="dealList"></div>
       </div>
     </div>
@@ -1302,8 +1303,8 @@ const TESTING_FREE_DETAILED = true;
 document.querySelectorAll('#genReportBasic, #genReportDetailed').forEach(btn => {
   btn.addEventListener('click', (e) => {
     const tier = e.currentTarget.dataset.tier; // 'basic' or 'detailed'
-    if(!state._computed){ $('parseStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
-    if(!state._valuation){ $('parseStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
+    if(!state._computed){ $('checkoutStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
+    if(!state._valuation){ $('checkoutStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
     if(TESTING_FREE_DETAILED && tier === 'detailed'){ openReportOverlay('detailed'); return; }
     if(isPaidThisSession && paidTier === tier){ openReportOverlay(tier); return; }
     if(isPaidThisSession && paidTier === 'detailed' && tier === 'basic'){ openReportOverlay('detailed'); return; } // already own the bigger tier
@@ -1328,12 +1329,17 @@ function openReportOverlay(tier){
 async function startCheckout(tier){
   const email = (state.reportInfo.email || '').trim();
   if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    $('parseStatus').textContent = 'Enter a valid email above (Report details, card 0) before checkout — that\'s where your receipt and report go.';
+    $('checkoutStatus').textContent = 'Enter a valid email above (Report details, card 0, at the top) before checkout — that\'s where your receipt and report go. Scrolling you up there now.';
+    const emailField = $('rdEmail');
+    emailField.scrollIntoView({behavior:'smooth', block:'center'});
+    emailField.style.outline = '2px solid #DC2626';
+    emailField.focus();
+    setTimeout(()=>{ emailField.style.outline = ''; }, 2500);
     return;
   }
   $('genReportBasic').disabled = true;
   $('genReportDetailed').disabled = true;
-  $('parseStatus').textContent = 'Redirecting to secure checkout…';
+  $('checkoutStatus').textContent = 'Redirecting to secure checkout…';
   try{
     // Save everything needed to regenerate this exact report after the
     // Stripe redirect round-trip — same technique as the existing
@@ -1357,7 +1363,7 @@ async function startCheckout(tier){
     window.location.href = data.url; // off to Stripe's hosted checkout
   }catch(e){
     console.error('Checkout error:', e);
-    $('parseStatus').textContent = 'Could not start checkout: ' + (e.message || e) + ' — contact hello@primebizvalue.com if this keeps happening.';
+    $('checkoutStatus').textContent = 'Could not start checkout: ' + (e.message || e) + ' — contact hello@primebizvalue.com if this keeps happening.';
     $('genReportBasic').disabled = false;
     $('genReportDetailed').disabled = false;
   }
