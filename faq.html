@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — PrimeBizValue</title>
+<meta name="description" content="Frequently asked questions about PrimeBizValue business valuation reports.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F7F8FA;
+    --border:#E6E8EC;
+    --text:#0B0E14;
+    --text-secondary:#5B6470;
+    --text-muted:#8A93A0;
+    --accent:#2454FF;
+    --accent-2:#0033B8;
+    --accent-bg:#EEF2FF;
+    --on-accent:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter', -apple-system, sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  .wrap-wide{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 24px; max-width:1080px; margin:0 auto;}
+  .brand{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.3px; text-decoration:none; color:var(--text);}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex; gap:26px; align-items:center;}
+  .nav-links a{font-size:14px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{background:var(--text); color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:600; transition:background .15s ease;}
+  .nav-cta:hover{background:#000;}
+  @media (max-width:760px){.nav-links{display:none;}}
+
+  main{padding:24px 0 72px;}
+  h1{font-family:'Space Grotesk', sans-serif; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:700; letter-spacing:-0.02em; margin:0 0 12px;}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
+  .updated{font-size:13px; color:var(--text-muted); margin-bottom:36px;}
+  h2{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; margin:34px 0 12px; letter-spacing:-0.01em;}
+  p{font-size:15px; color:var(--text-secondary); margin:0 0 16px;}
+  ul, ol{font-size:15px; color:var(--text-secondary); padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--text);}
+  .lede{font-size:17px; color:var(--text-secondary); max-width:60ch;}
+
+  details{border:1px solid var(--border); border-radius:10px; padding:16px 18px; margin-bottom:12px; background:var(--surface);}
+  summary{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+'; font-size:20px; color:var(--accent); font-weight:400; margin-left:12px;}
+  details[open] summary::after{content:'−';}
+  details p{margin-top:12px; margin-bottom:0;}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 26px; margin-bottom:20px;}
+
+  form .field{margin-bottom:16px;}
+  form label{display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px;}
+  form input, form select{width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-family:'Inter',sans-serif; background:#fff;}
+  form input:focus, form select:focus{border-color:var(--accent);}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:600px){.field-row{grid-template-columns:1fr;}}
+  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:18px 0 20px;}
+  .consent-row input{width:auto; margin-top:3px;}
+  .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
+  .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-weight:600; font-size:15px; cursor:pointer; transition:background .15s ease;}
+  .submit-btn:hover{background:var(--accent-2);}
+
+  .contact-card{display:flex; align-items:center; justify-content:space-between; background:var(--text); color:#fff; border-radius:14px; padding:30px 32px; flex-wrap:wrap; gap:16px;}
+  .contact-card h3{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
+  .contact-card p{color:rgba(255,255,255,.7); margin:0; font-size:14px;}
+  .contact-card a.email-btn{background:var(--accent); color:#fff; padding:12px 24px; border-radius:9px; text-decoration:none; font-weight:600; font-size:14.5px; white-space:nowrap;}
+
+  footer{padding:32px 0 44px; border-top:1px solid var(--border); margin-top:40px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:18px; max-width:1080px; margin:0 auto; padding:0 24px;}
+  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .foot-links a{font-size:13px; color:var(--text-secondary); text-decoration:none;}
+  .foot-links a:hover{color:var(--text);}
+  footer p{margin:0; font-size:12.5px; color:var(--text-muted);}
+</style>
+
+</head>
+<body>
+<nav>
+  <a href="/" class="brand">Prime<span>BizValue</span></a>
+  <div class="nav-links">
+    <a href="/#how-it-works">How it works</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/join.html">Join our list</a>
+  </div>
+  <a href="/tool.html" class="nav-cta">Get your valuation</a>
+</nav>
+
+<main>
+  <div class="wrap">
+    <span class="kicker">FAQ</span>
+    <h1>Frequently asked questions</h1>
+    <p class="lede" style="margin-bottom:32px;">Everything people usually want to know before they submit their numbers.</p>
+
+    <details open>
+      <summary>What is SDE, and how is it different from EBITDA?</summary>
+      <p>Seller's Discretionary Earnings (SDE) is the standard way small, owner-operated businesses are valued. It starts with your business's net income, then adds back the owner's salary, personal perks run through the business, depreciation, interest, and other one-time or discretionary costs — arriving at the true cash benefit available to a single owner-operator. Adjusted EBITDA is used instead for larger businesses that already have a management team in place, since a buyer in that situation isn't stepping in to do the owner's job themselves.</p>
+    </details>
+
+    <details>
+      <summary>Is this a certified appraisal or an official business valuation?</summary>
+      <p>No. This is an informational, directional estimate — not a certified appraisal, formal valuation, or fairness opinion, and it hasn't been reviewed by a CPA, licensed business appraiser, or lender. It's built to give you a real, defensible starting number using the same methodology brokers use, but for an SBA loan application, a formal sale, or a legal matter, you'll want a credentialed appraiser to sign off.</p>
+    </details>
+
+    <details>
+      <summary>How is the valuation multiple determined?</summary>
+      <p>We use four fixed Main Street SDE-size tiers, based on published industry transaction data (BizBuySell, IBBA/M&amp;A Source Market Pulse), and the tool automatically selects the tier that matches your business's calculated SDE. From there, adjustment factors for earnings trend, risk, and upside move the multiple within a realistic range for your specific situation.</p>
+    </details>
+
+    <details>
+      <summary>How accurate is the estimate?</summary>
+      <p>As accurate as the financial information you provide and the assumptions that go into any rule-of-thumb, multiple-based valuation. It's the same core methodology a business broker uses for an informal opinion of value — genuinely useful for planning, negotiating, or sanity-checking an asking price, but it isn't a substitute for a professional appraisal when real money and legal paperwork are on the line.</p>
+    </details>
+
+    <details>
+      <summary>Who is this for?</summary>
+      <p>Owners thinking about selling, buyers evaluating an asking price, anyone heading into an SBA financing conversation who wants to know if a deal actually services the debt, and franchisors who want their franchisees walking into resale conversations with real numbers instead of guesses.</p>
+    </details>
+
+    <details>
+      <summary>How long does it take?</summary>
+      <p>A few minutes. Upload or paste in your financials, the tool reads and recasts them automatically, and your report is ready to review on screen and delivered to your inbox right away.</p>
+    </details>
+
+    <details>
+      <summary>What happens to my financial data?</summary>
+      <p>It's used to generate your report and nothing else. We don't sell your data, and we don't use it to train any AI model. See our <a href="/privacy.html">Privacy Policy</a> for the full detail, including which service providers help us process it.</p>
+    </details>
+
+    <details>
+      <summary>What's your refund policy?</summary>
+      <p>Because your report generates and delivers instantly, purchases are generally final. If something breaks on our end and your report doesn't generate properly, contact us and we'll fix it or refund you — just reach out at <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a>.</p>
+    </details>
+
+    <details>
+      <summary>I'm a franchisor — can my franchisees get a discount?</summary>
+      <p>Yes, we offer partner discount codes for franchise brands who want to make this available to their network. <a href="/contact.html">Get in touch</a> and mention your brand.</p>
+    </details>
+
+    <details>
+      <summary>My business doesn't fit the "Main Street" size range — can I still use this?</summary>
+      <p>The tool is built and calibrated specifically for businesses valued under about $2M — the range where SDE-based, broker-style valuation is the standard approach. If your business is meaningfully larger, an EBITDA-based valuation from a lower-middle-market advisor will generally serve you better than this tool.</p>
+    </details>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-row">
+    <p>© 2026 Rebellious Franchising LLC — PrimeBizValue.com</p>
+    <div class="foot-links">
+      <a href="/faq.html">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/join.html">Join our list</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
