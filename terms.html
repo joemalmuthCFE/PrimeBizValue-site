@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — PrimeBizValue</title>
+<meta name="description" content="Terms of Service for PrimeBizValue.com valuation reports and tools.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F7F8FA;
+    --border:#E6E8EC;
+    --text:#0B0E14;
+    --text-secondary:#5B6470;
+    --text-muted:#8A93A0;
+    --accent:#2454FF;
+    --accent-2:#0033B8;
+    --accent-bg:#EEF2FF;
+    --on-accent:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter', -apple-system, sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  .wrap-wide{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 24px; max-width:1080px; margin:0 auto;}
+  .brand{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.3px; text-decoration:none; color:var(--text);}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex; gap:26px; align-items:center;}
+  .nav-links a{font-size:14px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-cta{background:var(--text); color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:600; transition:background .15s ease;}
+  .nav-cta:hover{background:#000;}
+  @media (max-width:760px){.nav-links{display:none;}}
+
+  main{padding:24px 0 72px;}
+  h1{font-family:'Space Grotesk', sans-serif; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:700; letter-spacing:-0.02em; margin:0 0 12px;}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
+  .updated{font-size:13px; color:var(--text-muted); margin-bottom:36px;}
+  h2{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; margin:34px 0 12px; letter-spacing:-0.01em;}
+  p{font-size:15px; color:var(--text-secondary); margin:0 0 16px;}
+  ul, ol{font-size:15px; color:var(--text-secondary); padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--text);}
+  .lede{font-size:17px; color:var(--text-secondary); max-width:60ch;}
+
+  details{border:1px solid var(--border); border-radius:10px; padding:16px 18px; margin-bottom:12px; background:var(--surface);}
+  summary{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+'; font-size:20px; color:var(--accent); font-weight:400; margin-left:12px;}
+  details[open] summary::after{content:'−';}
+  details p{margin-top:12px; margin-bottom:0;}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 26px; margin-bottom:20px;}
+
+  form .field{margin-bottom:16px;}
+  form label{display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px;}
+  form input, form select{width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-family:'Inter',sans-serif; background:#fff;}
+  form input:focus, form select:focus{border-color:var(--accent);}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:600px){.field-row{grid-template-columns:1fr;}}
+  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:18px 0 20px;}
+  .consent-row input{width:auto; margin-top:3px;}
+  .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
+  .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-weight:600; font-size:15px; cursor:pointer; transition:background .15s ease;}
+  .submit-btn:hover{background:var(--accent-2);}
+
+  .contact-card{display:flex; align-items:center; justify-content:space-between; background:var(--text); color:#fff; border-radius:14px; padding:30px 32px; flex-wrap:wrap; gap:16px;}
+  .contact-card h3{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
+  .contact-card p{color:rgba(255,255,255,.7); margin:0; font-size:14px;}
+  .contact-card a.email-btn{background:var(--accent); color:#fff; padding:12px 24px; border-radius:9px; text-decoration:none; font-weight:600; font-size:14.5px; white-space:nowrap;}
+
+  footer{padding:32px 0 44px; border-top:1px solid var(--border); margin-top:40px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:18px; max-width:1080px; margin:0 auto; padding:0 24px;}
+  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
+  .foot-links a{font-size:13px; color:var(--text-secondary); text-decoration:none;}
+  .foot-links a:hover{color:var(--text);}
+  footer p{margin:0; font-size:12.5px; color:var(--text-muted);}
+</style>
+
+</head>
+<body>
+<nav>
+  <a href="/" class="brand">Prime<span>BizValue</span></a>
+  <div class="nav-links">
+    <a href="/#how-it-works">How it works</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/join.html">Join our list</a>
+  </div>
+  <a href="/tool.html" class="nav-cta">Get your valuation</a>
+</nav>
+
+<main>
+  <div class="wrap">
+    <span class="kicker">Legal</span>
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: August 2026</p>
+
+    <p class="lede">These Terms of Service ("Terms") govern your use of PrimeBizValue.com (the "Site") and the valuation reports and tools we provide (the "Service"), operated by Rebellious Franchising LLC ("we," "us," "our"). By using the Site or purchasing a report, you agree to these Terms.</p>
+
+    <h2>1. What the Service Is</h2>
+    <p>PrimeBizValue provides an automated, informational business valuation tool. You submit financial information (such as a profit &amp; loss statement), and the Service generates a recast of your financials, an estimated Seller's Discretionary Earnings (SDE) or Adjusted EBITDA figure, and an estimated valuation range based on a fixed set of Main Street business-size multiples.</p>
+    <p><strong>This is not a certified business valuation, formal appraisal, fairness opinion, or offer of financing.</strong> It has not been reviewed by a CPA, licensed business appraiser, or lender. It is intended as a directional planning tool, not a substitute for professional advice.</p>
+
+    <h2>2. Eligibility &amp; Accounts</h2>
+    <p>You must be at least 18 years old and legally able to enter into these Terms to use the Service. You're responsible for the accuracy of any financial information you submit — the Service's output is only as reliable as the numbers it's given.</p>
+
+    <h2>3. Payment &amp; Refunds</h2>
+    <p>Reports are sold on a one-time, flat-fee basis as stated at checkout. Payments are processed securely through Stripe; we do not store your full payment card details.</p>
+    <p>Because a report is generated and delivered instantly upon submission, purchases are generally final. If a technical error on our end prevents your report from generating or being delivered, contact us and we'll make it right — either by fixing the issue and delivering your report, or issuing a refund.</p>
+
+    <h2>4. Acceptable Use</h2>
+    <p>You agree not to: use the Service for any unlawful purpose; attempt to reverse-engineer, scrape, or resell the Service; submit financial data that isn't yours or that you aren't authorized to submit for valuation purposes; or interfere with the Service's operation or security.</p>
+
+    <h2>5. Intellectual Property</h2>
+    <p>The Site, the valuation tool, our report formatting and methodology, and all associated content are owned by Rebellious Franchising LLC. Your report is yours to use for your own business purposes once purchased, but the underlying tool and methodology remain our property.</p>
+
+    <h2>6. Third-Party Services</h2>
+    <p>The Service uses third-party providers to operate, including Stripe (payment processing) and Anthropic's Claude AI (to help parse and structure the financial data you submit). By using the Service, you consent to your submitted data being processed by these providers as described in our <a href="/privacy.html">Privacy Policy</a>.</p>
+
+    <h2>7. Disclaimer of Warranties</h2>
+    <p>The Service is provided "as is" and "as available," without warranties of any kind, express or implied. We do not warrant that the valuation figures are accurate, complete, or suitable for any particular transaction, financing application, or legal proceeding. Nothing in the Service constitutes legal, tax, financial, or investment advice.</p>
+
+    <h2>8. Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, Rebellious Franchising LLC and its owners, employees, and contractors will not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Service, including decisions made based on a valuation estimate. Our total liability for any claim relating to the Service is limited to the amount you paid for the report giving rise to the claim.</p>
+
+    <h2>9. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless Rebellious Franchising LLC from any claims, damages, or expenses arising from your misuse of the Service or violation of these Terms.</p>
+
+    <h2>10. Governing Law</h2>
+    <p>These Terms are governed by the laws of <strong>[State of formation — to be confirmed]</strong>, without regard to conflict-of-law principles.</p>
+
+    <h2>11. Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. Continued use of the Service after changes take effect constitutes acceptance of the updated Terms.</p>
+
+    <h2>12. Contact</h2>
+    <p>Questions about these Terms? Reach us at <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> or visit our <a href="/contact.html">Contact page</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-row">
+    <p>© 2026 Rebellious Franchising LLC — PrimeBizValue.com</p>
+    <div class="foot-links">
+      <a href="/faq.html">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/join.html">Join our list</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
