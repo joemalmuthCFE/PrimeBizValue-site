@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>P&amp;L Recast — SDE / EBITDA Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3EC;
+    --paper-dark:#EDE8DB;
+    --ink:#1F2A38;
+    --ink-soft:#4A5568;
+    --ledger-green:#2F5233;
+    --ledger-green-bg:#E7EEE4;
+    --rust:#A85C32;
+    --rust-bg:#F3E4D6;
+    --muted-red:#8B3A3A;
+    --muted-red-bg:#F5E6E1;
+    --hairline:#D8D2C2;
+    --gold:#B08D57;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px;}
+
+  header.top{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:28px;}
+  header.top h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:26px;margin:0;letter-spacing:-.01em;}
+  header.top .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;}
+
+  .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;}
+  @media(max-width:900px){.grid{grid-template-columns:1fr;}}
+
+  .card{background:#fff;border:1px solid var(--hairline);border-radius:2px;padding:20px 22px;margin-bottom:20px;}
+  .card h2{font-family:'Source Serif 4',serif;font-size:16px;margin:0 0 4px;color:var(--ink);}
+  .card .sub{font-size:12.5px;color:var(--ink-soft);margin:0 0 16px;line-height:1.5;}
+
+  textarea{width:100%;min-height:150px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:12px;border:1px solid var(--hairline);border-radius:2px;background:var(--paper);resize:vertical;color:var(--ink);}
+
+  .dropzone{border:1.5px dashed var(--hairline);border-radius:3px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .15s, background .15s;background:var(--paper);}
+  .dropzone:hover, .dropzone.drag{border-color:var(--rust);background:var(--rust-bg);}
+  .dropzone .dz-main{font-size:13px;font-weight:600;color:var(--ink);}
+  .dropzone .dz-sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-top:4px;letter-spacing:.04em;}
+  button{cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;border-radius:2px;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 16px;transition:opacity .15s;}
+  button:hover{opacity:.85;}
+  button.ghost{background:transparent;color:var(--ink);}
+  button.small{padding:5px 10px;font-size:11.5px;}
+  button:disabled{opacity:.4;cursor:default;}
+
+  .row-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+  .status{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--rust);margin-top:8px;min-height:14px;}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);border-bottom:1px solid var(--ink);padding:6px 4px;}
+  td{padding:5px 4px;border-bottom:1px dotted var(--hairline);}
+  td.num, th.num{text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;}
+  td input[type=text]{width:100%;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13px;padding:2px;}
+  td input[type=number]{width:100%;border:none;background:transparent;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;padding:2px;}
+  td input:focus, textarea:focus{outline:1px solid var(--gold);}
+  .del{cursor:pointer;color:var(--muted-red);font-size:13px;padding:0 6px;}
+  .addline{font-size:12px;color:var(--rust);cursor:pointer;font-weight:600;display:inline-block;margin-top:8px;}
+
+  .section-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);margin:14px 0 6px;}
+
+  /* Ledger tape - the signature element */
+  .tape{background:var(--ink);color:var(--paper);border-radius:2px;padding:20px 20px 8px;font-family:'IBM Plex Mono',monospace;}
+  .tape h2{font-family:'Source Serif 4',serif;color:#fff;font-size:15px;margin:0 0 14px;}
+  .tape .line{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dotted rgba(255,255,255,.18);}
+  .tape .line.total{border-bottom:none;border-top:1px solid rgba(255,255,255,.4);margin-top:6px;padding-top:9px;font-weight:600;font-size:14px;}
+  .tape .line .lbl{color:rgba(255,255,255,.75);}
+  .tape .line.total .lbl{color:#fff;}
+  .tape .line .val{font-variant-numeric:tabular-nums;}
+  .tape .divider{height:1px;background:rgba(255,255,255,.25);margin:12px 0;}
+  .tape .result{background:rgba(255,255,255,.08);border-radius:2px;padding:12px 14px;margin:10px 0;}
+  .tape .result .k{font-family:'Inter',sans-serif;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);}
+  .tape .result .v{font-size:22px;font-weight:600;margin-top:2px;}
+
+  .toggle-row{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:4px 0;}
+  .toggle-row input[type=checkbox]{accent-color:var(--rust);}
+
+  .comp-row{display:grid;grid-template-columns:1fr 70px 70px 24px;gap:8px;align-items:center;margin-bottom:6px;}
+  .comp-row input{border:1px solid var(--hairline);border-radius:2px;padding:5px 6px;font-family:'IBM Plex Mono',monospace;font-size:12px;}
+  .comp-row input[type=text]{font-family:'Inter',sans-serif;}
+
+  .valbox{border:1px solid var(--hairline);border-radius:2px;padding:14px;margin-top:10px;}
+  .valbox .range{font-family:'Source Serif 4',serif;font-size:22px;color:var(--ledger-green);}
+  .valbox .lbl{font-size:11.5px;color:var(--ink-soft);margin-bottom:4px;}
+  .bar-wrap{margin-top:10px;}
+  .bar-track{position:relative;height:8px;background:var(--paper-dark);border-radius:4px;}
+  .bar-fill{position:absolute;height:8px;background:var(--gold);border-radius:4px;}
+
+  .disclaimer{font-size:11px;color:var(--ink-soft);border-top:1px solid var(--hairline);padding-top:12px;margin-top:20px;line-height:1.6;}
+  .savebar{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:10px;flex-wrap:wrap;}
+  .deal-list{max-height:180px;overflow-y:auto;margin-top:8px;}
+  .deal-item{display:flex;justify-content:space-between;font-size:12px;padding:6px 4px;border-bottom:1px dotted var(--hairline);cursor:pointer;}
+  .deal-item:hover{background:var(--paper-dark);}
+  .pill{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--rust-bg);color:var(--rust);padding:2px 6px;border-radius:8px;}
+
+  .factor-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:3px 0;}
+  .factor-row label{flex:1;}
+  .factor-row input[type=number]{width:48px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 4px;text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>P&amp;L Recast — SDE / EBITDA</h1>
+    <div style="text-align:right;">
+      <span class="tag">Unofficial estimate of value · Main Street methodology</span><br>
+      <span class="addline" id="resetDataBtn" style="font-size:11px;">Reset saved data</span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div>
+
+      <div class="card">
+        <h2>0 · Report details</h2>
+        <p class="sub">Used only for the itemized report header — none of this affects the math.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><div class="section-label">Business name</div><input type="text" id="rdBusinessName" placeholder="e.g. Batteries Plus — Austin, TX" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
+          <div><div class="section-label">Prepared for</div><input type="text" id="rdPreparedFor" placeholder="Client name" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
+          <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
+          <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>1 · Bring in the P&amp;L</h2>
+        <p class="sub">Drop in the file however you have it — a PDF, a Word doc, a CSV, or an Excel export — or paste text straight from a tax-return summary. Claude will read it and sort it into revenue, COGS, and expense lines below for you to check.</p>
+        <div class="dropzone" id="dropzone">
+          <div class="dz-main">Drop a PDF, Word (.docx), CSV, or Excel file here — or click to browse</div>
+          <div class="dz-sub">.pdf · .docx · .csv · .xls · .xlsx</div>
+          <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.csv,.xls,.xlsx" style="display:none;">
+        </div>
+        <div class="section-label" style="margin-top:14px;">Or paste text directly</div>
+        <textarea id="rawInput" placeholder="Paste raw P&L text here..."></textarea>
+        <div class="row-actions">
+          <button id="parseBtn">Parse with Claude</button>
+          <button class="ghost" id="manualBtn">Skip — enter lines manually</button>
+          <button class="ghost" id="startOverBtn">Start over</button>
+        </div>
+        <div class="status" id="parseStatus"></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-top:2px;word-break:break-word;" id="debugLine"></div>
+      </div>
+
+      <div class="card" id="lineItemsCard" style="display:none;">
+        <h2>2 · Line items</h2>
+        <p class="sub">Edit anything Claude got wrong. Mark whichever expense lines are add-back candidates over on the right — owner comp, personal perks, one-time items, non-cash charges.</p>
+
+        <div class="section-label">Revenue</div>
+        <table><tbody id="revBody"></tbody></table>
+        <div class="addline" data-add="rev">+ add revenue line</div>
+
+        <div class="section-label">Cost of goods sold</div>
+        <table><tbody id="cogsBody"></tbody></table>
+        <div class="addline" data-add="cogs">+ add COGS line</div>
+
+        <div class="section-label">Operating expenses</div>
+        <table>
+          <thead><tr><th>Line</th><th class="num">Amount</th><th style="width:70px;">Add-back?</th><th></th></tr></thead>
+          <tbody id="opexBody"></tbody>
+        </table>
+        <div class="addline" data-add="opex">+ add expense line</div>
+
+        <div class="section-label">Below the line</div>
+        <table><tbody id="belowBody"></tbody></table>
+      </div>
+
+      <div class="card" id="sdeWorksheetCard" style="display:none;">
+        <h2>2b · Discretionary Earnings Worksheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— Batteries Plus SDE standard</span></h2>
+        <p class="sub">Matches the franchise system's official Seller's Discretionary Earnings Worksheet line for line, so the recast lines up with what buyers and franchisees already expect. Fill in whatever applies — everything defaults to $0.</p>
+        <table>
+          <thead><tr><th>Line</th><th class="num" style="width:110px;">Amount</th><th></th></tr></thead>
+          <tbody id="sdeWorksheetBody"></tbody>
+        </table>
+        <div class="addline" id="addSdeWorksheetRow">+ add custom line (worksheet rows 28–33)</div>
+        <p class="sub" style="margin-top:10px;">Heads up: these are separate from the add-back checkboxes on the Operating Expenses table above — don't check a line there <em>and</em> fill in the matching row here, or it'll be counted twice.</p>
+      </div>
+
+      <div class="card" id="balanceSheetCard" style="display:none;">
+        <h2>2c · Balance sheet <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— optional, powers Cash to Seller &amp; Net Tangible Assets</span></h2>
+        <p class="sub">Most recent balance sheet snapshot. Skip anything you don't have — the report will just leave that line out of the math.</p>
+        <table><tbody id="balanceSheetBody"></tbody></table>
+      </div>
+
+      <div class="card" id="financingCard" style="display:none;">
+        <h2>2d · Buyer financing <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— SBA 7(a) bankability check</span></h2>
+        <p class="sub">A rough DSCR check on whether the estimated price is financeable — not a lender underwrite.</p>
+        <table><tbody id="financingBody"></tbody></table>
+      </div>
+
+    </div>
+
+    <div>
+      <div class="tape" id="tape">
+        <h2>Recast Ledger</h2>
+        <div id="tapeLines"><div class="status" style="color:rgba(255,255,255,.5);">Waiting on line items…</div></div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <h2>3 · Multiples &amp; comps</h2>
+        <p class="sub">Defaults are generic Main Street rules of thumb. Overwrite them with your own comps as you close deals — they're saved on this device for next time.</p>
+        <div class="section-label">Valuation basis</div>
+        <div class="toggle-row"><input type="radio" name="basis" value="sde" id="basisSDE" checked><label for="basisSDE">SDE (owner-operator businesses, roughly &lt;$1M cash flow)</label></div>
+        <div class="toggle-row"><input type="radio" name="basis" value="ebitda" id="basisEBITDA"><label for="basisEBITDA">Adjusted EBITDA (roughly $1M+ cash flow, management team in place)</label></div>
+
+        <div class="section-label">Multiple comps (name / low / high)</div>
+        <div id="compsList"></div>
+        <div class="addline" id="addComp">+ add comp</div>
+
+        <div class="section-label">Base multiple for this deal</div>
+        <select id="baseCompSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;"></select>
+
+        <div class="section-label" style="margin-top:16px;">Earnings trend</div>
+        <select id="trendSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
+          <option value="decline_no_turn">Declining ~20%/yr, no turnaround yet</option>
+          <option value="decline_turn">Declining ~20%/yr, turnaround started</option>
+          <option value="steady" selected>Steady, sustainable revenue</option>
+          <option value="increase_sustainable">Increasing 20%+/yr, sustainable</option>
+          <option value="increase_nonsustainable">Increasing 20%+/yr, not sustainable</option>
+        </select>
+
+        <div class="section-label" style="margin-top:16px;">Risk factors <span style="text-transform:none;letter-spacing:0;">(pull the multiple down)</span></div>
+        <div id="riskFactors"></div>
+
+        <div class="section-label" style="margin-top:16px;">Upside / low-risk factors <span style="text-transform:none;letter-spacing:0;">(push the multiple up)</span></div>
+        <div id="upsideFactors"></div>
+
+        <p class="sub" style="margin-top:12px;">This adjustment layer mirrors how Main Street brokers (e.g. BizEx's valuation tool) qualitatively move a multiple around a base — industry-specific base multiples aren't public data, so plug in your own comp above and let these factors do the adjusting. Each weight is editable.</p>
+
+        <div class="section-label" style="margin-top:16px;">Inventory at cost <span style="text-transform:none;letter-spacing:0;">(sold separately, on top of the multiple)</span></div>
+        <input type="number" id="inventoryInput" value="0" placeholder="0.00" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;">
+        <p class="sub" style="margin-top:6px;">Main Street deals almost always sell saleable inventory at cost, separately from the SDE/EBITDA multiple — it's cash the seller collects on top of the business value, not baked into the multiple.</p>
+
+        <div class="section-label" style="margin-top:16px;">Remaining lease term</div>
+        <input type="text" id="leaseTermInput" placeholder="e.g. 3 years remaining, two 5-year options" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
+        <p class="sub" style="margin-top:6px;">Informational — a short remaining term with no renewal options is a real transferability risk buyers and lenders will flag; factor it into the risk checkboxes above if it applies.</p>
+
+        <div class="section-label" style="margin-top:16px;">Anticipated costs at closing <span style="text-transform:none;letter-spacing:0;">(reduce net cash to seller)</span></div>
+        <div id="closingCostsList"></div>
+        <div class="addline" id="addClosingCost">+ add closing cost</div>
+
+        <div class="section-label" style="margin-top:16px;">Capital gains &amp; transaction fees <span style="text-transform:none;letter-spacing:0;">(% of estimated value, optional)</span></div>
+        <div id="pctCostsList" style="font-size:12.5px;"></div>
+
+        <div class="valbox">
+          <div class="lbl">Adjusted multiple applied</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-soft);" id="multRange">—</div>
+          <div class="lbl" style="margin-top:10px;">Estimated business value range</div>
+          <div class="range" id="valRange">—</div>
+          <div class="bar-wrap">
+            <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+          </div>
+          <div class="lbl" style="margin-top:12px;">+ Inventory at cost</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;" id="inventoryOut">—</div>
+          <div class="lbl" style="margin-top:12px;">+ Cash − long-term debt (from balance sheet)</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;" id="debtCashOut">—</div>
+          <div class="lbl" style="margin-top:12px;">− Anticipated closing costs</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted-red);" id="closingCostsOut">—</div>
+          <div class="lbl" style="margin-top:12px;">− Capital gains &amp; transaction fees</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--muted-red);" id="pctCostsOut">—</div>
+          <div class="lbl" style="margin-top:12px;">= Possible net cash to seller at closing</div>
+          <div class="range" id="totalRange" style="color:var(--gold);">—</div>
+        </div>
+
+        <div class="savebar">
+          <button class="small" id="saveDeal">Save this recast</button>
+          <button class="small ghost" id="genReport">Generate itemized report</button>
+          <span style="font-size:11px;color:var(--ink-soft);" id="dealName"></span>
+        </div>
+        <div class="deal-list" id="dealList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    This is an unofficial, directional estimate built from the numbers entered, a base multiple you choose (generic Main Street defaults, or your own saved comps), and adjustment factors for earnings trend and risk/upside — a methodology modeled on how brokers like BizEx qualitatively move a multiple, not a reproduction of any firm's proprietary industry-multiple data. It is not a business valuation, appraisal, or offer of financing, and it hasn't been reviewed by a CPA or business appraiser. Add-back judgment calls (owner comp, perks, one-time items) and the adjustment weights materially change the result and should be backed by documentation before being used in a negotiation. Nothing here is legal, tax, or financial advice.
+  </div></div>
+
+  <div id="reportOverlay" style="display:none;position:fixed;inset:0;background:rgba(31,42,56,.6);z-index:1000;">
+    <div style="position:absolute;inset:20px;background:#fff;border-radius:4px;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #D8D2C2;flex-shrink:0;">
+        <span style="font-family:'Source Serif 4',serif;font-size:15px;">Itemized report</span>
+        <div>
+          <button class="small" id="reportPrintBtn">Print / Save as PDF</button>
+          <button class="small ghost" id="reportCloseBtn">Close</button>
+        </div>
+      </div>
+      <iframe id="reportFrame" style="flex:1;border:none;width:100%;"></iframe>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (window['pdfjsLib']) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
+<script>
+const $ = (id) => document.getElementById(id);
+
+// Storage wrapper: uses Claude's window.storage when this runs as a Claude artifact,
+// falls back to plain browser localStorage when hosted standalone outside Claude.
+const appStorage = (function(){
+  const hasClaudeStorage = typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function';
+  if(hasClaudeStorage) return window.storage;
+  const prefix = 'pnl-recast-app:';
+  return {
+    async get(key){
+      const raw = localStorage.getItem(prefix+key);
+      if(raw === null) throw new Error('not found');
+      return {key, value: raw};
+    },
+    async set(key, value){
+      localStorage.setItem(prefix+key, value);
+      return {key, value};
+    },
+    async delete(key){
+      localStorage.removeItem(prefix+key);
+      return {key, deleted:true};
+    },
+    async list(pfx){
+      const keys = [];
+      for(let i=0;i<localStorage.length;i++){
+        const k = localStorage.key(i);
+        if(k && k.startsWith(prefix)){
+          const bare = k.slice(prefix.length);
+          if(!pfx || bare.startsWith(pfx)) keys.push(bare);
+        }
+      }
+      return {keys};
+    }
+  };
+})();
+
+const SDE_WORKSHEET_FIXED = [
+  {key:'familySalaries', label:'Salaries to Non-Working Family Members'},
+  {key:'otherOwnerSalaryAdj', label:'Salary Adjustments for Other Owners & Family Members'},
+  {key:'familyPayrollTaxAdj', label:"Payroll Tax Additions/Deletions For Above Two Lines"},
+  {key:'autoLease', label:"Auto Lease/Payments for Owner's Benefit"},
+  {key:'autoInsurance', label:"Auto Insurance for Owner's Benefit"},
+  {key:'autoRepairs', label:"Auto Repairs & Maintenance for Owner's Benefit"},
+  {key:'donations', label:'Contributions and Donations'},
+  {key:'fairMarketRent', label:'Fair Market Rent Additions/Deletions'},
+  {key:'ownerInsurance', label:"Insurance Premiums for Owner's Health, Life, etc."},
+  {key:'nonBusinessProfServices', label:'Non-Business Professional Services (legal / accounting / tax)'},
+  {key:'retirementContributions', label:'Retirement Plan Contributions'},
+  {key:'nonBusinessMeals', label:'Non-Business Meals & Entertainment'},
+  {key:'nonBusinessTravel', label:'Non-Business Travel'},
+  {key:'nonBusinessPhone', label:'Non-Business Telephone, Internet & Cell Phone expenses'},
+  {key:'oneTimeCharges', label:'One Time Non-Recurring Charges or (Income)'},
+  {key:'inventoryAdjustments', label:'Inventory Adjustments'},
+  {key:'supplierRebates', label:'Supplier Rebates'}
+];
+function defaultSdeWorksheetValues(){
+  const v = {};
+  SDE_WORKSHEET_FIXED.forEach(f => v[f.key] = 0);
+  return v;
+}
+
+let state = {
+  rev: [], cogs: [], opex: [], below: {ownerSalary:0, ownerPayrollTax:0, dep:0, amort:0, interest:0, taxes:0, replacementSalary:0},
+  comps: [], inventory: 0, leaseTerm: '',
+  sdeWorksheet: defaultSdeWorksheetValues(),
+  sdeWorksheetCustom: [],
+  closingCosts: [
+    {name:'Attorney fees', amount:0},
+    {name:'Broker / transaction fee', amount:0},
+    {name:'Franchise transfer fee', amount:0},
+    {name:'Other closing costs', amount:0}
+  ],
+  reportInfo: {businessName:'', preparedFor:'', presentedBy:'', reportDate: new Date().toISOString().slice(0,10)},
+  balanceSheet: {cash:0, ar:0, ppe:0, intangibles:0, ap:0, accrued:0, longTermDebt:0},
+  financing: {downPaymentPct:20, interestRatePct:10.5, termYears:10},
+  pctCosts: {brokerFeePct:0, fedCapGainsPct:0, stateCapGainsPct:0, ddHaircutPct:0}
+};
+
+$('rdReportDate').value = state.reportInfo.reportDate;
+['rdBusinessName','rdPreparedFor','rdPresentedBy'].forEach(id=>{
+  $(id).addEventListener('input', (e)=>{
+    const key = {rdBusinessName:'businessName', rdPreparedFor:'preparedFor', rdPresentedBy:'presentedBy'}[id];
+    state.reportInfo[key] = e.target.value;
+  });
+});
+$('rdReportDate').addEventListener('input', (e)=>{ state.reportInfo.reportDate = e.target.value; });
+
+$('inventoryInput').addEventListener('input', (e) => {
+  state.inventory = Number(e.target.value) || 0;
+  renderValuation();
+});
+$('leaseTermInput').addEventListener('input', (e) => {
+  state.leaseTerm = e.target.value;
+});
+
+function renderBalanceSheet(){
+  const body = $('balanceSheetBody');
+  const bs = state.balanceSheet;
+  const fields = [
+    ['cash', 'Cash & Equivalents'],
+    ['ar', 'Accounts Receivable'],
+    ['ppe', 'Equipment, Vehicles & FF&E (net)'],
+    ['intangibles', 'Intangibles & Goodwill'],
+    ['ap', 'Accounts Payable'],
+    ['accrued', 'Accrued Liabilities (wages, taxes payable)'],
+    ['longTermDebt', 'Long-term Debt (bank/SBA loans)']
+  ];
+  body.innerHTML = fields.map(([k,label])=>
+    `<tr><td>${label}</td><td class="num"><input type="number" value="${bs[k]||0}" data-bsf="${k}"></td></tr>`
+  ).join('');
+  body.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',(e)=>{
+    state.balanceSheet[e.target.dataset.bsf] = Number(e.target.value)||0;
+    renderValuation();
+  }));
+}
+
+function renderFinancing(){
+  const body = $('financingBody');
+  const f = state.financing;
+  body.innerHTML = `
+    <tr><td>Down payment</td><td class="num"><input type="number" step="1" value="${f.downPaymentPct}" data-ff="downPaymentPct" style="width:70px;">%</td></tr>
+    <tr><td>Interest rate</td><td class="num"><input type="number" step="0.1" value="${f.interestRatePct}" data-ff="interestRatePct" style="width:70px;">%</td></tr>
+    <tr><td>Loan term</td><td class="num"><input type="number" step="1" value="${f.termYears}" data-ff="termYears" style="width:70px;"> yrs</td></tr>
+  `;
+  body.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',(e)=>{
+    state.financing[e.target.dataset.ff] = Number(e.target.value)||0;
+    renderValuation();
+  }));
+}
+
+function renderPctCosts(){
+  const list = $('pctCostsList');
+  const p = state.pctCosts;
+  const fields = [
+    ['brokerFeePct','Broker / M&A advisor fee'],
+    ['fedCapGainsPct','Federal capital gains tax'],
+    ['stateCapGainsPct','State capital gains tax'],
+    ['ddHaircutPct','Due-diligence haircut']
+  ];
+  list.innerHTML = fields.map(([k,label])=>
+    `<div class="comp-row" style="grid-template-columns:1fr 60px;"><span>${label}</span><input type="number" step="0.1" value="${p[k]||0}" data-pf="${k}"></div>`
+  ).join('');
+  list.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',(e)=>{
+    state.pctCosts[e.target.dataset.pf] = Number(e.target.value)||0;
+    renderValuation();
+  }));
+}
+
+function renderSdeWorksheet(){
+  const body = $('sdeWorksheetBody');
+  let html = '';
+  SDE_WORKSHEET_FIXED.forEach(f=>{
+    html += `<tr><td>${escapeHtml(f.label)}</td><td class="num"><input type="number" value="${state.sdeWorksheet[f.key]||0}" data-sdefixed="${f.key}"></td><td></td></tr>`;
+  });
+  (state.sdeWorksheetCustom||[]).forEach((row,i)=>{
+    html += `<tr><td><input type="text" value="${escapeHtml(row.name)}" data-sdecustomi="${i}" data-sdecustomf="name" style="width:100%;border:none;font-family:'Inter',sans-serif;font-size:13px;"></td>
+      <td class="num"><input type="number" value="${row.amount||0}" data-sdecustomi="${i}" data-sdecustomf="amount"></td>
+      <td><span class="del" data-sdecustomdel="${i}">✕</span></td></tr>`;
+  });
+  body.innerHTML = html;
+  body.querySelectorAll('input[data-sdefixed]').forEach(inp=>inp.addEventListener('input',(e)=>{
+    state.sdeWorksheet[e.target.dataset.sdefixed] = Number(e.target.value)||0;
+    computeAndRenderTape();
+  }));
+  body.querySelectorAll('input[data-sdecustomi]').forEach(inp=>inp.addEventListener('input',(e)=>{
+    const {sdecustomi, sdecustomf} = e.target.dataset;
+    state.sdeWorksheetCustom[sdecustomi][sdecustomf] = sdecustomf==='amount' ? (Number(e.target.value)||0) : e.target.value;
+    computeAndRenderTape();
+  }));
+  body.querySelectorAll('[data-sdecustomdel]').forEach(d=>d.addEventListener('click',(e)=>{
+    state.sdeWorksheetCustom.splice(Number(e.target.dataset.sdecustomdel),1);
+    renderSdeWorksheet(); computeAndRenderTape();
+  }));
+}
+$('addSdeWorksheetRow').addEventListener('click', ()=>{
+  state.sdeWorksheetCustom = state.sdeWorksheetCustom || [];
+  state.sdeWorksheetCustom.push({name:'New line', amount:0});
+  renderSdeWorksheet(); computeAndRenderTape();
+});
+
+// ---------- Parsing via Claude ----------
+$('parseBtn').addEventListener('click', () => parseRawText($('rawInput').value.trim()));
+
+async function parseRawText(raw){
+  if(!raw){ $('parseStatus').textContent = 'Paste a P&L in first, or drop in a file above.'; return; }
+  $('parseStatus').textContent = 'Reading the statement…';
+  $('parseBtn').disabled = true;
+  try{
+    const sys = `You extract structured data from small-business profit & loss statements, however messy or partially formatted — including text extracted from PDFs, Word docs, or spreadsheets, which may contain layout artifacts, repeated headers, or multiple columns of years. Return ONLY valid JSON, no markdown fences, no commentary, matching exactly this shape:
+{
+  "revenue": [{"name": string, "amount": number}],
+  "cogs": [{"name": string, "amount": number}],
+  "opex": [{"name": string, "amount": number, "addback_candidate": boolean, "addback_reason": string}],
+  "depreciation_amortization": number,
+  "interest_expense": number,
+  "income_taxes": number,
+  "owner_salary_candidate": number,
+  "notes": string
+}
+Rules: amounts are positive numbers representing magnitude (never negative). If the source has multiple periods/years of data, use the most recent full period and mention in notes which one you used. addback_candidate=true only for owner salary/payroll tax on the owner, personal vehicle/phone/travel/meals/insurance run through the business, one-time or non-recurring items, and clearly discretionary/non-essential spending. Do not mark ordinary necessary operating costs (rent at market rate, COGS, normal payroll for non-owner staff, utilities, franchise royalties, dues/subscriptions, general business insurance, etc.) as add-backs unless there's clear evidence they're personal/discretionary rather than operating necessities — when genuinely ambiguous, set addback_candidate=false and explain the ambiguity in addback_reason so a human can decide, rather than guessing yes. If depreciation, amortization, or interest are listed as opex lines, extract them into their own top-level fields instead of leaving them in opex. Franchise tax, margin tax, or state/corporate income tax lines should go in income_taxes, not opex. If a lump-sum line (e.g. a single "Insurance Expense" or "Telephone Expense" covering the whole company) likely bundles a personal owner portion that can't be isolated from the P&L alone, do NOT add back the full amount — instead note in addback_reason (or in notes) that a partial personal-use split may exist but requires the owner's input to quantify, since guessing a percentage from the P&L alone isn't reliable. If an amount can't be determined, use 0. If owner salary is not separately broken out but obviously exists, estimate owner_salary_candidate as 0 and note it.`;
+    const resp = await fetch('/api/parse-pnl', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        system: sys,
+        text: raw.slice(0, 40000)
+      })
+    });
+    if(!resp.ok){
+      let bodyText = '';
+      try{ bodyText = await resp.text(); }catch(_){}
+      throw new Error(`HTTP ${resp.status} ${resp.statusText}${bodyText ? ' — ' + bodyText.slice(0,300) : ''}`);
+    }
+    const data = await resp.json();
+    let text = data.text || '';
+    text = text.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(text);
+    applyParsed(parsed, parsed.notes ? ('Parsed with Claude. ' + parsed.notes) : 'Parsed with Claude — check the lines below.');
+    $('debugLine').textContent = '';
+  }catch(e){
+    console.error('Claude API call failed:', e);
+    const detail = (e && e.message) ? e.message : String(e);
+    $('debugLine').textContent = 'Claude API error detail: ' + detail;
+    try{
+      const parsed = heuristicParse(raw);
+      applyParsed(parsed, 'Claude API call failed — used the offline fallback parser instead. Its add-back flags are conservative by design; check every line. (Error detail shown below.)');
+    }catch(e2){
+      $('parseStatus').textContent = 'Could not parse automatically — enter lines manually below.';
+      manualStart();
+    }
+  }
+  $('parseBtn').disabled = false;
+}
+
+function applyParsed(parsed, statusMsg){
+  state.rev = (parsed.revenue||[]).map(r=>({name:r.name, amount:Number(r.amount)||0}));
+  state.cogs = (parsed.cogs||[]).map(r=>({name:r.name, amount:Number(r.amount)||0}));
+  state.opex = (parsed.opex||[]).map(r=>({name:r.name, amount:Number(r.amount)||0, addback: !!r.addback_candidate, reason: r.addback_reason||''}));
+  state.below.dep = Number(parsed.depreciation_amortization)||0;
+  state.below.interest = Number(parsed.interest_expense)||0;
+  state.below.taxes = Number(parsed.income_taxes)||0;
+  state.below.ownerSalary = Number(parsed.owner_salary_candidate)||0;
+  if(!state.rev.length) state.rev = [{name:'Total revenue', amount:0}];
+  if(!state.cogs.length) state.cogs = [{name:'COGS', amount:0}];
+  $('parseStatus').textContent = statusMsg || 'Parsed — check the lines below.';
+  render();
+}
+
+// ---------- Offline fallback parser (no API needed) ----------
+// Targets common QuickBooks-style P&L exports: "NNNNN · Account Name   1,234.56" line items
+// under "Income" / "Cost of Goods Sold" / "Expense" headers, with "Total X" subtotals.
+function heuristicParse(rawText){
+  const text = rawText;
+  const idxOf = (re) => { const m = re.exec(text); return m ? m.index : -1; };
+
+  const idxCOGS = idxOf(/Cost of Goods Sold/i);
+  const idxGrossProfit = idxOf(/Gross Profit/i);
+
+  let idxExpenseHeader = -1;
+  if(idxGrossProfit >= 0){
+    const re = /\bExpense\b/gi; re.lastIndex = idxGrossProfit;
+    let mm;
+    while((mm = re.exec(text))){
+      const before = text.slice(Math.max(0, mm.index-8), mm.index);
+      if(!/total\s*$/i.test(before) && !/other\s*$/i.test(before)){ idxExpenseHeader = mm.index; break; }
+    }
+  }
+  let idxOtherIncome = -1;
+  {
+    const all = [...text.matchAll(/Other Income/gi)];
+    const after = all.find(a => a.index > (idxExpenseHeader>=0 ? idxExpenseHeader : 0));
+    if(after) idxOtherIncome = after.index;
+  }
+
+  const itemRe = /(\d{4,6})\s*[·\-–]\s*([A-Za-z][^\n]*?)\s+(-?[\d,]+\.\d{2})/g;
+  let m; const items = [];
+  while((m = itemRe.exec(text))){
+    const preceding = text.slice(Math.max(0, m.index-10), m.index);
+    if(/total\s*$/i.test(preceding)) continue; // skip subtotal lines like "Total 65600 · Payroll Expenses  224,579.83"
+    items.push({name: m[2].replace(/\s+/g,' ').trim(), amount: parseFloat(m[3].replace(/,/g,'')), idx: m.index});
+  }
+  if(!items.length) throw new Error('no line items found');
+
+  const revenue = items.filter(it => idxCOGS<0 || it.idx < idxCOGS).map(it=>({name:it.name, amount:it.amount}));
+  const cogs = items.filter(it => idxCOGS>=0 && it.idx>=idxCOGS && (idxGrossProfit<0 || it.idx<idxGrossProfit)).map(it=>({name:it.name, amount:it.amount}));
+  const opexRaw = items.filter(it => idxExpenseHeader>=0 && it.idx>=idxExpenseHeader && (idxOtherIncome<0 || it.idx<idxOtherIncome));
+
+  let dep=0, amort=0, interest=0, ownerSalary=0, taxes=0;
+  const STRONG_ADDBACK = /officer|travel|mileage|\bmeals\b|entertainment|appreciation|staff meeting|life insurance|dental insurance|aflac|petty cash/i;
+  const WEAK_ADDBACK = /dues|subscri|donation|charitable/i;
+  const EXCLUDE_FROM_ADDBACK = /royalt|required/i;
+
+  const opex = [];
+  opexRaw.forEach(it=>{
+    if(/depreciation/i.test(it.name) && !/amort/i.test(it.name)){ dep += it.amount; return; }
+    if(/amortization/i.test(it.name)){ amort += it.amount; return; }
+    if(/interest expense/i.test(it.name)){ interest += it.amount; return; }
+    if(/officer compensation/i.test(it.name)){ ownerSalary += it.amount; return; }
+    if(/franchise tax|margin tax|state income tax|corporate income tax/i.test(it.name)){ taxes += it.amount; return; }
+    const excluded = EXCLUDE_FROM_ADDBACK.test(it.name);
+    const isStrong = STRONG_ADDBACK.test(it.name) && !excluded;
+    const isWeak = !isStrong && WEAK_ADDBACK.test(it.name) && !excluded;
+    opex.push({
+      name: it.name,
+      amount: it.amount,
+      addback_candidate: isStrong,
+      addback_reason: isStrong ? 'flagged by local keyword parser — verify'
+        : isWeak ? 'possible add-back (e.g. dues/subscriptions can be legitimate business costs) — left unchecked, review and check manually if personal/discretionary'
+        : ''
+    });
+  });
+
+  return {
+    revenue: revenue.length ? revenue : [{name:'Revenue', amount:0}],
+    cogs: cogs.length ? cogs : [{name:'COGS', amount:0}],
+    opex,
+    depreciation_amortization: dep+amort,
+    interest_expense: interest,
+    income_taxes: taxes,
+    owner_salary_candidate: ownerSalary,
+    notes: 'Offline parse — only Officer Compensation, D&A, Interest, and franchise/margin tax were auto-classified with confidence. Personal-use portions of shared costs (owner health insurance folded into a general insurance line, personal cell phone/auto use, etc.) can\'t be recovered from a P&L alone — those need a manual add-back if you know the split.'
+  };
+}
+
+// ---------- File upload: PDF / DOCX / CSV / XLS(X) ----------
+const dropzone = $('dropzone'), fileInput = $('fileInput');
+dropzone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (e) => { if(e.target.files[0]) handleFile(e.target.files[0]); });
+['dragover','dragenter'].forEach(evt => dropzone.addEventListener(evt, (e)=>{ e.preventDefault(); dropzone.classList.add('drag'); }));
+['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, (e)=>{ e.preventDefault(); dropzone.classList.remove('drag'); }));
+dropzone.addEventListener('drop', (e) => { if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+
+async function handleFile(file){
+  const ext = file.name.split('.').pop().toLowerCase();
+  $('parseStatus').textContent = `Reading ${file.name}…`;
+  try{
+    let text;
+    if(ext === 'csv') text = await readFileAsText(file);
+    else if(ext === 'xlsx' || ext === 'xls') text = await extractExcelText(file);
+    else if(ext === 'pdf') text = await extractPdfText(file);
+    else if(ext === 'docx') text = await extractDocxText(file);
+    else if(ext === 'doc'){
+      $('parseStatus').textContent = 'Legacy .doc files can\'t be read in-browser — please save it as .docx or PDF and re-upload.';
+      return;
+    } else {
+      $('parseStatus').textContent = `Unsupported file type ".${ext}" — try PDF, DOCX, CSV, or XLSX.`;
+      return;
+    }
+    if(!text || text.trim().length < 20){
+      $('parseStatus').textContent = 'Could not find readable text in that file — it may be a scanned image. Try pasting the numbers directly, or a text-based export.';
+      return;
+    }
+    $('rawInput').value = text;
+    parseRawText(text);
+  }catch(err){
+    $('parseStatus').textContent = 'Could not read that file: ' + (err.message || err);
+  }
+}
+
+function readFileAsText(file){
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = () => reject(new Error('file read failed'));
+    r.readAsText(file);
+  });
+}
+function readFileAsArrayBuffer(file){
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = () => reject(new Error('file read failed'));
+    r.readAsArrayBuffer(file);
+  });
+}
+
+async function extractExcelText(file){
+  const buf = await readFileAsArrayBuffer(file);
+  const wb = XLSX.read(buf, {type:'array'});
+  let out = '';
+  wb.SheetNames.forEach(name => {
+    out += `### Sheet: ${name}\n`;
+    out += XLSX.utils.sheet_to_csv(wb.Sheets[name]);
+    out += '\n\n';
+  });
+  return out;
+}
+
+async function extractPdfText(file){
+  const buf = await readFileAsArrayBuffer(file);
+  const doc = await pdfjsLib.getDocument({data: buf}).promise;
+  let out = '';
+  for(let i=1; i<=doc.numPages; i++){
+    const page = await doc.getPage(i);
+    const content = await page.getTextContent();
+    out += content.items.map(it => it.str).join(' ') + '\n';
+  }
+  return out;
+}
+
+async function extractDocxText(file){
+  const buf = await readFileAsArrayBuffer(file);
+  const result = await mammoth.extractRawText({arrayBuffer: buf});
+  return result.value;
+}
+
+$('manualBtn').addEventListener('click', manualStart);
+function manualStart(){
+  if(!state.rev.length) state.rev = [{name:'Revenue', amount:0}];
+  if(!state.cogs.length) state.cogs = [{name:'COGS', amount:0}];
+  if(!state.opex.length) state.opex = [{name:'Owner salary', amount:0, addback:true, reason:'Owner compensation'}];
+  render();
+}
+
+$('startOverBtn').addEventListener('click', () => {
+  state.rev = []; state.cogs = []; state.opex = [];
+  state.below = {ownerSalary:0, ownerPayrollTax:0, dep:0, amort:0, interest:0, taxes:0, replacementSalary:0};
+  state.sdeWorksheet = defaultSdeWorksheetValues();
+  state.sdeWorksheetCustom = [];
+  state._computed = null;
+  state._valuation = null;
+  state.inventory = 0;
+  state.leaseTerm = '';
+  state.closingCosts = [
+    {name:'Attorney fees', amount:0},
+    {name:'Broker / transaction fee', amount:0},
+    {name:'Franchise transfer fee', amount:0},
+    {name:'Other closing costs', amount:0}
+  ];
+  state.balanceSheet = {cash:0, ar:0, ppe:0, intangibles:0, ap:0, accrued:0, longTermDebt:0};
+  state.financing = {downPaymentPct:20, interestRatePct:10.5, termYears:10};
+  state.pctCosts = {brokerFeePct:0, fedCapGainsPct:0, stateCapGainsPct:0, ddHaircutPct:0};
+  $('inventoryInput').value = 0;
+  $('leaseTermInput').value = '';
+  renderClosingCosts();
+  renderSdeWorksheet();
+  renderBalanceSheet();
+  renderFinancing();
+  renderPctCosts();
+  $('rawInput').value = '';
+  $('lineItemsCard').style.display = 'none';
+  $('sdeWorksheetCard').style.display = 'none';
+  $('balanceSheetCard').style.display = 'none';
+  $('financingCard').style.display = 'none';
+  $('tapeLines').innerHTML = '<div class="status" style="color:rgba(255,255,255,.5);">Waiting on line items…</div>';
+  $('valRange').textContent = '—';
+  $('multRange').textContent = '—';
+  $('inventoryOut').textContent = '—';
+  $('debtCashOut').textContent = '—';
+  $('closingCostsOut').textContent = '—';
+  $('pctCostsOut').textContent = '—';
+  $('totalRange').textContent = '—';
+  $('parseStatus').textContent = 'Cleared — drop in the next P&L.';
+  $('debugLine').textContent = '';
+  $('dealName').textContent = '';
+});
+
+// ---------- Rendering ----------
+function render(){
+  $('lineItemsCard').style.display = 'block';
+  $('sdeWorksheetCard').style.display = 'block';
+  $('balanceSheetCard').style.display = 'block';
+  $('financingCard').style.display = 'block';
+  $('inventoryInput').value = state.inventory || 0;
+  $('leaseTermInput').value = state.leaseTerm || '';
+  if(!state.closingCosts || !state.closingCosts.length){
+    state.closingCosts = [
+      {name:'Attorney fees', amount:0},
+      {name:'Broker / transaction fee', amount:0},
+      {name:'Franchise transfer fee', amount:0},
+      {name:'Other closing costs', amount:0}
+    ];
+  }
+  if(!state.below.ownerPayrollTax) state.below.ownerPayrollTax = state.below.ownerPayrollTax || 0;
+  if(!state.sdeWorksheet) state.sdeWorksheet = defaultSdeWorksheetValues();
+  if(!state.sdeWorksheetCustom) state.sdeWorksheetCustom = [];
+  if(!state.balanceSheet) state.balanceSheet = {cash:0, ar:0, ppe:0, intangibles:0, ap:0, accrued:0, longTermDebt:0};
+  if(!state.financing) state.financing = {downPaymentPct:20, interestRatePct:10.5, termYears:10};
+  if(!state.pctCosts) state.pctCosts = {brokerFeePct:0, fedCapGainsPct:0, stateCapGainsPct:0, ddHaircutPct:0};
+  if(!state.reportInfo) state.reportInfo = {businessName:'', preparedFor:'', presentedBy:'', reportDate: new Date().toISOString().slice(0,10)};
+  $('rdBusinessName').value = state.reportInfo.businessName||'';
+  $('rdPreparedFor').value = state.reportInfo.preparedFor||'';
+  $('rdPresentedBy').value = state.reportInfo.presentedBy||'';
+  $('rdReportDate').value = state.reportInfo.reportDate||'';
+  renderClosingCosts();
+  renderSdeWorksheet();
+  renderBalanceSheet();
+  renderFinancing();
+  renderPctCosts();
+  renderSimpleTable('revBody', state.rev, 'rev');
+  renderSimpleTable('cogsBody', state.cogs, 'cogs');
+  renderOpex();
+  renderBelow();
+  renderComps();
+  computeAndRenderTape();
+}
+
+function renderSimpleTable(bodyId, arr, key){
+  const body = $(bodyId);
+  body.innerHTML = '';
+  arr.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><input type="text" value="${escapeHtml(item.name)}" data-k="${key}" data-i="${i}" data-f="name"></td>
+      <td class="num"><input type="number" value="${item.amount}" data-k="${key}" data-i="${i}" data-f="amount"></td>
+      <td><span class="del" data-del="${key}:${i}">✕</span></td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll('input').forEach(inp => inp.addEventListener('input', onFieldChange));
+  body.querySelectorAll('.del').forEach(d => d.addEventListener('click', onDelete));
+}
+
+function renderOpex(){
+  const body = $('opexBody');
+  body.innerHTML = '';
+  state.opex.forEach((item, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><input type="text" value="${escapeHtml(item.name)}" data-k="opex" data-i="${i}" data-f="name"></td>
+      <td class="num"><input type="number" value="${item.amount}" data-k="opex" data-i="${i}" data-f="amount"></td>
+      <td style="text-align:center;"><input type="checkbox" ${item.addback?'checked':''} data-k="opex" data-i="${i}" data-f="addback"></td>
+      <td><span class="del" data-del="opex:${i}">✕</span></td>`;
+    body.appendChild(tr);
+  });
+  body.querySelectorAll('input[type=text],input[type=number]').forEach(inp => inp.addEventListener('input', onFieldChange));
+  body.querySelectorAll('input[type=checkbox]').forEach(inp => inp.addEventListener('change', onCheckChange));
+  body.querySelectorAll('.del').forEach(d => d.addEventListener('click', onDelete));
+}
+
+function renderBelow(){
+  const body = $('belowBody');
+  const b = state.below;
+  body.innerHTML = `
+    <tr><td>Salary for one owner (add-back, SDE only)</td><td class="num"><input type="number" value="${b.ownerSalary}" data-belowf="ownerSalary"></td></tr>
+    <tr><td>Payroll taxes on owner's salary (add-back, SDE only)</td><td class="num"><input type="number" value="${b.ownerPayrollTax||0}" data-belowf="ownerPayrollTax"></td></tr>
+    <tr><td>Depreciation &amp; amortization</td><td class="num"><input type="number" value="${b.dep}" data-belowf="dep"></td></tr>
+    <tr><td>Interest expense</td><td class="num"><input type="number" value="${b.interest}" data-belowf="interest"></td></tr>
+    <tr><td>Income taxes (entity-level, e.g. franchise/margin tax — not part of the BP worksheet, add if applicable)</td><td class="num"><input type="number" value="${b.taxes}" data-belowf="taxes"></td></tr>
+    <tr><td>Market-rate replacement mgmt salary (deduct, EBITDA only)</td><td class="num"><input type="number" value="${b.replacementSalary}" data-belowf="replacementSalary"></td></tr>
+  `;
+  body.querySelectorAll('input').forEach(inp => inp.addEventListener('input', (e)=>{
+    state.below[e.target.dataset.belowf] = Number(e.target.value)||0;
+    computeAndRenderTape();
+  }));
+}
+
+function onFieldChange(e){
+  const {k,i,f} = e.target.dataset;
+  const arr = state[k];
+  arr[i][f] = f==='amount' ? (Number(e.target.value)||0) : e.target.value;
+  computeAndRenderTape();
+}
+function onCheckChange(e){
+  const {k,i,f} = e.target.dataset;
+  state[k][i][f] = e.target.checked;
+  computeAndRenderTape();
+}
+function onDelete(e){
+  const [k,i] = e.target.dataset.del.split(':');
+  state[k].splice(Number(i),1);
+  render();
+}
+document.querySelectorAll('.addline').forEach(el => {
+  el.addEventListener('click', () => {
+    const k = el.dataset.add;
+    if(k==='opex') state.opex.push({name:'New line', amount:0, addback:false});
+    else state[k].push({name:'New line', amount:0});
+    render();
+  });
+});
+
+function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmt(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+
+// ---------- Computation ----------
+function computeAndRenderTape(){
+  const sum = arr => arr.reduce((s,r)=>s+(Number(r.amount)||0),0);
+  const revenue = sum(state.rev);
+  const cogs = sum(state.cogs);
+  const grossProfit = revenue - cogs;
+  const totalOpex = sum(state.opex);
+  const addBackTotal = state.opex.filter(o=>o.addback).reduce((s,r)=>s+(Number(r.amount)||0),0);
+  const netIncome = grossProfit - totalOpex - state.below.ownerSalary - (state.below.ownerPayrollTax||0) - state.below.dep - state.below.interest - state.below.taxes;
+
+  const b = state.below;
+  // Batteries Plus SDE Worksheet structure:
+  // "Equals Basic SBA Discretionary Earnings" = Net Profit + D&A + Interest + Owner Salary + Payroll Tax on Owner Salary
+  const basicSBA = netIncome + b.dep + b.interest + b.ownerSalary + (b.ownerPayrollTax||0);
+  // "Sum of Discretionary Earnings Additions/Deletions" — the worksheet's 17 standard lines + any custom rows
+  const sdeWorksheetTotal = SDE_WORKSHEET_FIXED.reduce((s,f)=>s+(Number(state.sdeWorksheet[f.key])||0),0)
+    + (state.sdeWorksheetCustom||[]).reduce((s,r)=>s+(Number(r.amount)||0),0);
+  // Extras beyond the BP worksheet: entity-level tax add-back, and any P&L lines flagged on the Operating Expenses table
+  const sde = basicSBA + sdeWorksheetTotal + b.taxes + addBackTotal;
+  const ebitda = sde - b.replacementSalary;
+
+  state._computed = {revenue, cogs, grossProfit, totalOpex, addBackTotal, netIncome, basicSBA, sdeWorksheetTotal, sde, ebitda};
+
+  $('tapeLines').innerHTML = `
+    <div class="line"><span class="lbl">Revenue</span><span class="val">${fmt(revenue)}</span></div>
+    <div class="line"><span class="lbl">− COGS</span><span class="val">${fmt(cogs)}</span></div>
+    <div class="line"><span class="lbl">Gross profit</span><span class="val">${fmt(grossProfit)}</span></div>
+    <div class="line"><span class="lbl">− Operating expenses</span><span class="val">${fmt(totalOpex)}</span></div>
+    <div class="line"><span class="lbl">− Owner salary, D&amp;A, interest, taxes</span><span class="val">${fmt(b.ownerSalary+(b.ownerPayrollTax||0)+b.dep+b.interest+b.taxes)}</span></div>
+    <div class="line total"><span class="lbl">Net income (as reported)</span><span class="val">${fmt(netIncome)}</span></div>
+    <div class="divider"></div>
+    <div class="line"><span class="lbl">+ Salary for one owner</span><span class="val">${fmt(b.ownerSalary)}</span></div>
+    <div class="line"><span class="lbl">+ Payroll taxes on owner's salary</span><span class="val">${fmt(b.ownerPayrollTax||0)}</span></div>
+    <div class="line"><span class="lbl">+ Depreciation &amp; amortization</span><span class="val">${fmt(b.dep)}</span></div>
+    <div class="line"><span class="lbl">+ Interest</span><span class="val">${fmt(b.interest)}</span></div>
+    <div class="result"><div class="k">Basic SBA Discretionary Earnings</div><div class="v">${fmt(basicSBA)}</div></div>
+    <div class="line"><span class="lbl">+ Discretionary Earnings Worksheet total</span><span class="val">${fmt(sdeWorksheetTotal)}</span></div>
+    <div class="line"><span class="lbl">+ Entity-level tax add-back (non-BP)</span><span class="val">${fmt(b.taxes)}</span></div>
+    <div class="line"><span class="lbl">+ Other P&amp;L-flagged add-backs (${state.opex.filter(o=>o.addback).length})</span><span class="val">${fmt(addBackTotal)}</span></div>
+    <div class="result"><div class="k">Total Seller's Discretionary Earnings (SDE)</div><div class="v">${fmt(sde)}</div></div>
+    <div class="line"><span class="lbl">− Replacement mgmt salary</span><span class="val">${fmt(b.replacementSalary)}</span></div>
+    <div class="result"><div class="k">Adjusted EBITDA</div><div class="v">${fmt(ebitda)}</div></div>
+  `;
+  renderValuation();
+}
+
+// ---------- Comps / valuation ----------
+function defaultComps(){
+  return [
+    {name:'Main Street — low', low:1.8, high:2.5, basis:'sde'},
+    {name:'Main Street — typical', low:2.2, high:3.0, basis:'sde'},
+    {name:'Lower middle market', low:3.0, high:5.0, basis:'ebitda'},
+  ];
+}
+
+async function loadComps(){
+  try{
+    const r = await appStorage.get('pnl-recast:comps', false);
+    state.comps = r ? JSON.parse(r.value) : defaultComps();
+  }catch(e){ state.comps = defaultComps(); }
+  renderComps();
+}
+async function saveComps(){
+  try{ await appStorage.set('pnl-recast:comps', JSON.stringify(state.comps), false); }catch(e){}
+}
+
+function renderComps(){
+  const list = $('compsList');
+  list.innerHTML = '';
+  state.comps.forEach((c,i)=>{
+    const row = document.createElement('div');
+    row.className = 'comp-row';
+    row.innerHTML = `<input type="text" value="${escapeHtml(c.name)}" data-ci="${i}" data-cf="name">
+      <input type="number" step="0.1" value="${c.low}" data-ci="${i}" data-cf="low">
+      <input type="number" step="0.1" value="${c.high}" data-ci="${i}" data-cf="high">
+      <span class="del" data-cdel="${i}">✕</span>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('input').forEach(inp=>inp.addEventListener('input', (e)=>{
+    const {ci, cf} = e.target.dataset;
+    state.comps[ci][cf] = cf==='name' ? e.target.value : Number(e.target.value)||0;
+    saveComps();
+    renderBaseCompSelect();
+    renderValuation();
+  }));
+  list.querySelectorAll('.del').forEach(d=>d.addEventListener('click',(e)=>{
+    state.comps.splice(Number(e.target.dataset.cdel),1);
+    if(state.baseCompIndex >= state.comps.length) state.baseCompIndex = 0;
+    saveComps(); renderComps(); renderBaseCompSelect(); renderValuation();
+  }));
+  renderBaseCompSelect();
+}
+$('addComp').addEventListener('click', ()=>{
+  state.comps.push({name:'New comp', low:2.0, high:3.0});
+  saveComps(); renderComps(); renderBaseCompSelect(); renderValuation();
+});
+document.querySelectorAll('input[name=basis]').forEach(r=>r.addEventListener('change', renderValuation));
+
+function renderBaseCompSelect(){
+  const sel = $('baseCompSelect');
+  const prev = state.baseCompIndex || 0;
+  sel.innerHTML = state.comps.map((c,i)=>`<option value="${i}">${escapeHtml(c.name)} (${c.low}x–${c.high}x)</option>`).join('');
+  sel.value = Math.min(prev, state.comps.length-1);
+  state.baseCompIndex = Number(sel.value)||0;
+}
+$('baseCompSelect').addEventListener('change', (e)=>{
+  state.baseCompIndex = Number(e.target.value)||0;
+  renderValuation();
+});
+
+function renderClosingCosts(){
+  const list = $('closingCostsList');
+  list.innerHTML = '';
+  state.closingCosts.forEach((c,i)=>{
+    const row = document.createElement('div');
+    row.className = 'comp-row';
+    row.style.gridTemplateColumns = '1fr 90px 24px';
+    row.innerHTML = `<input type="text" value="${escapeHtml(c.name)}" data-cci="${i}" data-ccf="name">
+      <input type="number" step="0.01" value="${c.amount ? c.amount : ''}" placeholder="0.00" data-cci="${i}" data-ccf="amount">
+      <span class="del" data-ccdel="${i}">✕</span>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('input').forEach(inp=>inp.addEventListener('input', (e)=>{
+    const {cci, ccf} = e.target.dataset;
+    state.closingCosts[cci][ccf] = ccf==='name' ? e.target.value : (Number(e.target.value)||0);
+    renderValuation();
+  }));
+  list.querySelectorAll('.del').forEach(d=>d.addEventListener('click',(e)=>{
+    state.closingCosts.splice(Number(e.target.dataset.ccdel),1);
+    renderClosingCosts(); renderValuation();
+  }));
+}
+$('addClosingCost').addEventListener('click', ()=>{
+  state.closingCosts.push({name:'New cost', amount:0});
+  renderClosingCosts(); renderValuation();
+});
+
+// ---------- Trend / risk / upside adjustment weights (editable, persisted) ----------
+const TREND_LABELS = {
+  decline_no_turn:'Declining ~20%/yr, no turnaround yet',
+  decline_turn:'Declining ~20%/yr, turnaround started',
+  steady:'Steady, sustainable revenue',
+  increase_sustainable:'Increasing 20%+/yr, sustainable',
+  increase_nonsustainable:'Increasing 20%+/yr, not sustainable'
+};
+const RISK_LABELS = {
+  noEmployees:'No employees / not internet-based (owner-dependent)',
+  industryDecline:'Industry in objective decline',
+  poorBooks:'Poor books and records',
+  lt3yrs:'Less than 3 years in business',
+  lt1yr:'Less than 1 year in business'
+};
+const UPSIDE_LABELS = {
+  sbaFinanceable:'SBA financeable (tax returns show the profit)',
+  establishedFranchise:'Established, premium franchise',
+  highGrowth:'High-growth industry (objective, forward-looking)',
+  tenYears:'10+ years in business',
+  competitiveAdvantage:'Sustainable competitive advantage'
+};
+function defaultWeights(){
+  return {
+    trend:{decline_no_turn:-0.5, decline_turn:-0.25, steady:0, increase_sustainable:0.4, increase_nonsustainable:0.1},
+    risk:{noEmployees:-0.3, industryDecline:-0.4, poorBooks:-0.5, lt3yrs:-0.3, lt1yr:-0.5},
+    upside:{sbaFinanceable:0.3, establishedFranchise:0.3, highGrowth:0.3, tenYears:0.2, competitiveAdvantage:0.3}
+  };
+}
+async function loadAdjustments(){
+  try{
+    const r = await appStorage.get('pnl-recast:adjustments', false);
+    const saved = r ? JSON.parse(r.value) : null;
+    state.weights = (saved && saved.weights) || defaultWeights();
+    state.adjustments = (saved && saved.selections) || {trend:'steady', risk:{}, upside:{}};
+  }catch(e){
+    state.weights = defaultWeights();
+    state.adjustments = {trend:'steady', risk:{}, upside:{}};
+  }
+  $('trendSelect').value = state.adjustments.trend;
+  renderFactorRows();
+}
+async function saveAdjustments(){
+  try{ await appStorage.set('pnl-recast:adjustments', JSON.stringify({weights: state.weights, selections: state.adjustments}), false); }catch(e){}
+}
+$('trendSelect').addEventListener('change', (e)=>{ state.adjustments.trend = e.target.value; saveAdjustments(); renderValuation(); });
+
+function renderFactorRows(){
+  const riskBox = $('riskFactors'); riskBox.innerHTML = '';
+  Object.keys(RISK_LABELS).forEach(k=>{
+    const row = document.createElement('div');
+    row.className = 'factor-row';
+    row.innerHTML = `<input type="checkbox" ${state.adjustments.risk[k]?'checked':''} data-rk="${k}">
+      <label>${RISK_LABELS[k]}</label>
+      <input type="number" step="0.1" value="${state.weights.risk[k]}" data-rw="${k}">`;
+    riskBox.appendChild(row);
+  });
+  riskBox.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',(e)=>{
+    state.adjustments.risk[e.target.dataset.rk] = e.target.checked; saveAdjustments(); renderValuation();
+  }));
+  riskBox.querySelectorAll('input[type=number]').forEach(inp=>inp.addEventListener('input',(e)=>{
+    state.weights.risk[e.target.dataset.rw] = Number(e.target.value)||0; saveAdjustments(); renderValuation();
+  }));
+
+  const upBox = $('upsideFactors'); upBox.innerHTML = '';
+  Object.keys(UPSIDE_LABELS).forEach(k=>{
+    const row = document.createElement('div');
+    row.className = 'factor-row';
+    row.innerHTML = `<input type="checkbox" ${state.adjustments.upside[k]?'checked':''} data-uk="${k}">
+      <label>${UPSIDE_LABELS[k]}</label>
+      <input type="number" step="0.1" value="${state.weights.upside[k]}" data-uw="${k}">`;
+    upBox.appendChild(row);
+  });
+  upBox.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',(e)=>{
+    state.adjustments.upside[e.target.dataset.uk] = e.target.checked; saveAdjustments(); renderValuation();
+  }));
+  upBox.querySelectorAll('input[type=number]').forEach(inp=>inp.addEventListener('input',(e)=>{
+    state.weights.upside[e.target.dataset.uw] = Number(e.target.value)||0; saveAdjustments(); renderValuation();
+  }));
+}
+
+function renderValuation(){
+  if(!state._computed || !state.comps.length){
+    $('valRange').textContent='—'; $('multRange').textContent='—';
+    $('inventoryOut').textContent='—'; $('debtCashOut').textContent='—'; $('closingCostsOut').textContent='—'; $('pctCostsOut').textContent='—'; $('totalRange').textContent='—';
+    state._valuation = null;
+    return;
+  }
+  const basis = document.querySelector('input[name=basis]:checked').value;
+  const figure = basis==='sde' ? state._computed.sde : state._computed.ebitda;
+
+  const base = state.comps[state.baseCompIndex] || state.comps[0];
+  let lowMult = base.low, highMult = base.high;
+
+  const trendAdj = (state.weights.trend[state.adjustments.trend]) || 0;
+  lowMult += trendAdj; highMult += trendAdj;
+
+  let riskAdj = 0, upsideAdj = 0;
+  Object.keys(state.adjustments.risk||{}).forEach(k=>{ if(state.adjustments.risk[k]) riskAdj += (state.weights.risk[k]||0); });
+  Object.keys(state.adjustments.upside||{}).forEach(k=>{ if(state.adjustments.upside[k]) upsideAdj += (state.weights.upside[k]||0); });
+  lowMult += riskAdj + upsideAdj; highMult += riskAdj + upsideAdj;
+
+  lowMult = Math.max(0.3, lowMult);
+  highMult = Math.max(lowMult + 0.1, highMult);
+
+  const lowVal = figure * lowMult, highVal = figure * highMult;
+  const midVal = (lowVal + highVal) / 2;
+  const inv = Number(state.inventory) || 0;
+  const closingCosts = (state.closingCosts||[]).reduce((s,c)=>s+(Number(c.amount)||0),0);
+  const bs = state.balanceSheet || {};
+  const debtCashNet = (Number(bs.cash)||0) - (Number(bs.longTermDebt)||0);
+  const p = state.pctCosts || {};
+  const pctCostsTotal = midVal * ((Number(p.brokerFeePct)||0) + (Number(p.fedCapGainsPct)||0) + (Number(p.stateCapGainsPct)||0) + (Number(p.ddHaircutPct)||0)) / 100;
+
+  $('multRange').textContent = `${base.name}: ${base.low}x–${base.high}x, adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
+  $('valRange').textContent = figure > 0 ? `${fmt(lowVal)} – ${fmt(highVal)}` : '—';
+  $('inventoryOut').textContent = fmt(inv);
+  $('debtCashOut').textContent = fmt(debtCashNet);
+  $('closingCostsOut').textContent = fmt(closingCosts);
+  $('pctCostsOut').textContent = fmt(pctCostsTotal);
+  const netLow = lowVal + inv + debtCashNet - closingCosts - pctCostsTotal;
+  const netHigh = highVal + inv + debtCashNet - closingCosts - pctCostsTotal;
+  $('totalRange').textContent = figure > 0 ? `${fmt(netLow)} – ${fmt(netHigh)}` : '—';
+  $('barFill').style.left = '0%';
+  $('barFill').style.width = figure>0 ? '100%' : '0%';
+
+  state._valuation = {basis, figure, base, lowMult, highMult, trendAdj, riskAdj, upsideAdj, lowVal, highVal, midVal, inv, closingCosts, debtCashNet, pctCostsTotal, netLow, netHigh};
+  renderDscrPreview();
+}
+
+function computeDSCR(){
+  if(!state._valuation || !state._computed) return null;
+  const dealPrice = state._valuation.midVal;
+  const f = state.financing || {downPaymentPct:20, interestRatePct:10.5, termYears:10};
+  const loanAmount = dealPrice * (1 - (Number(f.downPaymentPct)||0)/100);
+  const r = (Number(f.interestRatePct)||0)/100/12;
+  const n = (Number(f.termYears)||0)*12;
+  const monthlyPayment = (r>0 && n>0) ? loanAmount * (r*Math.pow(1+r,n)) / (Math.pow(1+r,n)-1) : (n>0 ? loanAmount/n : 0);
+  const annualDebtService = monthlyPayment*12;
+  const availableSDE = state._computed.sde;
+  const postCloseCF = availableSDE - (Number(state.below.replacementSalary)||0);
+  const dscr = annualDebtService>0 ? postCloseCF/annualDebtService : null;
+  return {dealPrice, loanAmount, monthlyPayment, annualDebtService, availableSDE, postCloseCF, dscr};
+}
+function renderDscrPreview(){
+  // no dedicated preview element yet; computed on demand for the report
+}
+
+// ---------- Itemized report ----------
+$('genReport').addEventListener('click', () => {
+  if(!state._computed){ $('parseStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
+  if(!state._valuation){ $('parseStatus').textContent = 'Add at least one multiple comp before generating a report.'; return; }
+  const html = buildReportHTML();
+  $('reportFrame').srcdoc = html;
+  $('reportOverlay').style.display = 'block';
+});
+$('reportCloseBtn').addEventListener('click', () => {
+  $('reportOverlay').style.display = 'none';
+});
+$('reportPrintBtn').addEventListener('click', () => {
+  try{ $('reportFrame').contentWindow.print(); }catch(e){ /* ignore */ }
+});
+
+function buildReportHTML(){
+  const c = state._computed;
+  const v = state._valuation;
+  const basis = v.basis;
+  const base = v.base;
+  const trendAdj = v.trendAdj;
+  const riskChecked = Object.keys(state.adjustments.risk||{}).filter(k=>state.adjustments.risk[k]);
+  const upsideChecked = Object.keys(state.adjustments.upside||{}).filter(k=>state.adjustments.upside[k]);
+  const addbacks = state.opex.filter(o=>o.addback);
+  const nonAddbacks = state.opex.filter(o=>!o.addback);
+  const otherAddbacksTotal = state.below.taxes + c.addBackTotal;
+
+  const rowsHtml = (arr) => arr.map(r=>`<tr><td>${escapeHtml(r.name)}</td><td class="num">${fmt(r.amount)}</td></tr>`).join('');
+  const addbackRowsHtml = addbacks.map(r=>`<tr><td>${escapeHtml(r.name)}${r.reason?` <span class="reason">— ${escapeHtml(r.reason)}</span>`:''}</td><td class="num">${fmt(r.amount)}</td></tr>`).join('');
+
+  // ---- Sanity checks (computed, generic rules of thumb — not industry-specific benchmarks) ----
+  const addBackRatio = c.revenue > 0 ? (c.sdeWorksheetTotal + otherAddbacksTotal) / c.revenue : 0;
+  const netMargin = c.revenue > 0 ? c.netIncome / c.revenue : 0;
+  const checks = [];
+  checks.push({
+    label: 'Add-back ratio', level: addBackRatio<=0.10?'ok':addBackRatio<=0.20?'warn':'bad',
+    detail: `Discretionary add-backs (worksheet + other) are ${(addBackRatio*100).toFixed(1)}% of revenue.`,
+    note: addBackRatio<=0.10?'Within a defensible range.':addBackRatio<=0.20?'On the high side — expect buyer/lender pushback without documentation.':'Very high — likely to draw scrutiny; make sure every line is documented.'
+  });
+  checks.push({
+    label: 'Net profit sanity', level: netMargin<0?'bad':netMargin<0.05?'warn':'ok',
+    detail: `Net income (as reported) is ${(netMargin*100).toFixed(1)}% of revenue.`,
+    note: netMargin<0?'Reported a loss before recast — the SDE story needs to carry the whole valuation case.':netMargin<0.05?'Thin margin — normal for some categories, worth explaining.':'Healthy reported margin.'
+  });
+  checks.push({
+    label: 'Owner compensation captured', level: state.below.ownerSalary>0?'ok':'warn',
+    detail: state.below.ownerSalary>0?`$${Math.round(state.below.ownerSalary).toLocaleString()} captured as owner salary.`:'No owner salary entered.',
+    note: state.below.ownerSalary>0?'Present, as expected for an owner-operated business.':'If this is genuinely an owner-operated business, confirm salary wasn\'t missed in parsing.'
+  });
+  checks.push({
+    label: 'D&A / interest present', level: (state.below.dep>0||state.below.interest>0)?'ok':'warn',
+    detail: `D&A: ${fmt(state.below.dep)} · Interest: ${fmt(state.below.interest)}`,
+    note: (state.below.dep>0||state.below.interest>0)?'Present, as expected for most operating businesses.':'Both are zero — unusual unless the business has no debt or depreciable assets; confirm this is accurate.'
+  });
+  const checksBad = checks.filter(x=>x.level==='bad').length;
+  const checksWarn = checks.filter(x=>x.level==='warn').length;
+  const checksOk = checks.filter(x=>x.level==='ok').length;
+  const levelColor = {ok:'#2F5233', warn:'#B08D57', bad:'#8B3A3A'};
+  const levelBg = {ok:'#E7EEE4', warn:'#F3E4D6', bad:'#F5E6E1'};
+  const levelMark = {ok:'✓', warn:'●', bad:'✕'};
+
+  // ---- Deal reality mini-checks ----
+  const compMids = state.comps.map(cm=>(Number(cm.low)+Number(cm.high))/2).filter(x=>x>0);
+  const compRatio = compMids.length ? Math.max(...compMids)/Math.min(...compMids) : null;
+  const earningsYield = v.midVal > 0 ? ((v.figure - (basis==='ebitda'?0:0)) / v.midVal) * 100 : 0;
+  const dscrCalc = computeDSCR();
+
+  const dealChecks = [];
+  if(compMids.length >= 2){
+    dealChecks.push({
+      label: 'Multiple source agreement', level: compRatio<=1.3?'ok':compRatio<=1.6?'warn':'bad',
+      detail: `Comp midpoints range ${Math.min(...compMids).toFixed(2)}x–${Math.max(...compMids).toFixed(2)}x (max/min ratio ${compRatio.toFixed(2)}).`,
+      note: compRatio<=1.3?'Tight agreement across your saved comps — supports confidence in the applied multiple.':'Wider spread across comps — worth double-checking which one actually fits this business before leaning on it.'
+    });
+  }
+  dealChecks.push({
+    label: 'Earnings yield on purchase', level: earningsYield>=20?'ok':earningsYield>=12?'warn':'bad',
+    detail: `${basis.toUpperCase()} of ${fmt(v.figure)} on an estimated value of ${fmt(v.midVal)} ≈ ${earningsYield.toFixed(1)}% unlevered yield.`,
+    note: earningsYield>=20?'Solid unlevered return at this price.':earningsYield>=12?'Viable but not compelling before leverage — SBA financing may improve the levered return.':'Thin unlevered return — a buyer will want a lower price or stronger growth story.'
+  });
+  if(basis==='ebitda' && !state.below.replacementSalary){
+    dealChecks.push({label:'Replacement salary', level:'warn', detail:'EBITDA basis selected but no replacement management salary entered.', note:'Without it, EBITDA (and the resulting value) is overstated — fill in the "Market-rate replacement mgmt salary" field.'});
+  }
+
+  const dscrLevel = dscrCalc && dscrCalc.dscr!=null ? (dscrCalc.dscr>=1.25?'ok':dscrCalc.dscr>=1.15?'warn':'bad') : null;
+
+  const businessName = state.reportInfo.businessName || 'Untitled business';
+  const preparedFor = state.reportInfo.preparedFor;
+  const presentedBy = state.reportInfo.presentedBy;
+  const reportDate = state.reportInfo.reportDate ? new Date(state.reportInfo.reportDate+'T00:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : new Date().toLocaleDateString();
+
+  const checkRow = (chk) => `<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px dotted #D8D2C2;">
+    <div style="width:20px;height:20px;border-radius:50%;background:${levelBg[chk.level]};color:${levelColor[chk.level]};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">${levelMark[chk.level]}</div>
+    <div><div style="font-weight:700;font-size:12.5px;">${escapeHtml(chk.label)}</div><div style="font-size:12px;color:#4A5568;">${escapeHtml(chk.detail)}</div><div style="font-size:11.5px;color:${levelColor[chk.level]};margin-top:2px;">${escapeHtml(chk.note)}</div></div>
+  </div>`;
+
+  const sectionBanner = (letter, title) => `<div style="background:#4A1A24;color:#fff;border-radius:3px;padding:14px 18px;margin-top:32px;display:flex;align-items:center;gap:12px;">
+    <span style="font-size:22px;font-weight:800;color:#D9754F;">${letter}</span>
+    <span style="font-size:16px;font-weight:700;letter-spacing:.02em;">${title}</span>
+  </div>`;
+
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escapeHtml(businessName)} — Preliminary Recast &amp; Valuation</title>
+  <style>
+    body{font-family:Georgia,'Times New Roman',serif;color:#1F2A38;max-width:820px;margin:0 auto;padding:0 24px 60px;line-height:1.5;}
+    h1{font-size:24px;margin:0;}
+    h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:#4A1A24;margin-top:26px;border-bottom:2px solid #4A1A24;padding-bottom:5px;}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+    td{padding:4px 2px;border-bottom:1px dotted #D8D2C2;}
+    td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+    tr.total td{font-weight:700;border-top:1px solid #1F2A38;border-bottom:none;}
+    tr.result td{font-weight:700;font-size:14.5px;background:#F3E4D6;}
+    .reason{font-size:11px;color:#8B3A3A;font-style:italic;}
+    .meta{font-size:12px;color:#4A5568;margin-top:2px;}
+    .disc{font-size:10.5px;color:#4A5568;border-top:1px solid #D8D2C2;margin-top:30px;padding-top:10px;}
+    .cover{background:#F6F3EC;border:1px solid #D8D2C2;border-radius:4px;padding:26px 28px;margin-top:20px;}
+    .hero{background:#fff;border:1px solid #D8D2C2;border-radius:4px;padding:20px 24px;margin-top:16px;text-align:center;}
+    .hero .num{font-size:30px;font-weight:800;color:#4A1A24;}
+    .hero .range{font-size:13px;color:#4A5568;margin-top:4px;}
+    .capsule{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:#8B3A3A;font-weight:700;}
+    @media print{ .noprint{display:none;} body{padding:0 10px;} }
+  </style></head><body>
+  <div class="noprint" style="position:sticky;top:0;background:#fff;padding:10px 0;text-align:right;border-bottom:1px solid #D8D2C2;">
+    <button onclick="window.print()" style="padding:6px 14px;">Print / Save as PDF</button>
+  </div>
+
+  <div class="cover">
+    <div class="capsule">Preliminary Recast &amp; Estimate of Value</div>
+    <h1>${escapeHtml(businessName)}</h1>
+    <div class="meta">${reportDate}${preparedFor?' · Prepared for '+escapeHtml(preparedFor):''}${presentedBy?' · Presented by '+escapeHtml(presentedBy):''}${state.leaseTerm?' · Lease: '+escapeHtml(state.leaseTerm):''}</div>
+    <div class="hero">
+      <div class="capsule">Conclusion of Business Value</div>
+      <div class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</div>
+      <div class="range">Based on ${basis.toUpperCase()} of ${fmt(v.figure)} × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x (${escapeHtml(base.name)}, adjusted)</div>
+    </div>
+  </div>
+
+  ${sectionBanner('A','FINANCIAL RECAST')}
+
+  <h2>Sanity check — ${checksOk} ok, ${checksWarn} review, ${checksBad} flagged</h2>
+  <div>${checks.map(checkRow).join('')}</div>
+
+  <h2>Revenue</h2>
+  <table>${rowsHtml(state.rev)}<tr class="total"><td>Total revenue</td><td class="num">${fmt(c.revenue)}</td></tr></table>
+
+  <h2>Cost of goods sold</h2>
+  <table>${rowsHtml(state.cogs)}<tr class="total"><td>Total COGS</td><td class="num">${fmt(c.cogs)}</td></tr></table>
+  <table><tr class="total"><td>Gross profit</td><td class="num">${fmt(c.grossProfit)}</td></tr></table>
+
+  <h2>Operating expenses (not add-backs)</h2>
+  <table>${rowsHtml(nonAddbacks)}<tr class="total"><td>Total operating expenses</td><td class="num">${fmt(c.totalOpex)}</td></tr></table>
+
+  <h2>Below the line</h2>
+  <table>
+    <tr><td>Salary for one owner</td><td class="num">${fmt(state.below.ownerSalary)}</td></tr>
+    <tr><td>Payroll taxes on owner's salary</td><td class="num">${fmt(state.below.ownerPayrollTax||0)}</td></tr>
+    <tr><td>Depreciation &amp; amortization</td><td class="num">${fmt(state.below.dep)}</td></tr>
+    <tr><td>Interest expense</td><td class="num">${fmt(state.below.interest)}</td></tr>
+    <tr><td>Income taxes (entity-level, non-BP-standard)</td><td class="num">${fmt(state.below.taxes)}</td></tr>
+    <tr class="total"><td>Net income (as reported)</td><td class="num">${fmt(c.netIncome)}</td></tr>
+  </table>
+
+  <h2>Basic SBA Discretionary Earnings <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#4A5568;">— Batteries Plus SDE Worksheet, line 9</span></h2>
+  <table>
+    <tr><td>Net Profit (Loss) from Owner Provided P&amp;L</td><td class="num">${fmt(c.netIncome)}</td></tr>
+    <tr><td>Plus Depreciation &amp; Amortization</td><td class="num">${fmt(state.below.dep)}</td></tr>
+    <tr><td>Plus Interest</td><td class="num">${fmt(state.below.interest)}</td></tr>
+    <tr><td>Plus Salary for One Owner</td><td class="num">${fmt(state.below.ownerSalary)}</td></tr>
+    <tr><td>Plus Payroll Taxes on Owner's Salary</td><td class="num">${fmt(state.below.ownerPayrollTax||0)}</td></tr>
+    <tr class="result"><td>Equals Basic SBA Discretionary Earnings</td><td class="num">${fmt(c.basicSBA)}</td></tr>
+  </table>
+
+  <h2>Discretionary Earnings Additions/Deletions <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#4A5568;">— Batteries Plus SDE Worksheet, lines 10–33</span></h2>
+  <table>
+    ${SDE_WORKSHEET_FIXED.map(f=>`<tr><td>${escapeHtml(f.label)}</td><td class="num">${fmt(state.sdeWorksheet[f.key]||0)}</td></tr>`).join('')}
+    ${(state.sdeWorksheetCustom||[]).map(r=>`<tr><td>${escapeHtml(r.name)}</td><td class="num">${fmt(r.amount||0)}</td></tr>`).join('')}
+    <tr class="result"><td>Sum of Discretionary Earnings Additions/Deletions</td><td class="num">${fmt(c.sdeWorksheetTotal)}</td></tr>
+  </table>
+
+  <h2>Other add-backs beyond the BP worksheet</h2>
+  <table>
+    <tr><td>Entity-level tax add-back (e.g. franchise/margin tax)</td><td class="num">${fmt(state.below.taxes)}</td></tr>
+    ${addbackRowsHtml}
+    <tr class="total"><td>Total other add-backs</td><td class="num">${fmt(otherAddbacksTotal)}</td></tr>
+  </table>
+
+  <h2>Result</h2>
+  <table>
+    <tr><td>Basic SBA Discretionary Earnings</td><td class="num">${fmt(c.basicSBA)}</td></tr>
+    <tr><td>+ Sum of Discretionary Earnings Additions/Deletions</td><td class="num">${fmt(c.sdeWorksheetTotal)}</td></tr>
+    <tr><td>+ Other add-backs beyond the BP worksheet</td><td class="num">${fmt(otherAddbacksTotal)}</td></tr>
+    <tr class="result"><td>Total Seller's Discretionary Earnings (SDE)</td><td class="num">${fmt(c.sde)}</td></tr>
+    <tr><td>− Replacement management salary (EBITDA basis only)</td><td class="num">${fmt(state.below.replacementSalary)}</td></tr>
+    <tr class="result"><td>Adjusted EBITDA</td><td class="num">${fmt(c.ebitda)}</td></tr>
+  </table>
+
+  ${sectionBanner('B','VALUATION')}
+
+  <h2>Multiple applied (basis: ${basis.toUpperCase()})</h2>
+  <table>
+    <tr><td>Base multiple — ${escapeHtml(base.name)}</td><td class="num">${base.low}x – ${base.high}x</td></tr>
+    <tr><td>Earnings trend adjustment (${escapeHtml(TREND_LABELS[state.adjustments.trend]||state.adjustments.trend)})</td><td class="num">${trendAdj>=0?'+':''}${trendAdj.toFixed(2)}x</td></tr>
+    ${riskChecked.map(k=>`<tr><td>Risk: ${escapeHtml(RISK_LABELS[k]||k)}</td><td class="num">${(state.weights.risk[k]||0).toFixed(2)}x</td></tr>`).join('')}
+    ${upsideChecked.map(k=>`<tr><td>Upside: ${escapeHtml(UPSIDE_LABELS[k]||k)}</td><td class="num">+${(state.weights.upside[k]||0).toFixed(2)}x</td></tr>`).join('')}
+    <tr class="total"><td>Adjusted multiple</td><td class="num">${v.lowMult.toFixed(2)}x – ${v.highMult.toFixed(2)}x</td></tr>
+    <tr class="result"><td>Estimated business value</td><td class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</td></tr>
+  </table>
+
+  <h2>Deal reality check</h2>
+  <div>${dealChecks.map(checkRow).join('')}</div>
+
+  ${sectionBanner('C','BUYER FINANCING & SBA BANKABILITY')}
+  <h2>SBA 7(a) debt-service estimate</h2>
+  ${dscrCalc ? `<table>
+    <tr><td>Deal price (midpoint of estimated value)</td><td class="num">${fmt(dscrCalc.dealPrice)}</td></tr>
+    <tr><td>Down payment (${state.financing.downPaymentPct}%)</td><td class="num">${fmt(dscrCalc.dealPrice*(state.financing.downPaymentPct/100))}</td></tr>
+    <tr><td>SBA loan amount</td><td class="num">${fmt(dscrCalc.loanAmount)}</td></tr>
+    <tr><td>Interest rate / term</td><td class="num">${state.financing.interestRatePct}% / ${state.financing.termYears} yrs</td></tr>
+    <tr><td>Monthly payment</td><td class="num">${fmt(dscrCalc.monthlyPayment)}</td></tr>
+    <tr class="total"><td>Annual debt service</td><td class="num">${fmt(dscrCalc.annualDebtService)}</td></tr>
+    <tr><td>Available SDE</td><td class="num">${fmt(dscrCalc.availableSDE)}</td></tr>
+    <tr><td>− Replacement salary</td><td class="num">${fmt(state.below.replacementSalary)}</td></tr>
+    <tr class="total"><td>Post-close cash flow</td><td class="num">${fmt(dscrCalc.postCloseCF)}</td></tr>
+    <tr class="result" style="background:${dscrLevel==='ok'?'#E7EEE4':dscrLevel==='warn'?'#F3E4D6':'#F5E6E1'};"><td>DSCR</td><td class="num">${dscrCalc.dscr!=null?dscrCalc.dscr.toFixed(2)+'x':'—'}</td></tr>
+  </table>
+  <p style="font-size:11.5px;color:${levelColor[dscrLevel]||'#4A5568'};">${dscrLevel==='ok'?'≥ 1.25x meets typical SBA 7(a) underwriting preference.':dscrLevel==='warn'?'1.15–1.25x is marginal — expect a lender to want a larger down payment, seller note, or price concession.':dscrLevel==='bad'?'Below 1.15x — not financeable as structured without restructuring the deal.':''}</p>`
+  : '<p style="font-size:12px;color:#4A5568;">Enter financing assumptions in card 2d to see a DSCR estimate.</p>'}
+
+  ${sectionBanner('D','CASH TO SELLER AT CLOSE')}
+  <table>
+    <tr class="result"><td>Estimated business value (midpoint)</td><td class="num">${fmt(v.midVal)}</td></tr>
+    <tr><td>+ Inventory at cost</td><td class="num">${fmt(v.inv)}</td></tr>
+    <tr><td>+ Cash &amp; equivalents (balance sheet)</td><td class="num">${fmt(state.balanceSheet.cash||0)}</td></tr>
+    <tr><td>− Long-term debt payoff (balance sheet)</td><td class="num">${fmt(state.balanceSheet.longTermDebt||0)}</td></tr>
+    <tr><td>− Anticipated closing costs (flat)</td><td class="num">${fmt(v.closingCosts)}</td></tr>
+    <tr><td>− Broker/capital-gains/DD costs (% of value)</td><td class="num">${fmt(v.pctCostsTotal)}</td></tr>
+    <tr class="result"><td>Possible net cash to seller at closing</td><td class="num">${fmt(v.netLow)} – ${fmt(v.netHigh)}</td></tr>
+  </table>
+
+  <h2>Net tangible assets &amp; working capital <span style="font-size:10.5px;text-transform:none;letter-spacing:0;color:#4A5568;">— from balance sheet, card 2c</span></h2>
+  <table>
+    <tr><td>Cash &amp; equivalents</td><td class="num">${fmt(state.balanceSheet.cash||0)}</td></tr>
+    <tr><td>Accounts receivable</td><td class="num">${fmt(state.balanceSheet.ar||0)}</td></tr>
+    <tr><td>Inventory (at cost)</td><td class="num">${fmt(v.inv)}</td></tr>
+    <tr><td>Equipment, vehicles &amp; FF&amp;E (net)</td><td class="num">${fmt(state.balanceSheet.ppe||0)}</td></tr>
+    <tr><td>Accounts payable</td><td class="num">(${fmt(state.balanceSheet.ap||0)})</td></tr>
+    <tr><td>Accrued liabilities</td><td class="num">(${fmt(state.balanceSheet.accrued||0)})</td></tr>
+    <tr><td>Long-term debt</td><td class="num">(${fmt(state.balanceSheet.longTermDebt||0)})</td></tr>
+    <tr class="result"><td>Net tangible assets</td><td class="num">${fmt((state.balanceSheet.cash||0)+(state.balanceSheet.ar||0)+v.inv+(state.balanceSheet.ppe||0)-(state.balanceSheet.ap||0)-(state.balanceSheet.accrued||0)-(state.balanceSheet.longTermDebt||0))}</td></tr>
+    <tr class="result"><td>Working capital (cash+AR+inventory − AP − accrued)</td><td class="num">${fmt((state.balanceSheet.cash||0)+(state.balanceSheet.ar||0)+v.inv-(state.balanceSheet.ap||0)-(state.balanceSheet.accrued||0))}</td></tr>
+  </table>
+
+  <div class="disc">
+    This is an unofficial, directional estimate — not a certified business valuation, formal appraisal, or fairness opinion, and it hasn't been reviewed by a CPA, business appraiser, or lender. It does not incorporate live third-party comparable-transaction databases, public reputation data, or an industry-multiple benchmark service — the multiple applied comes from the comps you've saved in the tool, not a licensed data feed. Add-back judgment calls, adjustment weights, and financing assumptions materially change the result and should be backed by documentation before use in a negotiation, financing application, or any tax, legal, or regulatory matter.
+  </div>
+  </body></html>`;
+}
+
+// ---------- Save / load deals ----------
+$('saveDeal').addEventListener('click', async ()=>{
+  if(!state._computed){ return; }
+  const name = prompt('Name this business/deal:', $('dealName').textContent || 'Untitled deal');
+  if(!name) return;
+  const record = {name, savedAt: new Date().toISOString(), state: JSON.parse(JSON.stringify(state))};
+  delete record.state._computed;
+  try{
+    const key = 'pnl-recast:deal:' + Date.now();
+    await appStorage.set(key, JSON.stringify(record), false);
+    $('dealName').textContent = 'Saved: ' + name;
+    loadDealList();
+  }catch(e){ $('dealName').textContent = 'Save failed.'; }
+});
+
+async function loadDealList(){
+  try{
+    const r = await appStorage.list('pnl-recast:deal:', false);
+    const keys = (r && r.keys) || [];
+    const box = $('dealList');
+    box.innerHTML = '';
+    for(const k of keys.slice().reverse()){
+      try{
+        const rec = await appStorage.get(k, false);
+        const parsed = JSON.parse(rec.value);
+        const div = document.createElement('div');
+        div.className = 'deal-item';
+        div.innerHTML = `<span>${escapeHtml(parsed.name)}</span><span class="pill">${new Date(parsed.savedAt).toLocaleDateString()}</span>`;
+        div.addEventListener('click', ()=>{
+          state = parsed.state;
+          render();
+          $('dealName').textContent = 'Loaded: ' + parsed.name;
+        });
+        box.appendChild(div);
+      }catch(e){}
+    }
+  }catch(e){}
+}
+
+$('resetDataBtn').addEventListener('click', async () => {
+  if(!confirm('This clears your saved comps, adjustment weights, and saved deals from this device. Continue?')) return;
+  try{
+    await appStorage.delete('pnl-recast:comps', false).catch(()=>{});
+    await appStorage.delete('pnl-recast:adjustments', false).catch(()=>{});
+    const r = await appStorage.list('pnl-recast:deal:', false).catch(()=>null);
+    const keys = (r && r.keys) || [];
+    for(const k of keys){ await appStorage.delete(k, false).catch(()=>{}); }
+
+    state.comps = defaultComps();
+    state.baseCompIndex = 0;
+    state.weights = defaultWeights();
+    state.adjustments = {trend:'steady', risk:{}, upside:{}};
+    $('trendSelect').value = 'steady';
+    renderComps();
+    renderFactorRows();
+    renderValuation();
+    $('dealList').innerHTML = '';
+    $('dealName').textContent = '';
+    $('parseStatus').textContent = 'Saved data cleared — comps, adjustments, and deals reset to defaults.';
+  }catch(e){
+    $('parseStatus').textContent = 'Could not clear saved data: ' + (e.message || e);
+  }
+});
+
+loadComps();
+loadAdjustments();
+loadDealList();
+renderClosingCosts();
+</script>
+</body>
+</html>
