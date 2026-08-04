@@ -98,7 +98,7 @@
 
   .factor-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:3px 0;}
   .factor-row label{flex:1;}
-  .factor-row input[type=number]{width:48px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 4px;text-align:right;}
+  .factor-row input[type=number]{width:58px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 3px;text-align:right;}
 </style>
 </head>
 <body>
@@ -201,10 +201,16 @@
 
       <div class="card" style="margin-top:20px;">
         <h2>3 · Valuation multiple</h2>
-        <p class="sub">The multiple applied is calculated automatically from this business's SDE — it isn't user-editable, which keeps every report consistent with the same underlying comp set.</p>
+        <p class="sub">Four fixed Main Street SDE tiers — the brackets are locked, but you can fine-tune the multiple on each one. The tool auto-selects the right tier for this business's SDE; use the dropdown below to override it for this deal.</p>
         <div class="section-label">Valuation basis</div>
         <div class="toggle-row"><input type="radio" name="basis" value="sde" id="basisSDE" checked><label for="basisSDE">SDE (owner-operator businesses, roughly &lt;$1M cash flow)</label></div>
         <div class="toggle-row"><input type="radio" name="basis" value="ebitda" id="basisEBITDA"><label for="basisEBITDA">Adjusted EBITDA (roughly $1M+ cash flow, management team in place)</label></div>
+
+        <div class="section-label">Multiple tiers (name / low / high)</div>
+        <div id="compsList"></div>
+
+        <div class="section-label">Base multiple for this deal</div>
+        <select id="baseCompSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-family:'IBM Plex Mono',monospace;font-size:12px;"></select>
 
         <div class="section-label" style="margin-top:16px;">Earnings trend</div>
         <select id="trendSelect" style="width:100%;padding:6px;border:1px solid var(--hairline);border-radius:2px;font-size:12.5px;">
@@ -357,7 +363,7 @@ function defaultSdeWorksheetValues(){
 
 let state = {
   rev: [], cogs: [], opex: [], below: {ownerSalary:0, ownerPayrollTax:0, dep:0, amort:0, interest:0, taxes:0, replacementSalary:0},
-  comps: [], inventory: 0, leaseTerm: '',
+  comps: [], baseCompIndex: 0, baseCompManual: false, inventory: 0, leaseTerm: '',
   sdeWorksheet: defaultSdeWorksheetValues(),
   sdeWorksheetCustom: [],
   closingCosts: [
@@ -538,6 +544,7 @@ function applyParsed(parsed, statusMsg){
   state.below.ownerSalary = Number(parsed.owner_salary_candidate)||0;
   if(!state.rev.length) state.rev = [{name:'Total revenue', amount:0}];
   if(!state.cogs.length) state.cogs = [{name:'COGS', amount:0}];
+  state.baseCompManual = false; // fresh P&L — re-auto-select the tier for its SDE
   $('parseStatus').textContent = statusMsg || 'Parsed — check the lines below.';
   render();
 }
@@ -715,6 +722,7 @@ $('startOverBtn').addEventListener('click', () => {
   state.sdeWorksheetCustom = [];
   state._computed = null;
   state._valuation = null;
+  state.baseCompManual = false;
   state.inventory = 0;
   state.leaseTerm = '';
   state.closingCosts = [
@@ -913,9 +921,11 @@ function computeAndRenderTape(){
 }
 
 // ---------- Comps / valuation ----------
-// LOCKED — these four tiers are fixed business logic, not user-editable.
-// The tool auto-selects the correct tier based on computed SDE; nothing here
-// is exposed in the UI for a customer to see or change.
+// The four SDE-size tiers are fixed — a broker can fine-tune the low/high
+// multiple on each tier, but can't add a 5th tier or delete one of the four.
+// The size brackets themselves (which SDE falls into which tier) are locked
+// and not exposed in the UI. The tool auto-selects the matching tier for a
+// freshly-parsed P&L; the dropdown lets a broker override that choice.
 const LOCKED_COMPS = [
   {name:'Main Street — Low',      low:0.0, high:1.5, sdeMin:0,       sdeMax:75000,      basis:'sde'},
   {name:'Main Street — Typical',  low:1.6, high:3.4, sdeMin:75000,   sdeMax:250000,     basis:'sde'},
@@ -925,8 +935,7 @@ const LOCKED_COMPS = [
 function defaultComps(){
   return LOCKED_COMPS.map(c => ({...c}));
 }
-// Picks the correct tier based on the computed SDE figure — this replaces the
-// old manual "choose your base comp" dropdown.
+// Picks the tier matching a given SDE figure.
 function pickCompForSDE(sde){
   const s = Number(sde) || 0;
   for(const c of state.comps){
@@ -938,7 +947,17 @@ function pickCompForSDE(sde){
 async function loadComps(){
   try{
     const r = await appStorage.get('pnl-recast:comps', false);
-    state.comps = r ? JSON.parse(r.value) : defaultComps();
+    let loaded = r ? JSON.parse(r.value) : null;
+    // Guard against a stale saved set from before tiers were locked to 4 —
+    // if it doesn't look like our 4 fixed tiers, reset to defaults.
+    if(!Array.isArray(loaded) || loaded.length !== 4){
+      loaded = defaultComps();
+    } else {
+      // Keep any broker-edited low/high, but always keep the locked
+      // sdeMin/sdeMax boundaries so tier selection can't drift.
+      loaded = loaded.map((c,i) => ({...LOCKED_COMPS[i], low:c.low, high:c.high, name:c.name || LOCKED_COMPS[i].name}));
+    }
+    state.comps = loaded;
   }catch(e){ state.comps = defaultComps(); }
   renderComps();
 }
@@ -946,22 +965,41 @@ async function saveComps(){
   try{ await appStorage.set('pnl-recast:comps', JSON.stringify(state.comps), false); }catch(e){}
 }
 
-async function loadComps(){
-  // Comps are locked business logic now — always the fixed tiers, never
-  // loaded from or saved to per-device storage.
-  state.comps = defaultComps();
-  renderComps();
-}
-async function saveComps(){
-  // No-op: comps are locked and no longer user-editable or persisted.
-}
-
 function renderComps(){
-  // Editable comp table removed — tiers are locked and not shown to the
-  // customer. renderValuation() displays which tier was auto-selected and
-  // why, which is the only comp-related info the UI now surfaces.
+  const list = $('compsList');
+  list.innerHTML = '';
+  state.comps.forEach((c,i)=>{
+    const row = document.createElement('div');
+    row.className = 'comp-row';
+    row.style.gridTemplateColumns = '1fr 70px 70px';
+    row.innerHTML = `<input type="text" value="${escapeHtml(c.name)}" data-ci="${i}" data-cf="name">
+      <input type="number" step="0.1" value="${c.low}" data-ci="${i}" data-cf="low">
+      <input type="number" step="0.1" value="${c.high}" data-ci="${i}" data-cf="high">`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('input').forEach(inp=>inp.addEventListener('input', (e)=>{
+    const {ci, cf} = e.target.dataset;
+    state.comps[ci][cf] = cf==='name' ? e.target.value : Number(e.target.value)||0;
+    saveComps();
+    renderBaseCompSelect();
+    renderValuation();
+  }));
+  renderBaseCompSelect();
 }
 document.querySelectorAll('input[name=basis]').forEach(r=>r.addEventListener('change', renderValuation));
+
+function renderBaseCompSelect(){
+  const sel = $('baseCompSelect');
+  const prev = state.baseCompIndex || 0;
+  sel.innerHTML = state.comps.map((c,i)=>`<option value="${i}">${escapeHtml(c.name)} (${c.low}x–${c.high}x)</option>`).join('');
+  sel.value = Math.min(prev, state.comps.length-1);
+  state.baseCompIndex = Number(sel.value)||0;
+}
+$('baseCompSelect').addEventListener('change', (e)=>{
+  state.baseCompIndex = Number(e.target.value)||0;
+  state.baseCompManual = true;
+  renderValuation();
+});
 
 function renderClosingCosts(){
   const list = $('closingCostsList');
@@ -1081,9 +1119,16 @@ function renderValuation(){
   const basis = document.querySelector('input[name=basis]:checked').value;
   const figure = basis==='sde' ? state._computed.sde : state._computed.ebitda;
 
-  // Tier is auto-selected from computed SDE — this is locked business logic,
-  // not a user choice. See LOCKED_COMPS / pickCompForSDE above.
-  const base = pickCompForSDE(state._computed.sde);
+  // Auto-select the tier matching this business's SDE, unless the broker has
+  // manually overridden the dropdown for this deal (reset on each fresh parse).
+  if(!state.baseCompManual){
+    const autoComp = pickCompForSDE(state._computed.sde);
+    const autoIdx = state.comps.indexOf(autoComp);
+    state.baseCompIndex = autoIdx >= 0 ? autoIdx : 0;
+    const sel = $('baseCompSelect');
+    if(sel) sel.value = state.baseCompIndex;
+  }
+  const base = state.comps[state.baseCompIndex] || state.comps[0];
   let lowMult = base.low, highMult = base.high;
 
   const trendAdj = (state.weights.trend[state.adjustments.trend]) || 0;
@@ -1106,7 +1151,8 @@ function renderValuation(){
   const p = state.pctCosts || {};
   const pctCostsTotal = midVal * ((Number(p.brokerFeePct)||0) + (Number(p.fedCapGainsPct)||0) + (Number(p.stateCapGainsPct)||0) + (Number(p.ddHaircutPct)||0)) / 100;
 
-  $('multRange').textContent = `Auto-selected tier: ${base.name} (SDE ${fmt(state._computed.sde)} → ${base.low}x–${base.high}x), adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
+  const pickNote = state.baseCompManual ? 'Manually selected' : 'Auto-selected';
+  $('multRange').textContent = `${pickNote} tier: ${base.name} (SDE ${fmt(state._computed.sde)} → ${base.low}x–${base.high}x), adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
   $('valRange').textContent = figure > 0 ? `${fmt(lowVal)} – ${fmt(highVal)}` : '—';
   $('inventoryOut').textContent = fmt(inv);
   $('debtCashOut').textContent = fmt(debtCashNet);
@@ -1428,14 +1474,16 @@ async function loadDealList(){
 }
 
 $('resetDataBtn').addEventListener('click', async () => {
-  if(!confirm('This clears your saved adjustment weights and saved deals from this device. Continue?')) return;
+  if(!confirm('This clears your saved multiple-tier edits, adjustment weights, and saved deals from this device. Continue?')) return;
   try{
+    await appStorage.delete('pnl-recast:comps', false).catch(()=>{});
     await appStorage.delete('pnl-recast:adjustments', false).catch(()=>{});
     const r = await appStorage.list('pnl-recast:deal:', false).catch(()=>null);
     const keys = (r && r.keys) || [];
     for(const k of keys){ await appStorage.delete(k, false).catch(()=>{}); }
 
     state.comps = defaultComps();
+    state.baseCompManual = false;
     state.weights = defaultWeights();
     state.adjustments = {trend:'steady', risk:{}, upside:{}};
     $('trendSelect').value = 'steady';
@@ -1444,7 +1492,7 @@ $('resetDataBtn').addEventListener('click', async () => {
     renderValuation();
     $('dealList').innerHTML = '';
     $('dealName').textContent = '';
-    $('parseStatus').textContent = 'Saved data cleared — adjustments and deals reset to defaults.';
+    $('parseStatus').textContent = 'Saved data cleared — multiple tiers, adjustments, and deals reset to defaults.';
   }catch(e){
     $('parseStatus').textContent = 'Could not clear saved data: ' + (e.message || e);
   }
