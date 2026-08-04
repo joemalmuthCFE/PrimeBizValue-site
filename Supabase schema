@@ -1,0 +1,42 @@
+-- PrimeBizValue.com — partner tracking schema
+-- Run this once in your Supabase project (SQL Editor -> New query -> paste -> Run)
+
+create table if not exists partners (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,                 -- e.g. "Acme Corp"
+  stripe_promo_code text unique,      -- e.g. "PARTNER25" (must match the code in Stripe)
+  discount_pct numeric not null,      -- e.g. 25
+  active boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists orders (
+  id uuid primary key default gen_random_uuid(),
+  stripe_session_id text unique not null,
+  customer_email text,
+  partner_id uuid references partners(id),   -- null = organic, no partner code used
+  tier text not null default 'detailed',     -- 'basic' ($199) or 'detailed' ($799)
+  amount_charged numeric not null,           -- what the customer actually paid, in dollars
+  discount_amount numeric not null default 0, -- how much was discounted off list price, in dollars
+  created_at timestamptz not null default now()
+);
+
+-- One view that gives you the "Acme Corp sent me 12 orders worth $X" answer at a glance
+create or replace view partner_summary as
+select
+  p.name as partner_name,
+  p.stripe_promo_code,
+  p.active,
+  count(o.id) as total_orders,
+  count(o.id) filter (where o.tier = 'basic') as basic_orders,
+  count(o.id) filter (where o.tier = 'detailed') as detailed_orders,
+  coalesce(sum(o.amount_charged), 0) as total_revenue,
+  coalesce(sum(o.discount_amount), 0) as total_discounts_given
+from partners p
+left join orders o on o.partner_id = p.id
+group by p.id, p.name, p.stripe_promo_code, p.active
+order by total_orders desc;
+
+-- Organic (no-code) orders, tracked separately
+create or replace view organic_orders as
+select * from orders where partner_id is null;
