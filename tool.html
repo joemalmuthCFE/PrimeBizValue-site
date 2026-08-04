@@ -520,7 +520,7 @@ async function parseRawText(raw){
   "owner_salary_candidate": number,
   "notes": string
 }
-Rules: amounts are positive numbers representing magnitude (never negative). If the source has multiple periods/years of data, use the most recent full period and mention in notes which one you used. addback_candidate=true only for owner salary/payroll tax on the owner, personal vehicle/phone/travel/meals/insurance run through the business, one-time or non-recurring items, and clearly discretionary/non-essential spending. Do not mark ordinary necessary operating costs (rent at market rate, COGS, normal payroll for non-owner staff, utilities, franchise royalties, dues/subscriptions, general business insurance, etc.) as add-backs unless there's clear evidence they're personal/discretionary rather than operating necessities — when genuinely ambiguous, set addback_candidate=false and explain the ambiguity in addback_reason so a human can decide, rather than guessing yes. If depreciation, amortization, or interest are listed as opex lines, extract them into their own top-level fields instead of leaving them in opex. Franchise tax, margin tax, or state/corporate income tax lines should go in income_taxes, not opex. If a lump-sum line (e.g. a single "Insurance Expense" or "Telephone Expense" covering the whole company) likely bundles a personal owner portion that can't be isolated from the P&L alone, do NOT add back the full amount — instead note in addback_reason (or in notes) that a partial personal-use split may exist but requires the owner's input to quantify, since guessing a percentage from the P&L alone isn't reliable. If an amount can't be determined, use 0. If owner salary is not separately broken out but obviously exists, estimate owner_salary_candidate as 0 and note it.`;
+Rules: amounts are positive numbers representing magnitude (never negative). If the source has multiple periods/years of data, use the most recent full period and mention in notes which one you used. If the source has multiple location, store, class, or department columns (e.g. store numbers like "000"/"148"/"407", "Corporate", "Not specified") alongside a single "Total" or "Grand Total" column, always use that Total column's value for each line — it's the consolidated company-wide figure this valuation needs. Never sum the individual location columns yourself and never pick just one location's column. Skip subtotal rows (e.g. "Total for X") entirely — only extract the individual line items beneath each subtotal, since the subtotal is redundant with them and including both would double-count. addback_candidate=true only for owner salary/payroll tax on the owner, personal vehicle/phone/travel/meals/insurance run through the business, one-time or non-recurring items, and clearly discretionary/non-essential spending. Do not mark ordinary necessary operating costs (rent at market rate, COGS, normal payroll for non-owner staff, utilities, franchise royalties, dues/subscriptions, general business insurance, etc.) as add-backs unless there's clear evidence they're personal/discretionary rather than operating necessities — when genuinely ambiguous, set addback_candidate=false and explain the ambiguity in addback_reason so a human can decide, rather than guessing yes. If depreciation, amortization, or interest are listed as opex lines, extract them into their own top-level fields instead of leaving them in opex. Franchise tax, margin tax, or state/corporate income tax lines should go in income_taxes, not opex. If a lump-sum line (e.g. a single "Insurance Expense" or "Telephone Expense" covering the whole company) likely bundles a personal owner portion that can't be isolated from the P&L alone, do NOT add back the full amount — instead note in addback_reason (or in notes) that a partial personal-use split may exist but requires the owner's input to quantify, since guessing a percentage from the P&L alone isn't reliable. If an amount can't be determined, use 0. If owner salary is not separately broken out but obviously exists, estimate owner_salary_candidate as 0 and note it.`;
     const resp = await fetch('/api/parse-pnl', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -544,10 +544,15 @@ Rules: amounts are positive numbers representing magnitude (never negative). If 
     console.error('Claude API call failed:', e);
     const detail = (e && e.message) ? e.message : String(e);
     $('debugLine').textContent = 'Claude API error detail: ' + detail;
+    let parsed = null;
     try{
-      const parsed = heuristicParse(raw);
-      applyParsed(parsed, 'Claude API call failed — used the offline fallback parser instead. Its add-back flags are conservative by design; check every line. (Error detail shown below.)');
+      parsed = heuristicParse(raw);
     }catch(e2){
+      try{ parsed = heuristicParse(csvToFlatText(raw)); }catch(e3){ parsed = null; }
+    }
+    if(parsed){
+      applyParsed(parsed, 'Claude API call failed — used the offline fallback parser instead. Its add-back flags are conservative by design; check every line. (Error detail shown below.)');
+    } else {
       $('parseStatus').textContent = 'Could not parse automatically — enter lines manually below.';
       manualStart();
     }
@@ -644,6 +649,62 @@ function heuristicParse(rawText){
     owner_salary_candidate: ownerSalary,
     notes: 'Offline parse — only Officer Compensation, D&A, Interest, and franchise/margin tax were auto-classified with confidence. Personal-use portions of shared costs (owner health insurance folded into a general insurance line, personal cell phone/auto use, etc.) can\'t be recovered from a P&L alone — those need a manual add-back if you know the split.'
   };
+}
+
+// ---------- CSV flattening fallback ----------
+// The offline heuristic above expects a single trailing dollar amount per
+// line (typical single-column QuickBooks export). Multi-location exports
+// (columns for each store/class plus a final Total column) don't match that
+// shape at all, so heuristicParse throws "no line items found" on them.
+// This flattens that kind of CSV into the single-amount-per-line shape
+// heuristicParse expects, using the last populated numeric cell in each row
+// (the Total column) as the line's amount, before handing it to the same
+// classification logic above.
+function splitCsvLine(line){
+  const out = [];
+  let cur = '';
+  let inQuotes = false;
+  for(let i=0;i<line.length;i++){
+    const ch = line[i];
+    if(ch === '"'){ inQuotes = !inQuotes; continue; }
+    if(ch === ',' && !inQuotes){ out.push(cur); cur=''; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+function parseMoneyCell(cell){
+  if(cell == null) return null;
+  const t = String(cell).trim();
+  if(t === '') return null;
+  const cleaned = t.replace(/\$/g,'').replace(/,/g,'');
+  if(!/^-?\d+(\.\d+)?$/.test(cleaned)) return null;
+  const n = parseFloat(cleaned);
+  return isNaN(n) ? null : n;
+}
+function csvToFlatText(rawText){
+  const lines = rawText.split(/\r\n|\n|\r/).filter(l=>l.trim().length);
+  const rows = lines.map(splitCsvLine);
+  const out = [];
+  rows.forEach(r=>{
+    const label = (r[0]||'').trim();
+    if(!label) return;
+    if(/^total\s+for/i.test(label)) return; // subtotal row — skip, its line items are already counted
+    if(/^(income|cost of goods sold|gross profit|expenses|other income|other expenses|net operating income|net other income|net income)\s*$/i.test(label)){
+      out.push(label); // keep section-header keywords so heuristicParse's section detection still works
+      return;
+    }
+    const m = label.match(/^(\d{4,6})\s*(.*)$/); // needs a leading account code, like the primary heuristic
+    if(!m) return;
+    let amount = null;
+    for(let c = r.length-1; c>=1; c--){ // scan right-to-left for the Total column
+      const v = parseMoneyCell(r[c]);
+      if(v !== null){ amount = v; break; }
+    }
+    if(amount === null) return;
+    out.push(`${m[1]} - ${m[2]}  ${amount.toFixed(2)}`);
+  });
+  return out.join('\n');
 }
 
 // ---------- File upload: PDF / DOCX / CSV / XLS(X) ----------
