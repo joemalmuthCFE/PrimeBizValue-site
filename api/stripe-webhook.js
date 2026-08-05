@@ -40,13 +40,25 @@ module.exports = async (req, res) => {
     const session = event.data.object;
 
     try {
-      // Pull the full session with discount details expanded
+      // Pull the full session with discount details expanded — Stripe caps
+      // expand depth at 4 levels, so we stop at the discount object itself
+      // (which gives us a promotion_code ID) and fetch the actual code
+      // string with a separate, cheap lookup below.
       const full = await stripe.checkout.sessions.retrieve(session.id, {
-        expand: ['total_details.breakdown.discounts.discount.promotion_code'],
+        expand: ['total_details.breakdown.discounts.discount'],
       });
 
       const discounts = full.total_details?.breakdown?.discounts || [];
-      const promoCode = discounts[0]?.discount?.promotion_code?.code || null;
+      const promoCodeId = discounts[0]?.discount?.promotion_code || null;
+      let promoCode = null;
+      if (promoCodeId) {
+        try {
+          const promo = await stripe.promotionCodes.retrieve(promoCodeId);
+          promoCode = promo.code || null;
+        } catch (e) {
+          console.error('Could not look up promotion code:', e.message);
+        }
+      }
       const tier = full.metadata?.tier === 'basic' ? 'basic' : 'detailed';
 
       const amountCharged = (full.amount_total || 0) / 100;
