@@ -74,7 +74,7 @@ module.exports = async (req, res) => {
         partnerId = partner?.id || null;
       }
 
-      await supabase.from('orders').insert({
+      const { error: insertError } = await supabase.from('orders').insert({
         stripe_session_id: session.id,
         customer_email: full.customer_details?.email || null,
         partner_id: partnerId,
@@ -82,6 +82,13 @@ module.exports = async (req, res) => {
         amount_charged: amountCharged,
         discount_amount: discountAmount,
       });
+      if (insertError) {
+        // Supabase errors are often returned, not thrown — log this
+        // explicitly or a silent rejection here looks identical to success.
+        console.error('Supabase insert failed:', insertError);
+      } else {
+        console.log('Order logged to Supabase:', session.id);
+      }
     } catch (err) {
       // Log and still return 200 — we don't want Stripe endlessly retrying
       // a webhook over a logging issue once the payment itself succeeded.
