@@ -330,6 +330,24 @@
     </div>
   </div>
 
+<script>
+  // Catches any JavaScript error anywhere on this page and shows it in plain
+  // sight instead of failing silently — the whole point being that neither
+  // Joe nor a real customer should ever need to open DevTools to know
+  // something broke.
+  (function(){
+    const bar = document.createElement('div');
+    bar.id = 'jsErrorBar';
+    bar.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;z-index:99999;background:#DC2626;color:#fff;padding:10px 16px;font-family:monospace;font-size:12px;line-height:1.5;';
+    document.addEventListener('DOMContentLoaded', () => document.body.appendChild(bar));
+    function showError(msg){
+      bar.style.display = 'block';
+      bar.textContent = 'Something broke on this page: ' + msg + ' — please screenshot this red bar and send it over.';
+    }
+    window.addEventListener('error', (e) => showError((e.message||'unknown error') + ' (line ' + e.lineno + ')'));
+    window.addEventListener('unhandledrejection', (e) => showError('async error: ' + (e.reason && e.reason.message ? e.reason.message : e.reason)));
+  })();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
