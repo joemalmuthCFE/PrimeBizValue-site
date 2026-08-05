@@ -301,6 +301,7 @@
           <button class="small" id="genReportDetailed" data-tier="detailed">Detailed report — $799</button>
           <span style="font-size:11px;color:var(--ink-soft);" id="dealName"></span>
         </div>
+        <div style="font-size:11.5px;margin-top:4px;" id="tierSwitchLine"></div>
         <div class="status" id="checkoutStatus" style="margin-top:6px;"></div>
         <div class="deal-list" id="dealList"></div>
       </div>
@@ -395,6 +396,34 @@ function defaultSdeWorksheetValues(){
 }
 
 let isPaidThisSession = false; // set true only after /api/verify-session confirms real Stripe payment
+
+// If the customer already picked a tier on the homepage pricing card, honor
+// that instead of making them choose again from scratch after doing all the
+// work of entering their P&L. They can still switch via the small link.
+let preselectedTier = (new URLSearchParams(window.location.search)).get('tier');
+if (preselectedTier !== 'basic' && preselectedTier !== 'detailed') preselectedTier = null;
+
+function applyTierPreselection(){
+  if (isPaidThisSession) return; // don't mess with the buttons once payment's confirmed
+  const basicBtn = $('genReportBasic'), detailedBtn = $('genReportDetailed'), switchLine = $('tierSwitchLine');
+  if (preselectedTier === 'basic'){
+    basicBtn.style.display = ''; basicBtn.textContent = 'Buy your Basic Report — $199'; basicBtn.className = 'small';
+    detailedBtn.style.display = 'none';
+    switchLine.innerHTML = 'Want the Detailed Report instead ($799)? <a href="#" id="switchToDetailed" style="color:var(--rust);font-weight:600;">Switch</a>';
+    $('switchToDetailed')?.addEventListener('click', (e)=>{ e.preventDefault(); preselectedTier = 'detailed'; applyTierPreselection(); });
+  } else if (preselectedTier === 'detailed'){
+    detailedBtn.style.display = ''; detailedBtn.textContent = 'Buy your Detailed Report — $799'; detailedBtn.className = 'small';
+    basicBtn.style.display = 'none';
+    switchLine.innerHTML = 'Want the Basic Report instead ($199)? <a href="#" id="switchToBasic" style="color:var(--rust);font-weight:600;">Switch</a>';
+    $('switchToBasic')?.addEventListener('click', (e)=>{ e.preventDefault(); preselectedTier = 'basic'; applyTierPreselection(); });
+  } else {
+    // No tier chosen yet (direct link to the tool) — show both, original behavior
+    basicBtn.style.display = ''; basicBtn.textContent = 'Basic report — $199'; basicBtn.className = 'small ghost';
+    detailedBtn.style.display = ''; detailedBtn.textContent = 'Detailed report — $799'; detailedBtn.className = 'small';
+    switchLine.innerHTML = '';
+  }
+}
+applyTierPreselection();
 
 let state = {
   rev: [], cogs: [], opex: [], below: {ownerSalary:0, ownerPayrollTax:0, dep:0, amort:0, interest:0, taxes:0, replacementSalary:0},
