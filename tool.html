@@ -108,6 +108,15 @@
 
   .disclaimer{font-size:11.5px;color:var(--ink-soft);border-top:1px solid var(--hairline);padding-top:14px;margin-top:22px;line-height:1.65;}
   .savebar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap;}
+
+  .report-cta{display:block;width:100%;padding:16px 20px;border-radius:12px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;text-align:center;cursor:pointer;border:none;margin-top:10px;transition:transform .15s ease, box-shadow .15s ease;}
+  .report-cta:first-child{margin-top:0;}
+  .report-cta.tier-basic{background:#fff;color:var(--ink);border:2px solid var(--ink);}
+  .report-cta.tier-basic:hover{background:var(--paper-dark);}
+  .report-cta.tier-gold{background:linear-gradient(135deg,#E8C158,#B8860B);color:#241B02;box-shadow:0 12px 26px -10px rgba(184,134,11,0.55);}
+  .report-cta.tier-gold:hover{transform:translateY(-1px); box-shadow:0 16px 32px -10px rgba(184,134,11,0.65);}
+  .report-cta.recommended{box-shadow:0 0 0 3px var(--rust), 0 12px 26px -10px rgba(36,84,255,0.4);}
+  .report-cta:disabled{opacity:.55; cursor:default; transform:none;}
   .deal-list{max-height:180px;overflow-y:auto;margin-top:9px;}
   .deal-item{display:flex;justify-content:space-between;font-size:12.5px;padding:7px 5px;border-bottom:1px solid var(--hairline);cursor:pointer;border-radius:6px;transition:background .1s;}
   .deal-item:hover{background:var(--paper-dark);}
@@ -295,18 +304,19 @@
           <div class="range" id="totalRange" style="color:#8FADFF;">—</div>
         </div>
 
-        <div class="savebar">
-          <button class="small" id="saveDeal">Save this recast</button>
-          <button class="small ghost" id="genReportBasic" data-tier="basic">Basic report — $199</button>
-          <button class="small" id="genReportDetailed" data-tier="detailed">Detailed report — $799</button>
+        <div id="reportCtaWrap" style="margin-top:20px;">
+          <button class="report-cta tier-basic" id="genReportBasic" data-tier="basic">Get your Custom Report — $199</button>
+          <button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed">Upgrade to Certified Prime Report — $799</button>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+          <span style="font-size:11.5px;color:var(--ink-soft);text-decoration:underline;cursor:pointer;" id="saveDeal">Save this recast</span>
           <span style="font-size:11px;color:var(--ink-soft);" id="dealName"></span>
         </div>
-        <div style="font-size:11.5px;margin-top:4px;" id="tierSwitchLine"></div>
-        <div class="status" id="checkoutStatus" style="margin-top:6px;"></div>
+        <div class="status" id="checkoutStatus" style="margin-top:8px;"></div>
         <div id="upgradeOffer" style="display:none;background:var(--rust-bg);border:1px solid #C9D6FF;border-radius:8px;padding:12px 14px;margin-top:10px;">
           <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;">Want the full itemized analysis?</div>
-          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:8px;">Upgrade to the Detailed Report for just the $600 difference — no need to pay full price twice.</div>
-          <button class="small" id="upgradeBtn" style="margin:0;">Upgrade to Detailed — $600</button>
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:8px;">Upgrade to the Certified Prime Report for just the $600 difference — no need to pay full price twice.</div>
+          <button class="small" id="upgradeBtn" style="margin:0;">Upgrade to Certified Prime — $600</button>
         </div>
         <div class="deal-list" id="dealList"></div>
       </div>
@@ -426,25 +436,14 @@ let isPaidThisSession = false; // set true only after /api/verify-session confir
 let preselectedTier = (new URLSearchParams(window.location.search)).get('tier');
 if (preselectedTier !== 'basic' && preselectedTier !== 'detailed') preselectedTier = null;
 
+// Both report buttons always stay visible and real — the homepage choice
+// just gets a visual highlight (a blue ring), so the customer isn't forced
+// to re-decide from scratch, but switching is a real click, not tiny text.
 function applyTierPreselection(){
-  if (isPaidThisSession) return; // don't mess with the buttons once payment's confirmed
-  const basicBtn = $('genReportBasic'), detailedBtn = $('genReportDetailed'), switchLine = $('tierSwitchLine');
-  if (preselectedTier === 'basic'){
-    basicBtn.style.display = ''; basicBtn.textContent = 'Buy your Basic Report — $199'; basicBtn.className = 'small';
-    detailedBtn.style.display = 'none';
-    switchLine.innerHTML = 'Want the Detailed Report instead ($799)? <a href="#" id="switchToDetailed" style="color:var(--rust);font-weight:600;">Switch</a>';
-    $('switchToDetailed')?.addEventListener('click', (e)=>{ e.preventDefault(); preselectedTier = 'detailed'; applyTierPreselection(); });
-  } else if (preselectedTier === 'detailed'){
-    detailedBtn.style.display = ''; detailedBtn.textContent = 'Buy your Detailed Report — $799'; detailedBtn.className = 'small';
-    basicBtn.style.display = 'none';
-    switchLine.innerHTML = 'Want the Basic Report instead ($199)? <a href="#" id="switchToBasic" style="color:var(--rust);font-weight:600;">Switch</a>';
-    $('switchToBasic')?.addEventListener('click', (e)=>{ e.preventDefault(); preselectedTier = 'basic'; applyTierPreselection(); });
-  } else {
-    // No tier chosen yet (direct link to the tool) — show both, original behavior
-    basicBtn.style.display = ''; basicBtn.textContent = 'Basic report — $199'; basicBtn.className = 'small ghost';
-    detailedBtn.style.display = ''; detailedBtn.textContent = 'Detailed report — $799'; detailedBtn.className = 'small';
-    switchLine.innerHTML = '';
-  }
+  $('genReportBasic').classList.remove('recommended');
+  $('genReportDetailed').classList.remove('recommended');
+  if (preselectedTier === 'basic') $('genReportBasic').classList.add('recommended');
+  if (preselectedTier === 'detailed') $('genReportDetailed').classList.add('recommended');
 }
 applyTierPreselection();
 
@@ -1352,16 +1351,19 @@ function renderDscrPreview(){
 // real (or even test-mode) payments each time. Does NOT affect Basic.
 const TESTING_FREE_DETAILED = true;
 
-document.querySelectorAll('#genReportBasic, #genReportDetailed').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    const tier = e.currentTarget.dataset.tier; // 'basic' or 'detailed'
-    if(!state._computed){ $('checkoutStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
-    if(!state._valuation){ $('checkoutStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
-    if(TESTING_FREE_DETAILED && tier === 'detailed'){ openReportOverlay('detailed'); return; }
-    if(isPaidThisSession && paidTier === tier){ openReportOverlay(tier); return; }
-    if(isPaidThisSession && paidTier === 'detailed' && tier === 'basic'){ openReportOverlay('detailed'); return; } // already own the bigger tier
-    startCheckout(tier);
-  });
+// Event delegation on the stable wrapper div, not the buttons themselves —
+// this keeps working even if the buttons ever get re-rendered, and rules
+// out any listener-attachment-timing issue as a cause of a dead click.
+$('reportCtaWrap').addEventListener('click', (e) => {
+  const btn = e.target.closest('.report-cta');
+  if(!btn || btn.disabled) return;
+  const tier = btn.dataset.tier; // 'basic' or 'detailed'
+  if(!state._computed){ $('checkoutStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
+  if(!state._valuation){ $('checkoutStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
+  if(TESTING_FREE_DETAILED && tier === 'detailed'){ openReportOverlay('detailed'); return; }
+  if(isPaidThisSession && paidTier === tier){ openReportOverlay(tier); return; }
+  if(isPaidThisSession && paidTier === 'detailed' && tier === 'basic'){ openReportOverlay('detailed'); return; } // already own the bigger tier
+  startCheckout(tier);
 });
 $('upgradeBtn')?.addEventListener('click', () => startCheckout('upgrade'));
 $('reportCloseBtn').addEventListener('click', () => {
@@ -1450,7 +1452,7 @@ let paidTier = null;
       // "upgrade" unlocks the same report content as "detailed" — it's just
       // priced as the top-up difference rather than the full price.
       const effectiveTier = (rawTier === 'upgrade') ? 'detailed' : rawTier;
-      $((effectiveTier === 'detailed') ? 'genReportDetailed' : 'genReportBasic').textContent = 'View your report';
+      $((effectiveTier === 'detailed') ? 'genReportDetailed' : 'genReportBasic').textContent = (effectiveTier === 'detailed') ? 'View your Certified Prime Report' : 'View your Custom Report';
       try{
         const pending = await appStorage.get('pnl-recast:pendingCheckout', false);
         if(pending){
