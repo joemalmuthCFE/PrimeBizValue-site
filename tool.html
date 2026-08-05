@@ -305,6 +305,14 @@
         </div>
 
         <div id="reportCtaWrap" style="margin-top:20px;">
+          <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1A1206,#241B02);border:1px solid #B8860B;border-radius:12px;padding:12px 16px;margin-bottom:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F3D68A,#B8860B);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#241B02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,.85);line-height:1.5;">
+              <strong style="color:#F3D68A;font-family:'Space Grotesk',sans-serif;">Certified Prime Report</strong> includes the Prime Valuation Certification seal — documented methodology, benchmarked multiple, DSCR sanity check, full transparency. <a href="/certification.html" target="_blank" style="color:#8FADFF;">See the standard →</a>
+            </div>
+          </div>
           <button class="report-cta tier-basic" id="genReportBasic" data-tier="basic">Get your Custom Report — $199</button>
           <button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed">Upgrade to Certified Prime Report — $799</button>
         </div>
@@ -1759,11 +1767,11 @@ function buildReportHTML(tier){
     .brandbar .word{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.01em;}
     .brandbar .word span{color:#2454FF;}
     .tierbadge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:${isDetailed?'#0B0E14':'#EEF2FF'};color:${isDetailed?'#fff':'#2454FF'};}
-    .cert-seal{display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E6E8EC;border-radius:12px;padding:14px 18px;margin-top:16px;}
-    .cert-seal .ring{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2454FF,#0033B8);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px -3px rgba(36,84,255,0.5);}
-    .cert-seal .ring svg{width:22px;height:22px;}
-    .cert-seal .title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#0B0E14;}
-    .cert-seal .sub{font-size:11px;color:#5B6470;margin-top:2px;line-height:1.5;}
+    .cert-seal{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#1A1206,#241B02);border:1px solid #B8860B;border-radius:14px;padding:18px 22px;margin-top:20px;box-shadow:0 10px 26px -12px rgba(184,134,11,0.45);}
+    .cert-seal .ring{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#F3D68A,#B8860B);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px -3px rgba(184,134,11,0.6), inset 0 1px 2px rgba(255,255,255,0.5);}
+    .cert-seal .ring svg{width:26px;height:26px;}
+    .cert-seal .title{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700;color:#F3D68A;letter-spacing:.01em;}
+    .cert-seal .sub{font-size:11.5px;color:rgba(255,255,255,.68);margin-top:4px;line-height:1.55;}
     .cover{background:#F7F8FA;border:1px solid #E6E8EC;border-radius:14px;padding:30px 32px;margin-top:20px;}
     .hero{background:#0B0E14;border-radius:12px;padding:26px 28px;margin-top:18px;text-align:center;position:relative;overflow:hidden;}
     .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 200px at 50% -20%, rgba(36,84,255,0.35), transparent 70%);}
@@ -1796,7 +1804,7 @@ function buildReportHTML(tier){
     </div>
     ${isDetailed ? `
     <div class="cert-seal">
-      <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="#241B02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
       <div>
         <div class="title">Prime Valuation Certification</div>
         <div class="sub">This report meets PrimeBizValue's certification standard: documented recast methodology, a benchmark multiple tied to published Main Street transaction data, a full deal-reality sanity-check review, and complete transparency on every adjustment made. See primebizvalue.com/certification for the full standard.</div>
