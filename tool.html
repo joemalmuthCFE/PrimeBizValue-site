@@ -313,11 +313,6 @@
           <span style="font-size:11px;color:var(--ink-soft);" id="dealName"></span>
         </div>
         <div class="status" id="checkoutStatus" style="margin-top:8px;"></div>
-        <div id="upgradeOffer" style="display:none;background:var(--rust-bg);border:1px solid #C9D6FF;border-radius:8px;padding:12px 14px;margin-top:10px;">
-          <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;">Want the full itemized analysis?</div>
-          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:8px;">Upgrade to the Certified Prime Report for just the $600 difference — no need to pay full price twice.</div>
-          <button class="small" id="upgradeBtn" style="margin:0;">Upgrade to Certified Prime — $600</button>
-        </div>
         <div class="deal-list" id="dealList"></div>
       </div>
     </div>
@@ -332,6 +327,7 @@
       <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #D8D2C2;flex-shrink:0;">
         <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;">Itemized report</span>
         <div>
+          <button class="small" id="reportUpgradeBtn" style="display:none;background:linear-gradient(135deg,#E8C158,#B8860B);color:#241B02;">Upgrade to Certified Prime — $600</button>
           <button class="small" id="reportPrintBtn">Print / Save as PDF</button>
           <button class="small ghost" id="reportCloseBtn">Close</button>
         </div>
@@ -1354,18 +1350,39 @@ const TESTING_FREE_DETAILED = true;
 // Event delegation on the stable wrapper div, not the buttons themselves —
 // this keeps working even if the buttons ever get re-rendered, and rules
 // out any listener-attachment-timing issue as a cause of a dead click.
+// Does the customer already own full Detailed-level access, whether they
+// bought it outright or upgraded into it from Basic?
+function ownsDetailed(){ return isPaidThisSession && (paidTier === 'detailed' || paidTier === 'upgrade'); }
+function ownsBasicOnly(){ return isPaidThisSession && paidTier === 'basic'; }
+
+// Keeps both button labels honest about what they'll actually do/cost —
+// called once at load and again right after any payment confirms.
+function updateReportButtonLabels(){
+  $('genReportBasic').textContent = (ownsBasicOnly() || ownsDetailed()) ? 'View your Custom Report' : 'Get your Custom Report — $199';
+  if(ownsDetailed()) $('genReportDetailed').textContent = 'View your Certified Prime Report';
+  else if(ownsBasicOnly()) $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $600';
+  else $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $799';
+}
+updateReportButtonLabels();
+
 $('reportCtaWrap').addEventListener('click', (e) => {
   const btn = e.target.closest('.report-cta');
   if(!btn || btn.disabled) return;
-  const tier = btn.dataset.tier; // 'basic' or 'detailed'
+  const clickedTier = btn.dataset.tier; // always 'basic' or 'detailed' — never changes
   if(!state._computed){ $('checkoutStatus').textContent = 'Nothing to report yet — parse or enter a P&L first.'; return; }
   if(!state._valuation){ $('checkoutStatus').textContent = 'Parse or enter P&L figures first — the valuation multiple is calculated automatically.'; return; }
-  if(TESTING_FREE_DETAILED && tier === 'detailed'){ openReportOverlay('detailed'); return; }
-  if(isPaidThisSession && paidTier === tier){ openReportOverlay(tier); return; }
-  if(isPaidThisSession && paidTier === 'detailed' && tier === 'basic'){ openReportOverlay('detailed'); return; } // already own the bigger tier
-  startCheckout(tier);
+  if(TESTING_FREE_DETAILED && clickedTier === 'detailed' && !ownsDetailed()){ openReportOverlay('detailed'); return; }
+
+  if(clickedTier === 'basic'){
+    if(ownsBasicOnly() || ownsDetailed()){ openReportOverlay(ownsDetailed() ? 'detailed' : 'basic'); return; }
+    startCheckout('basic');
+    return;
+  }
+  // clickedTier === 'detailed'
+  if(ownsDetailed()){ openReportOverlay('detailed'); return; }
+  if(ownsBasicOnly()){ startCheckout('upgrade'); return; } // charge only the $600 difference
+  startCheckout('detailed'); // nothing owned yet — full price
 });
-$('upgradeBtn')?.addEventListener('click', () => startCheckout('upgrade'));
 $('reportCloseBtn').addEventListener('click', () => {
   $('reportOverlay').style.display = 'none';
 });
@@ -1378,8 +1395,12 @@ function openReportOverlay(tier){
   const html = buildReportHTML(tier || 'detailed');
   $('reportFrame').srcdoc = html;
   $('reportOverlay').style.display = 'block';
+  // Only offer the upgrade while looking at the Basic report, and only if
+  // they don't already own Detailed (bought direct or already upgraded).
+  $('reportUpgradeBtn').style.display = (tier === 'basic' && !ownsDetailed()) ? 'inline-block' : 'none';
   return true;
 }
+$('reportUpgradeBtn').addEventListener('click', () => startCheckout('upgrade'));
 
 async function startCheckout(tier){
   const email = (state.reportInfo.email || '').trim();
@@ -1394,7 +1415,6 @@ async function startCheckout(tier){
   }
   $('genReportBasic').disabled = true;
   $('genReportDetailed').disabled = true;
-  if($('upgradeBtn')) $('upgradeBtn').disabled = true;
   $('checkoutStatus').textContent = 'Redirecting to secure checkout…';
   try{
     // Save everything needed to regenerate this exact report after the
@@ -1422,7 +1442,6 @@ async function startCheckout(tier){
     $('checkoutStatus').textContent = 'Could not start checkout: ' + (e.message || e) + ' — contact hello@primebizvalue.com if this keeps happening.';
     $('genReportBasic').disabled = false;
     $('genReportDetailed').disabled = false;
-    if($('upgradeBtn')) $('upgradeBtn').disabled = false;
   }
 }
 
@@ -1452,7 +1471,7 @@ let paidTier = null;
       // "upgrade" unlocks the same report content as "detailed" — it's just
       // priced as the top-up difference rather than the full price.
       const effectiveTier = (rawTier === 'upgrade') ? 'detailed' : rawTier;
-      $((effectiveTier === 'detailed') ? 'genReportDetailed' : 'genReportBasic').textContent = (effectiveTier === 'detailed') ? 'View your Certified Prime Report' : 'View your Custom Report';
+      updateReportButtonLabels();
       try{
         const pending = await appStorage.get('pnl-recast:pendingCheckout', false);
         if(pending){
@@ -1469,13 +1488,6 @@ let paidTier = null;
         reportEmailSent = false;
       }
       sendReportEmail(effectiveTier);
-      // Only offer the upgrade if they just bought Basic outright — not if
-      // they already own Detailed (bought direct or just upgraded).
-      if(rawTier === 'basic'){
-        $('upgradeOffer').style.display = 'block';
-      } else {
-        $('upgradeOffer').style.display = 'none';
-      }
     } else {
       $('parseStatus').textContent = 'We could not confirm payment for that session. If you were charged, contact hello@primebizvalue.com.';
     }
