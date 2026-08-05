@@ -7,11 +7,14 @@ const Stripe = require('stripe');
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Prices are fixed here, server-side, keyed only by a tier keyword — the
-// client sends "basic" or "detailed", never a dollar amount, so there's no
-// way to tamper with what gets charged.
+// client sends a keyword, never a dollar amount, so there's no way to
+// tamper with what gets charged. "upgrade" is exactly detailed - basic —
+// for a customer who already bought Basic and wants to top up to Detailed
+// without paying full price twice.
 const TIERS = {
   basic:    { amount: 19900, label: 'PrimeBizValue Basic Valuation Report' },
   detailed: { amount: 79900, label: 'PrimeBizValue Detailed Valuation Report' },
+  upgrade:  { amount: 60000, label: 'PrimeBizValue Upgrade — Basic to Detailed Report' },
 };
 
 module.exports = async (req, res) => {
