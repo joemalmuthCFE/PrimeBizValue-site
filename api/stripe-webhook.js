@@ -59,7 +59,8 @@ module.exports = async (req, res) => {
           console.error('Could not look up promotion code:', e.message);
         }
       }
-      const tier = full.metadata?.tier === 'basic' ? 'basic' : 'detailed';
+      const validTiers = ['basic', 'detailed', 'upgrade'];
+      const tier = validTiers.includes(full.metadata?.tier) ? full.metadata.tier : 'detailed';
 
       const amountCharged = (full.amount_total || 0) / 100;
       const discountAmount = discounts.reduce((sum, d) => sum + (d.amount || 0), 0) / 100;
