@@ -5,7 +5,7 @@
 // into the URL to get a free report.
 
 const Stripe = require('stripe');
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
