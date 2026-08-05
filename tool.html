@@ -1413,10 +1413,20 @@ let paidTier = null;
 
 let reportEmailSent = false; // guard against re-sending if the report gets reopened
 async function sendReportEmail(tier){
-  if(reportEmailSent || !state._computed || !state._valuation) return;
+  if(reportEmailSent){ console.log('sendReportEmail: skipped, already sent this session'); return; }
+  if(!state._computed || !state._valuation){
+    console.log('sendReportEmail: skipped, no computed valuation yet');
+    $('checkoutStatus').textContent = 'Report opened, but could not email a copy (no valuation computed). Contact hello@primebizvalue.com.';
+    return;
+  }
   const email = (state.reportInfo.email || '').trim();
-  if(!email) return;
+  if(!email){
+    console.log('sendReportEmail: skipped, no email on file. state.reportInfo:', state.reportInfo);
+    $('checkoutStatus').textContent = 'Report opened, but no email was on file to send a copy to. Contact hello@primebizvalue.com if you\'d like one.';
+    return;
+  }
   reportEmailSent = true;
+  $('checkoutStatus').textContent = 'Emailing your report to ' + email + '…';
   try{
     const html = buildReportHTML(tier);
     const resp = await fetch('/api/send-report-email', {
@@ -1432,10 +1442,13 @@ async function sendReportEmail(tier){
     if(!resp.ok){
       const bodyText = await resp.text().catch(()=> '');
       console.error('Report email send failed:', resp.status, bodyText);
-      $('parseStatus').textContent = 'Payment confirmed — your report is open below. (We couldn\'t email a copy just now — you can still print/save it from the report window.)';
+      $('checkoutStatus').textContent = 'Payment confirmed — your report is open below. (We couldn\'t email a copy just now — you can still print/save it from the report window.)';
+    } else {
+      $('checkoutStatus').textContent = 'Report emailed to ' + email + '.';
     }
   }catch(e){
     console.error('sendReportEmail error:', e);
+    $('checkoutStatus').textContent = 'Payment confirmed — your report is open below. (Emailing a copy failed — you can still print/save it from the report window.)';
   }
 }
 
