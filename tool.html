@@ -1660,6 +1660,11 @@ function buildReportHTML(tier){
     .brandbar .word{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.01em;}
     .brandbar .word span{color:#2454FF;}
     .tierbadge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:${isDetailed?'#0B0E14':'#EEF2FF'};color:${isDetailed?'#fff':'#2454FF'};}
+    .cert-seal{display:flex;align-items:center;gap:12px;background:#F7F8FA;border:1px solid #E6E8EC;border-radius:12px;padding:14px 18px;margin-top:16px;}
+    .cert-seal .ring{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2454FF,#0033B8);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px -3px rgba(36,84,255,0.5);}
+    .cert-seal .ring svg{width:22px;height:22px;}
+    .cert-seal .title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:#0B0E14;}
+    .cert-seal .sub{font-size:11px;color:#5B6470;margin-top:2px;line-height:1.5;}
     .cover{background:#F7F8FA;border:1px solid #E6E8EC;border-radius:14px;padding:30px 32px;margin-top:20px;}
     .hero{background:#0B0E14;border-radius:12px;padding:26px 28px;margin-top:18px;text-align:center;position:relative;overflow:hidden;}
     .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(360px 200px at 50% -20%, rgba(36,84,255,0.35), transparent 70%);}
@@ -1690,6 +1695,15 @@ function buildReportHTML(tier){
       <div class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</div>
       <div class="range">Based on ${basis.toUpperCase()} of ${fmt(v.figure)} × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x (${escapeHtml(base.name)}, adjusted)</div>
     </div>
+    ${isDetailed ? `
+    <div class="cert-seal">
+      <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div>
+        <div class="title">Prime Valuation Certification</div>
+        <div class="sub">This report meets PrimeBizValue's certification standard: documented recast methodology, a benchmark multiple tied to published Main Street transaction data, a full deal-reality sanity-check review, and complete transparency on every adjustment made. See primebizvalue.com/certification for the full standard.</div>
+      </div>
+    </div>
+    ` : ''}
   </div>
 
 ${sectionARecast}
