@@ -58,6 +58,15 @@
 
   .row-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
   .status{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft);margin-top:9px;min-height:14px;line-height:1.5;}
+  .status-loading{display:inline-flex;align-items:flex-start;gap:8px;color:var(--ink-soft);}
+  .status-spinner{width:12px;height:12px;margin-top:1px;border:2px solid rgba(36,84,255,.2);border-top-color:var(--ledger-green);border-radius:50%;animation:statusSpin .7s linear infinite;flex-shrink:0;}
+  @keyframes statusSpin{to{transform:rotate(360deg);}}
+  .status-badge{display:inline-flex;align-items:flex-start;gap:8px;}
+  .status-badge .dot{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .status-badge.ok .dot{background:#DCFCE7;color:#15803D;}
+  .status-badge.ok .lead{color:#15803D;font-weight:700;}
+  .status-badge.warn .dot{background:#FEF3C7;color:#B45309;}
+  .status-badge.warn .lead{color:#B45309;font-weight:700;}
 
   table{width:100%;border-collapse:collapse;font-size:13.5px;}
   th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);border-bottom:1.5px solid var(--ink);padding:8px 6px;}
@@ -311,15 +320,21 @@
         <div id="reportCtaWrap" style="margin-top:20px;">
           <button class="report-cta tier-basic" id="genReportBasic" data-tier="basic">Get your Custom Report — $199</button>
           <div class="next-step-badge"><span class="chevron">↓</span> Next step <span class="chevron">↓</span></div>
-          <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1A1206,#241B02);border:1px solid #B8860B;border-bottom:none;border-radius:12px 12px 0 0;padding:12px 16px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F3D68A,#B8860B);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#241B02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <div id="goldStack" style="cursor:pointer;">
+            <div style="display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1A1206,#241B02);border:1px solid #B8860B;border-bottom:none;border-radius:12px 12px 0 0;padding:12px 16px;pointer-events:none;">
+              <svg viewBox="0 0 100 100" width="40" height="40" style="flex-shrink:0;filter:drop-shadow(0 3px 8px rgba(184,134,11,0.55));">
+                <defs><linearGradient id="sealGradBanner" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F9E2A7"/><stop offset="55%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6508"/></linearGradient></defs>
+                <circle cx="50" cy="50" r="47" fill="none" stroke="url(#sealGradBanner)" stroke-width="2.5" stroke-dasharray="3.4 3.4"/>
+                <circle cx="50" cy="50" r="38" fill="url(#sealGradBanner)"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#7A5A05" stroke-width="1.2" opacity="0.35"/>
+                <path d="M34 51 L45 61 L68 37" fill="none" stroke="#241B02" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div style="font-size:11.5px;color:rgba(255,255,255,.85);line-height:1.5;">
+                <strong style="color:#F3D68A;font-family:'Space Grotesk',sans-serif;">This report carries the Prime Valuation Certification</strong> — the same rigor as a broker opinion of value ($2,500–$10,000+), fully documented and benchmarked, for $799.
+              </div>
             </div>
-            <div style="font-size:11.5px;color:rgba(255,255,255,.85);line-height:1.5;">
-              <strong style="color:#F3D68A;font-family:'Space Grotesk',sans-serif;">This report carries the Prime Valuation Certification</strong> — the same rigor as a broker opinion of value ($2,500–$10,000+), fully documented and benchmarked, for $799.
-            </div>
+            <button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed" style="margin-top:0;border-radius:0 0 12px 12px;">Upgrade to Certified Prime Report — $799</button>
           </div>
-          <button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed" style="margin-top:0;border-radius:0 0 12px 12px;">Upgrade to Certified Prime Report — $799</button>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
           <span style="font-size:11.5px;color:var(--ink-soft);text-decoration:underline;cursor:pointer;" id="saveDeal">Save this recast</span>
@@ -575,13 +590,23 @@ $('addSdeWorksheetRow').addEventListener('click', ()=>{
   renderSdeWorksheet(); computeAndRenderTape();
 });
 
+function setParseStatusLoading(text){
+  $('parseStatus').innerHTML = `<span class="status-loading"><span class="status-spinner"></span>${escapeHtml(text)}</span>`;
+}
+function setParseStatusBadge(kind, leadText, restText){
+  const lead = escapeHtml(leadText);
+  const rest = restText ? ' ' + escapeHtml(restText) : '';
+  const mark = kind === 'ok' ? '✓' : '!';
+  $('parseStatus').innerHTML = `<span class="status-badge ${kind}"><span class="dot">${mark}</span><span><span class="lead">${lead}</span>${rest}</span></span>`;
+}
+
 // ---------- Parsing via Claude ----------
 $('parseBtn').addEventListener('click', () => parseRawText($('rawInput').value.trim()));
 
 async function parseRawText(raw){
   if(!$('confidentialityAck').checked){ $('parseStatus').textContent = 'Please check the box above confirming you understand how your financial information is handled before continuing.'; return; }
   if(!raw){ $('parseStatus').textContent = 'Paste a P&L in first, or drop in a file above.'; return; }
-  $('parseStatus').textContent = 'Reading the statement…';
+  setParseStatusLoading('Reading the statement… this will only take a moment');
   $('parseBtn').disabled = true;
   try{
     const sys = `You extract structured data from small-business profit & loss statements, however messy or partially formatted — including text extracted from PDFs, Word docs, or spreadsheets, which may contain layout artifacts, repeated headers, or multiple columns of years. Return ONLY valid JSON, no markdown fences, no commentary, matching exactly this shape:
@@ -613,7 +638,7 @@ Rules: amounts are positive numbers representing magnitude (never negative). If 
     let text = data.text || '';
     text = text.replace(/```json|```/g,'').trim();
     const parsed = JSON.parse(text);
-    applyParsed(parsed, parsed.notes ? ('Parsed with Claude. ' + parsed.notes) : 'Parsed with Claude — check the lines below.');
+    applyParsed(parsed, parsed.notes || '', 'ok', 'Evaluation Completed!');
     $('debugLine').textContent = '';
   }catch(e){
     console.error('Claude API call failed:', e);
@@ -626,7 +651,7 @@ Rules: amounts are positive numbers representing magnitude (never negative). If 
       try{ parsed = heuristicParse(csvToFlatText(raw)); }catch(e3){ parsed = null; }
     }
     if(parsed){
-      applyParsed(parsed, 'Claude API call failed — used the offline fallback parser instead. Its add-back flags are conservative by design; check every line. (Error detail shown below.)');
+      applyParsed(parsed, 'Used the offline fallback parser instead of Claude. Its add-back flags are conservative by design; check every line. (Error detail shown below.)', 'warn', 'Evaluation Completed —');
     } else {
       $('parseStatus').textContent = 'Could not parse automatically — enter lines manually below.';
       manualStart();
@@ -635,7 +660,7 @@ Rules: amounts are positive numbers representing magnitude (never negative). If 
   $('parseBtn').disabled = false;
 }
 
-function applyParsed(parsed, statusMsg){
+function applyParsed(parsed, statusDetail, statusKind, statusLead){
   state.rev = (parsed.revenue||[]).map(r=>({name:r.name, amount:Number(r.amount)||0}));
   state.cogs = (parsed.cogs||[]).map(r=>({name:r.name, amount:Number(r.amount)||0}));
   state.opex = (parsed.opex||[]).map(r=>({name:r.name, amount:Number(r.amount)||0, addback: !!r.addback_candidate, reason: r.addback_reason||''}));
@@ -646,7 +671,7 @@ function applyParsed(parsed, statusMsg){
   if(!state.rev.length) state.rev = [{name:'Total revenue', amount:0}];
   if(!state.cogs.length) state.cogs = [{name:'COGS', amount:0}];
   state.baseCompManual = false; // fresh P&L — re-auto-select the tier for its SDE
-  $('parseStatus').textContent = statusMsg || 'Parsed — check the lines below.';
+  setParseStatusBadge(statusKind || 'ok', statusLead || 'Evaluation Completed!', statusDetail || 'Check the lines below.');
   render();
 }
 
@@ -800,7 +825,7 @@ dropzone.addEventListener('drop', (e) => { if(e.dataTransfer.files[0]) handleFil
 async function handleFile(file){
   if(!$('confidentialityAck').checked){ $('parseStatus').textContent = 'Please check the box above confirming you understand how your financial information is handled before continuing.'; return; }
   const ext = file.name.split('.').pop().toLowerCase();
-  $('parseStatus').textContent = `Reading ${file.name}…`;
+  setParseStatusLoading(`Reading ${file.name}… this will only take a moment`);
   try{
     let text;
     if(ext === 'csv') text = await readFileAsText(file);
@@ -1398,6 +1423,16 @@ function updateReportButtonLabels(){
 }
 updateReportButtonLabels();
 
+// The cert banner sits on top of the gold button as one visual block, but
+// only the button itself is a real <button>. This makes the whole stack
+// clickable: a click anywhere in the banner area forwards to the button's
+// own click (guarded so a direct click on the button doesn't double-fire).
+$('goldStack').addEventListener('click', (e) => {
+  if(!e.target.closest('.report-cta')){
+    $('genReportDetailed').click();
+  }
+});
+
 $('reportCtaWrap').addEventListener('click', (e) => {
   const btn = e.target.closest('.report-cta');
   if(!btn || btn.disabled) return;
@@ -1793,8 +1828,7 @@ function buildReportHTML(tier){
     .brandbar .word span{color:#2454FF;}
     .tierbadge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:${isDetailed?'#0B0E14':'#EEF2FF'};color:${isDetailed?'#fff':'#2454FF'};}
     .cert-seal{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#1A1206,#241B02);border:1px solid #B8860B;border-radius:14px;padding:18px 22px;margin-top:20px;box-shadow:0 10px 26px -12px rgba(184,134,11,0.45);}
-    .cert-seal .ring{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#F3D68A,#B8860B);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px -3px rgba(184,134,11,0.6), inset 0 1px 2px rgba(255,255,255,0.5);}
-    .cert-seal .ring svg{width:26px;height:26px;}
+    .cert-seal .ring{display:flex;align-items:center;justify-content:center;flex-shrink:0;filter:drop-shadow(0 4px 10px rgba(184,134,11,0.55));}
     .cert-seal .title{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700;color:#F3D68A;letter-spacing:.01em;}
     .cert-seal .sub{font-size:11.5px;color:rgba(255,255,255,.68);margin-top:4px;line-height:1.55;}
     .cover{background:#F7F8FA;border:1px solid #E6E8EC;border-radius:14px;padding:30px 32px;margin-top:20px;}
@@ -1815,7 +1849,7 @@ function buildReportHTML(tier){
 
   <div class="brandbar">
     <div class="word">Prime<span>BizValue</span></div>
-    <span class="tierbadge">${isDetailed?'Detailed Report':'Basic Report'}</span>
+    <span class="tierbadge">${isDetailed?'Prime Certified Detailed Report':'Basic Report'}</span>
   </div>
 
   <div class="cover">
@@ -1829,7 +1863,13 @@ function buildReportHTML(tier){
     </div>
     ${isDetailed ? `
     <div class="cert-seal">
-      <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="#241B02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="ring"><svg viewBox="0 0 100 100" width="52" height="52">
+        <defs><linearGradient id="sealGradReport" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F9E2A7"/><stop offset="55%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6508"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="47" fill="none" stroke="url(#sealGradReport)" stroke-width="2.5" stroke-dasharray="3.4 3.4"/>
+        <circle cx="50" cy="50" r="38" fill="url(#sealGradReport)"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#7A5A05" stroke-width="1.2" opacity="0.35"/>
+        <path d="M34 51 L45 61 L68 37" fill="none" stroke="#241B02" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg></div>
       <div>
         <div class="title">Prime Valuation Certification</div>
         <div class="sub">This report meets PrimeBizValue's certification standard: documented recast methodology, a benchmark multiple tied to published Main Street transaction data, a full deal-reality sanity-check review, and complete transparency on every adjustment made. See primebizvalue.com/certification for the full standard.</div>
