@@ -197,9 +197,8 @@
     padding:12px 16px; margin:0 0 22px;
   }
   .cert-chip .ring{
-    width:32px; height:32px; border-radius:50%; flex-shrink:0;
-    background:linear-gradient(135deg,#F3D68A,#B8860B);
-    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    filter:drop-shadow(0 3px 8px rgba(184,134,11,0.5));
   }
   .cert-chip .txt{font-size:12px; color:rgba(255,255,255,0.75); line-height:1.5;}
   .cert-chip .txt strong{color:#F3D68A; font-family:'Space Grotesk',sans-serif; display:block; font-size:12.5px; margin-bottom:1px;}
@@ -318,7 +317,13 @@
         <p class="p-amt">$799</p>
         <p class="p-compare">Everything in Basic, plus the full itemized recast worksheet, SBA financing &amp; DSCR analysis, and a closing cash-to-seller breakdown. Compare to a broker opinion of value: typically $2,500&ndash;$10,000+</p>
         <div class="cert-chip">
-          <div class="ring"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#241B02" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <div class="ring"><svg viewBox="0 0 100 100" width="34" height="34">
+            <defs><linearGradient id="sealGradHome" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F9E2A7"/><stop offset="55%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6508"/></linearGradient></defs>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="url(#sealGradHome)" stroke-width="3" stroke-dasharray="3.6 3.6"/>
+            <circle cx="50" cy="50" r="38" fill="url(#sealGradHome)"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#7A5A05" stroke-width="1.4" opacity="0.35"/>
+            <path d="M34 51 L45 61 L68 37" fill="none" stroke="#241B02" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div>
           <div class="txt"><strong>Prime Valuation Certification</strong>Our transparent standard for a rigorous recast — <a href="/certification.html">see it</a></div>
         </div>
         <a href="/tool.html?tier=detailed" class="cta-primary">Get the detailed report</a>
