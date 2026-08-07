@@ -1353,7 +1353,7 @@ function renderDscrPreview(){
 // Detailed ($799) button skips Stripe checkout entirely and opens the
 // report directly, so the report itself can be tested without running
 // real (or even test-mode) payments each time. Does NOT affect Basic.
-const TESTING_FREE_DETAILED = true;
+const TESTING_FREE_DETAILED = false;
 
 // Event delegation on the stable wrapper div, not the buttons themselves —
 // this keeps working even if the buttons ever get re-rendered, and rules
