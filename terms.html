@@ -50,31 +50,10 @@
   strong{color:var(--text);}
   .lede{font-size:17px; color:var(--text-secondary); max-width:60ch;}
 
-  details{border:1px solid var(--border); border-radius:10px; padding:16px 18px; margin-bottom:12px; background:var(--surface);}
-  summary{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;}
-  summary::-webkit-details-marker{display:none;}
-  summary::after{content:'+'; font-size:20px; color:var(--accent); font-weight:400; margin-left:12px;}
-  details[open] summary::after{content:'−';}
-  details p{margin-top:12px; margin-bottom:0;}
+  .attorney-note{background:#FFFBEB; border:1px solid #FDE68A; border-radius:10px; padding:16px 18px; margin-bottom:28px;}
+  .attorney-note p{margin:0; font-size:13.5px; color:#92400E;}
 
-  .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 26px; margin-bottom:20px;}
-
-  form .field{margin-bottom:16px;}
-  form label{display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px;}
-  form input, form select{width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-family:'Inter',sans-serif; background:#fff;}
-  form input:focus, form select:focus{border-color:var(--accent);}
-  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-  @media (max-width:600px){.field-row{grid-template-columns:1fr;}}
-  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:18px 0 20px;}
-  .consent-row input{width:auto; margin-top:3px;}
-  .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
-  .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-weight:600; font-size:15px; cursor:pointer; transition:background .15s ease;}
-  .submit-btn:hover{background:var(--accent-2);}
-
-  .contact-card{display:flex; align-items:center; justify-content:space-between; background:var(--text); color:#fff; border-radius:14px; padding:30px 32px; flex-wrap:wrap; gap:16px;}
-  .contact-card h3{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
-  .contact-card p{color:rgba(255,255,255,.7); margin:0; font-size:14px;}
-  .contact-card a.email-btn{background:var(--accent); color:#fff; padding:12px 24px; border-radius:9px; text-decoration:none; font-weight:600; font-size:14.5px; white-space:nowrap;}
+  address{font-style:normal;}
 
   footer{padding:32px 0 44px; border-top:1px solid var(--border); margin-top:40px;}
   .foot-row{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:18px; max-width:1080px; margin:0 auto; padding:0 24px;}
@@ -102,47 +81,193 @@
   <div class="wrap">
     <span class="kicker">Legal</span>
     <h1>Terms of Service</h1>
-    <p class="updated">Last updated: August 2026</p>
+    <p class="updated">Last updated: [DATE OF LAUNCH — set this before publishing]</p>
 
-    <p class="lede">These Terms of Service ("Terms") govern your use of PrimeBizValue.com (the "Site") and the valuation reports and tools we provide (the "Service"), operated by PrimeBizValue ("we," "us," "our"). By using the Site or purchasing a report, you agree to these Terms.</p>
+    <div class="attorney-note">
+      <p><strong>Not yet reviewed by counsel.</strong> This draft has not been signed off by a Florida-licensed attorney. Do not publish this page live until that review is complete — the arbitration clause, class-action waiver, and liability caps below are exactly the provisions courts scrutinize hardest, and enforceability depends on details (venue, arbitration provider, opt-out mechanics) an attorney needs to confirm.</p>
+    </div>
 
-    <h2>1. What the Service Is</h2>
-    <p>PrimeBizValue provides an automated, informational business valuation tool. You submit financial information (such as a profit &amp; loss statement), and the Service generates a recast of your financials, an estimated Seller's Discretionary Earnings (SDE) or Adjusted EBITDA figure, and an estimated valuation range based on a fixed set of Main Street business-size multiples.</p>
-    <p><strong>This is not a certified business valuation, formal appraisal, fairness opinion, or offer of financing.</strong> It has not been reviewed by a CPA, licensed business appraiser, or lender. It is intended as a directional planning tool, not a substitute for professional advice.</p>
+    <p class="lede">These Terms of Service ("Terms") are a legally binding agreement between you ("you," "your," or "User") and <strong>Rebellious Franchising LLC</strong>, a Florida limited liability company doing business as <strong>PrimeBizValue</strong> ("PrimeBizValue," "we," "us," or "our"), governing your access to and use of PrimeBizValue.com and any related websites, applications, valuation tools, reports, and services (collectively, the "Service").</p>
 
-    <h2>2. Eligibility &amp; Accounts</h2>
-    <p>You must be at least 18 years old and legally able to enter into these Terms to use the Service. You're responsible for the accuracy of any financial information you submit — the Service's output is only as reliable as the numbers it's given.</p>
+    <p>By accessing the Service, submitting information, purchasing a report, checking an acceptance box, or otherwise using the Service, you agree to these Terms and our <a href="/privacy.html">Privacy Policy</a>. <strong>If you do not agree, do not use the Service.</strong></p>
 
-    <h2>3. Payment &amp; Refunds</h2>
-    <p>Reports are sold on a one-time, flat-fee basis as stated at checkout. Payments are processed securely through Stripe; we do not store your full payment card details.</p>
-    <p>Because a report is generated and delivered instantly upon submission, purchases are generally final. If a technical error on our end prevents your report from generating or being delivered, contact us and we'll make it right — either by fixing the issue and delivering your report, or issuing a refund.</p>
+    <p>This is a clickwrap agreement: your affirmative action (checking a box, clicking "Purchase," or submitting financial data for analysis) constitutes acceptance and creates a binding contract.</p>
 
-    <h2>4. Acceptable Use</h2>
-    <p>You agree not to: use the Service for any unlawful purpose; attempt to reverse-engineer, scrape, or resell the Service; submit financial data that isn't yours or that you aren't authorized to submit for valuation purposes; or interfere with the Service's operation or security.</p>
+    <h2>1. What PrimeBizValue Is — and Is Not</h2>
+    <p>PrimeBizValue provides an automated business valuation estimation and financial-analysis service for informational and business-planning purposes only.</p>
+    <p>Depending on the information you submit, the Service may normalize financial statements, identify potential adjustments or add-backs, estimate Seller's Discretionary Earnings ("SDE"), Adjusted EBITDA, or similar metrics, and generate an estimated valuation range using PrimeBizValue's proprietary methodology, benchmarks, and (in part) artificial-intelligence-assisted analysis.</p>
+    <p><strong>PrimeBizValue is not a certified appraisal service, and no report is a substitute for one.</strong> Unless we expressly agree otherwise in a separate signed writing, no report or output generated through the Service constitutes, and may not be represented as:</p>
+    <ul>
+      <li>a certified business valuation or formal appraisal;</li>
+      <li>a broker opinion of value, fairness opinion, or solvency opinion;</li>
+      <li>a tax, litigation, or securities valuation;</li>
+      <li>a lender-approved valuation or financing commitment;</li>
+      <li>a determination of fair market value under any legal or regulatory standard;</li>
+      <li>an offer or recommendation to buy, sell, finance, or invest in any business; or</li>
+      <li>professional accounting, tax, legal, or investment advice.</li>
+    </ul>
+    <p>We are not acting as your accountant, CPA, attorney, financial adviser, lender, business broker, investment banker, fiduciary, or certified valuation professional. <strong>No professional, advisory, or fiduciary relationship is created by your use of the Service, regardless of how a report is worded, formatted, certified, or badged</strong> (including any "Prime Valuation Certification" mark, which reflects PrimeBizValue's own self-defined transparency standard and is not a third-party accreditation, government license, or industry-board certification).</p>
 
-    <h2>5. Intellectual Property</h2>
-    <p>The Site, the valuation tool, our report formatting and methodology, and all associated content are owned by PrimeBizValue. Your report is yours to use for your own business purposes once purchased, but the underlying tool and methodology remain our property.</p>
+    <h2>2. Valuation Estimates Are Inherently Uncertain — Read This Before You Rely on Anything</h2>
+    <p>Business valuation is inherently subjective. Two qualified professionals examining the same business, on the same day, with the same financials, may reach materially different conclusions. Actual transaction value depends on factors the Service does not and cannot evaluate — buyer demand, financing terms, industry conditions, geography, customer concentration, management dependence, intellectual property, lease terms, pending litigation, tax structure, working capital, prevailing market conditions, and negotiation dynamics.</p>
+    <p>Accordingly, <strong>PrimeBizValue makes no guarantee, express or implied, regarding:</strong></p>
+    <ul>
+      <li>the accuracy of any valuation estimate, financial recasting, or normalization;</li>
+      <li>whether a suggested adjustment or add-back will be accepted by any buyer, lender, accountant, or valuation professional;</li>
+      <li>whether a business can be sold within, at, or near the estimated range;</li>
+      <li>whether financing will be available on the basis of the report;</li>
+      <li>whether any third party will agree with, rely on, or accept the report; or</li>
+      <li>whether a future valuation of the same business will produce a similar result.</li>
+    </ul>
+    <p>Every report is a directional estimate reflecting the information, assumptions, methodology, and technology in use <strong>at the moment it was generated.</strong> It is not a prediction, warranty, or guarantee of any transaction outcome, and you assume all risk associated with any decision made in reliance on it.</p>
 
-    <h2>6. Third-Party Services</h2>
-    <p>The Service uses third-party providers to operate, including Stripe (payment processing) and Anthropic's Claude AI (to help parse and structure the financial data you submit). By using the Service, you consent to your submitted data being processed by these providers as described in our <a href="/privacy.html">Privacy Policy</a>.</p>
+    <h2>3. No Third-Party Reliance</h2>
+    <p>Reports are prepared solely for the informational use of the purchaser and its authorized representatives. Unless we expressly agree otherwise in writing, <strong>no third party — including any prospective buyer, lender, investor, shareholder, partner, government authority, court, insurer, or professional adviser — is entitled to rely on a PrimeBizValue report</strong>, and PrimeBizValue owes no duty of care to any such third party.</p>
+    <p>You may share a report for legitimate business-discussion purposes, but you may not state or imply that PrimeBizValue has certified, audited, appraised, guaranteed, or independently verified the business or its value. You are solely responsible for accurately describing the nature and limitations of any report you share.</p>
 
-    <h2>7. Disclaimer of Warranties</h2>
-    <p>The Service is provided "as is" and "as available," without warranties of any kind, express or implied. We do not warrant that the valuation figures are accurate, complete, or suitable for any particular transaction, financing application, or legal proceeding. Nothing in the Service constitutes legal, tax, financial, or investment advice.</p>
+    <h2>4. Your Information and Your Responsibilities</h2>
+    <p>Report quality depends entirely on the completeness and accuracy of what you submit. You are solely responsible for reviewing your submitted information and determining whether it is accurate, complete, and appropriate for analysis. We are under no obligation to independently audit, verify, or authenticate anything you submit.</p>
+    <p>By submitting information, you represent and warrant that:</p>
+    <ol>
+      <li>it is accurate to the best of your knowledge;</li>
+      <li>you have the legal right and authority to provide it;</li>
+      <li>submitting it does not violate any confidentiality obligation, law, or third-party right; and</li>
+      <li>you are authorized to request an analysis of the business in question.</li>
+    </ol>
+    <p>Do not submit information belonging to another business, person, or entity unless you are authorized to do so. <strong>You are solely and fully responsible for any consequence of submitting information you were not authorized to submit</strong>, and this obligation survives regardless of anything else stated in these Terms.</p>
 
-    <h2>8. Limitation of Liability</h2>
-    <p>To the fullest extent permitted by law, PrimeBizValue and its owners, employees, and contractors will not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Service, including decisions made based on a valuation estimate. Our total liability for any claim relating to the Service is limited to the amount you paid for the report giving rise to the claim.</p>
+    <h2>5. Automated Systems and Artificial Intelligence</h2>
+    <p>Portions of the Service use automated systems, algorithms, and artificial intelligence — including third-party AI models — to extract, interpret, categorize, normalize, and analyze the information you submit.</p>
+    <p><strong>Automated and AI systems make mistakes.</strong> An automated system may misclassify an expense, overlook relevant context, misread a financial statement, suggest an inappropriate adjustment, generate output that appears more definitive than it is, or otherwise err in ways that are difficult to predict. AI-generated content is probabilistic in nature, not a deterministic calculation, and PrimeBizValue does not warrant that any AI-assisted output is correct, complete, or free of error.</p>
+    <p>You are solely responsible for reviewing your report and independently assessing whether its assumptions, classifications, and conclusions are reasonable before relying on it for any purpose. PrimeBizValue may use third-party AI and technology providers to help deliver the Service, as further described in our <a href="/privacy.html">Privacy Policy</a>.</p>
 
-    <h2>9. Indemnification</h2>
-    <p>You agree to indemnify and hold harmless PrimeBizValue from any claims, damages, or expenses arising from your misuse of the Service or violation of these Terms.</p>
+    <h2>6. Professional Review Is Required, Not Optional</h2>
+    <p>PrimeBizValue exists to help business owners get a directional read on value and prepare for informed conversations with professional advisers. <strong>It is a starting point, not a substitute, for professional advice.</strong></p>
+    <p>Before making any material transaction, financing, tax, investment, estate-planning, or legal decision that touches on business value, you must consult qualified, licensed professionals appropriate to that decision. PrimeBizValue disclaims any responsibility for decisions made without such consultation.</p>
 
-    <h2>10. Governing Law</h2>
-    <p>These Terms are governed by the laws of the <strong>State of Florida</strong>, without regard to conflict-of-law principles.</p>
+    <h2>7. Assumption of Risk</h2>
+    <p>By using the Service, you acknowledge and voluntarily assume all risks associated with reliance on an automated, non-certified, informational valuation tool, including the risk that the report's estimate diverges materially from actual market value, transaction price, lender assessment, or any professional appraisal. You agree that PrimeBizValue's role is limited to providing an estimative analytical tool, and that all business, financial, and legal decisions remain entirely your own responsibility.</p>
 
-    <h2>11. Changes to These Terms</h2>
-    <p>We may update these Terms from time to time. Continued use of the Service after changes take effect constitutes acceptance of the updated Terms.</p>
+    <h2>8. Eligibility</h2>
+    <p>You must be at least 18 years old and legally capable of entering a binding agreement to use the Service. The Service is intended for business and commercial purposes and is not designed as a personal, family, or household financial-planning product. If you use the Service on behalf of a company, partnership, or other organization, you represent that you are authorized to bind that organization to these Terms.</p>
 
-    <h2>12. Contact</h2>
-    <p>Questions about these Terms? Reach us at <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> or visit our <a href="/contact.html">Contact page</a>.</p>
+    <h2>9. Purchases, Payments, and Refunds</h2>
+    <p>Prices are displayed before purchase and may change at any time without notice to past purchasers. Payments are processed through third-party payment processors (currently Stripe); PrimeBizValue does not receive or store complete payment-card credentials.</p>
+    <p>Unless stated otherwise at checkout, reports are sold for a one-time fee per tier. <strong>Because report generation begins immediately upon submission, completed purchases are final and non-refundable</strong>, except that if a technical malfunction attributable to PrimeBizValue prevents a purchased report from being generated or delivered, we may, at our sole discretion: (a) correct the issue and regenerate the report; (b) provide a replacement report; or (c) refund the purchase price. This is your sole and exclusive remedy for a non-delivered report. Nothing here limits any non-waivable right available under applicable law. If you believe you were charged in error, contact us promptly at the email below.</p>
+
+    <h2>10. License to Use Your Report</h2>
+    <p>Subject to these Terms and full payment, PrimeBizValue grants you a non-exclusive, non-transferable, revocable license to use your completed report for your own legitimate internal and business purposes, and to share copies with your professional advisers or prospective transaction counterparties who have a legitimate reason to review it.</p>
+    <p>You may not:</p>
+    <ul>
+      <li>resell a PrimeBizValue report as your own valuation product;</li>
+      <li>remove, obscure, or alter any disclaimer, certification language, or attribution;</li>
+      <li>edit a report in any way that misrepresents its content or PrimeBizValue's conclusions;</li>
+      <li>represent a report as certified, audited, or independently verified by any party other than PrimeBizValue's own self-defined standard;</li>
+      <li>use a report to deceive, defraud, or mislead any person; or</li>
+      <li>use a report, or the Service generally, to reproduce, reverse-engineer, or build a competing valuation methodology or product.</li>
+    </ul>
+
+    <h2>11. Intellectual Property</h2>
+    <p>The Service — including its software, algorithms, valuation framework, methodology, formulas, prompts, workflows, benchmarks, report architecture and design, the "Prime Valuation Certification" mark and standard, branding, and all other content — is owned by PrimeBizValue or its licensors and protected by applicable intellectual-property law. No rights are transferred to you except the limited license expressly stated in Section 10.</p>
+    <p>You may not copy, scrape, systematically extract, reverse-engineer, decompile, train any machine-learning or AI system on, create derivative works from, or otherwise attempt to discover, replicate, or reconstruct the underlying operation, prompts, or methodology of the Service, except where such a restriction is prohibited by applicable law.</p>
+
+    <h2>12. License to Process Your Submitted Information</h2>
+    <p>You retain ownership of the information and documents you submit. You grant PrimeBizValue a limited, worldwide, non-exclusive license to host, copy, transmit, convert, extract, analyze, and otherwise process your submitted information as reasonably necessary to provide the Service, generate your report, maintain and secure the Service, detect and prevent fraud, troubleshoot technical issues, and comply with applicable law. Our handling of personal information is further governed by our <a href="/privacy.html">Privacy Policy</a>.</p>
+
+    <h2>13. Data Security</h2>
+    <p>We use commercially reasonable administrative, technical, and physical safeguards designed to protect submitted information. <strong>No system is completely secure, and we cannot and do not guarantee that unauthorized access, disclosure, alteration, or loss of data will never occur.</strong> To the maximum extent permitted by law, PrimeBizValue's liability for any data-security incident is governed exclusively by the Limitation of Liability in Section 19, regardless of the legal theory asserted.</p>
+
+    <h2>14. Electronic Communications and Records</h2>
+    <p>You consent to receive communications from PrimeBizValue electronically, including via email, and agree that any notice, disclosure, agreement, or other communication we provide electronically satisfies any legal requirement that such communication be in writing. This consent is given under, and these Terms are intended to satisfy, the U.S. Electronic Signatures in Global and National Commerce Act (E-SIGN).</p>
+
+    <h2>15. Acceptable Use</h2>
+    <p>You may not use the Service to:</p>
+    <ul>
+      <li>violate any law or regulation;</li>
+      <li>infringe any person's intellectual-property, privacy, confidentiality, or contractual rights;</li>
+      <li>submit financial information you are not authorized to submit;</li>
+      <li>impersonate another person or business;</li>
+      <li>generate fraudulent, deceptive, or misleading valuation materials;</li>
+      <li>misrepresent a report as a certified appraisal or third-party-accredited professional valuation;</li>
+      <li>obtain unauthorized access to the Service or circumvent any access control or security feature;</li>
+      <li>introduce malicious code or interfere with Service infrastructure;</li>
+      <li>scrape, systematically extract, or reverse-engineer the Service or any of its output at scale;</li>
+      <li>benchmark, analyze, or reconstruct the Service for the purpose of building a materially competing product;</li>
+      <li>resell access to the Service without authorization;</li>
+      <li>use the Service, or any output of the Service, to train, fine-tune, or evaluate any machine-learning or AI model; or</li>
+      <li>use automated means (bots, scripts, scrapers) to access the Service except as we expressly authorize.</li>
+    </ul>
+    <p>We may suspend or terminate access whenever we reasonably believe these Terms have been violated or the Service is being used in a manner that creates legal, security, reputational, or operational risk to PrimeBizValue.</p>
+
+    <h2>16. Third-Party Services</h2>
+    <p>PrimeBizValue relies on third-party providers — including payment processing (Stripe), hosting and cloud infrastructure, artificial intelligence, email delivery, and analytics — to operate the Service. Third-party services are governed by their own terms and policies. <strong>We do not control, and are not responsible for, outages, errors, security incidents, or other failures of any third-party system beyond our reasonable control</strong>, including any AI provider whose model powers our analytical output.</p>
+
+    <h2>17. Service Availability and Changes</h2>
+    <p>We may modify, update, suspend, discontinue, or replace any part of the Service at any time, without obligation to maintain any particular feature, methodology, multiple, assumption, data source, or report format indefinitely. We do not guarantee the Service will be available, uninterrupted, or error-free, or that it will be compatible with every document format, accounting system, browser, or device. We may correct errors in reports, calculations, software, or content whenever discovered, including retroactively where necessary to prevent further reliance on erroneous output.</p>
+
+    <h2>18. Disclaimer of Warranties</h2>
+    <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SERVICE AND ALL REPORTS ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY KIND.</strong></p>
+    <p>PrimeBizValue disclaims all warranties, express, implied, or statutory, including warranties of merchantability, fitness for a particular purpose, title, non-infringement, accuracy, and availability. Without limiting the foregoing, we do not warrant that any report is accurate or complete; that any adjustment, add-back, or methodology is appropriate for your particular business; that any estimated value will be accepted by any third party; that the Service will identify every relevant financial consideration; that the Service will be uninterrupted or error-free; or that use of the Service will produce any particular business or financial outcome.</p>
+    <p>Some jurisdictions do not permit certain warranty exclusions; in those jurisdictions, exclusions apply only to the extent legally permitted.</p>
+
+    <h2>19. Limitation of Liability</h2>
+    <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY LAW, PRIMEBIZVALUE, REBELLIOUS FRANCHISING LLC, AND THEIR AFFILIATES, OWNERS, OFFICERS, MEMBERS, EMPLOYEES, CONTRACTORS, LICENSORS, AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL DAMAGES, OR FOR LOST PROFITS, LOST BUSINESS OPPORTUNITIES, LOSS OF GOODWILL, LOSS OF DATA, LOSS OF FINANCING, FAILED TRANSACTIONS, OR DIMINUTION IN BUSINESS VALUE, ARISING OUT OF OR RELATING TO THE SERVICE OR ANY REPORT — REGARDLESS OF LEGAL THEORY, AND EVEN IF WE WERE ADVISED SUCH DAMAGES WERE POSSIBLE.</strong></p>
+    <p><strong>PRIMEBIZVALUE'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATING TO A PARTICULAR REPORT OR USE OF THE SERVICE WILL NOT EXCEED THE AMOUNT YOU ACTUALLY PAID TO PRIMEBIZVALUE FOR THE REPORT OR SERVICE GIVING RISE TO THE CLAIM.</strong></p>
+    <p>These limitations are an essential basis of the bargain between you and PrimeBizValue and apply even if any limited remedy fails of its essential purpose. Nothing in these Terms excludes liability that cannot lawfully be excluded or limited.</p>
+
+    <h2>20. Indemnification</h2>
+    <p>To the fullest extent permitted by law, you agree to defend, indemnify, and hold harmless PrimeBizValue, Rebellious Franchising LLC, and their affiliates, owners, officers, members, employees, and contractors from any claim, liability, damage, judgment, loss, cost, or reasonable attorneys' fees arising from or relating to: (a) your violation of these Terms; (b) information you submitted without authorization; (c) your misuse of the Service or a report; (d) your misrepresentation of a report's nature or conclusions to any third party; (e) your violation of another person's rights; or (f) unlawful or fraudulent activity conducted through your use of the Service. We reserve the right to control the defense of any indemnified matter.</p>
+
+    <h2>21. Dispute Resolution and Binding Individual Arbitration</h2>
+    <p><strong>PLEASE READ THIS SECTION CAREFULLY. IT AFFECTS YOUR LEGAL RIGHTS AND REQUIRES MOST DISPUTES TO BE RESOLVED THROUGH INDIVIDUAL ARBITRATION RATHER THAN IN COURT.</strong></p>
+    <p><strong>a. Scope.</strong> Except for (i) claims eligible for small-claims court, and (ii) claims for injunctive or equitable relief relating to intellectual property, security, fraud, or unauthorized access, any dispute arising out of or relating to these Terms, the Service, or a PrimeBizValue report will be resolved exclusively through binding, individual arbitration.</p>
+    <p><strong>b. Rules and Provider.</strong> The arbitration will be administered by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules then in effect, and governed by the Federal Arbitration Act. Unless the parties agree otherwise, arbitration will be conducted remotely or in Palm Beach County, Florida. Where consistent with AAA rules, PrimeBizValue will pay arbitration filing fees for individual (non-mass-filed) consumer claims under the amount AAA designates for its expedited procedures.</p>
+    <p><strong>c. Opt-Out Right.</strong> You may opt out of this arbitration provision by sending written notice to <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> within 30 days of first accepting these Terms, stating your name and a clear statement that you decline to be bound by this arbitration provision. If you opt out, this arbitration provision will not apply to you, but every other part of these Terms remains in effect.</p>
+    <p><strong>d. No Class, Collective, or Representative Actions.</strong> YOU AND PRIMEBIZVALUE AGREE THAT CLAIMS MAY BE BROUGHT ONLY IN AN INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF, CLAIMANT, OR CLASS MEMBER IN ANY PURPORTED CLASS, COLLECTIVE, CONSOLIDATED, OR REPRESENTATIVE PROCEEDING. The arbitrator has no authority to consolidate more than one person's claims and may not otherwise preside over any form of representative or class proceeding.</p>
+    <p><strong>e. Mass Filing / Batch Procedures.</strong> If 25 or more similar arbitration demands are filed against PrimeBizValue by or with the assistance of the same law firm or coordinated group of claimants within a 60-day period, the parties agree such claims will be resolved through a batched, bellwether process (with a small number of representative claims arbitrated first, and the results informing resolution of the remainder), and applicable AAA mass-arbitration procedures and fee schedules will govern in place of standard individual filing procedures.</p>
+    <p><strong>f. Jury Trial Waiver.</strong> TO THE EXTENT ANY DISPUTE IS PERMITTED TO PROCEED IN COURT, YOU AND PRIMEBIZVALUE EACH WAIVE THE RIGHT TO A TRIAL BY JURY TO THE MAXIMUM EXTENT PERMITTED BY LAW.</p>
+    <p><strong>g. Severability of This Section.</strong> If any part of this arbitration provision (other than the class-action waiver in subsection d) is found unenforceable, the remainder will be severed and remain in effect. If the class-action waiver in subsection (d) is found unenforceable as to a particular claim, that claim (and only that claim) must be litigated in court under Section 22, and all other claims remain subject to individual arbitration.</p>
+
+    <div class="attorney-note">
+      <p><strong>Attorney note:</strong> confirm AAA vs. JAMS based on counsel's relationship/cost preference, confirm the 30-day opt-out email address is monitored, and confirm mass-filing thresholds against current AAA supplementary rules before publishing.</p>
+    </div>
+
+    <h2>22. Governing Law and Venue</h2>
+    <p>These Terms are governed by the laws of the State of Florida, without regard to conflict-of-laws principles, except where federal law governs a particular issue. For any dispute not subject to arbitration under Section 21, you consent to the exclusive jurisdiction and venue of the state and federal courts located in Palm Beach County, Florida, and waive any objection to personal jurisdiction or venue there.</p>
+
+    <h2>23. Attorneys' Fees</h2>
+    <p>In any arbitration or court proceeding to enforce or interpret these Terms (other than small-claims actions), the prevailing party is entitled to recover its reasonable attorneys' fees and costs from the non-prevailing party, to the extent permitted by applicable law and the applicable arbitral rules.</p>
+
+    <h2>24. Changes to These Terms</h2>
+    <p>We may update these Terms at any time. When we make a material change, we will update the "Last Updated" date and provide any additional notice required by law. Changes apply prospectively. Your continued use of the Service after revised Terms take effect constitutes acceptance of those Terms; if you do not agree to a revision, your sole remedy is to stop using the Service.</p>
+
+    <h2>25. Termination</h2>
+    <p>You may stop using the Service at any time. We may suspend or terminate your access if we reasonably believe you have violated these Terms, created legal or security risk, engaged in fraud or abuse, or used the Service inconsistently with its intended purpose. Sections that by their nature should survive termination — including Intellectual Property, Disclaimers, Limitation of Liability, Indemnification, Dispute Resolution, and Governing Law — survive.</p>
+
+    <h2>26. Force Majeure</h2>
+    <p>PrimeBizValue is not responsible for delays or failures caused by events outside our reasonable control, including internet or telecommunications failures, cloud-provider or hosting outages, AI-model-provider outages or discontinuations, payment-processor outages, cyberattacks, natural disasters, governmental action, labor disruption, power failure, or failure of any third-party technology provider on which the Service depends.</p>
+
+    <h2>27. Assignment</h2>
+    <p>You may not assign or transfer your rights or obligations under these Terms without our prior written consent. We may assign these Terms, in whole or in part, in connection with a merger, acquisition, financing, reorganization, sale of assets, or transfer of the Service, without your consent.</p>
+
+    <h2>28. Severability</h2>
+    <p>If any provision of these Terms is found invalid or unenforceable, that provision will be enforced to the maximum extent legally permitted, and the remaining provisions remain in full effect. (See Section 21(g) for the arbitration-specific severability rule.)</p>
+
+    <h2>29. No Waiver</h2>
+    <p>Our failure to enforce any provision of these Terms does not waive our right to enforce that provision, or any other provision, at a later time.</p>
+
+    <h2>30. Entire Agreement</h2>
+    <p>These Terms, together with our <a href="/privacy.html">Privacy Policy</a> and any additional terms expressly presented in connection with a specific part of the Service, constitute the entire agreement between you and PrimeBizValue regarding your use of the Service, and supersede any prior agreement or communication on the same subject.</p>
+
+    <h2>31. Contact</h2>
+    <p>Questions about these Terms:</p>
+    <address>
+      <strong>PrimeBizValue</strong><br>
+      Rebellious Franchising LLC, d/b/a PrimeBizValue<br>
+      14635 Heights Blvd<br>
+      Jupiter, FL 33458
+    </address>
+    <p><strong>Email:</strong> <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a></p>
   </div>
 </main>
 
