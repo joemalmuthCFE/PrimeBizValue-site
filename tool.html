@@ -111,12 +111,16 @@
 
   .report-cta{display:block;width:100%;padding:16px 20px;border-radius:12px;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;text-align:center;cursor:pointer;border:none;margin-top:10px;transition:transform .15s ease, box-shadow .15s ease;}
   .report-cta:first-child{margin-top:0;}
-  .report-cta.tier-basic{background:#fff;color:var(--ink);border:2px solid var(--ink);}
+  .report-cta.tier-basic{background:#fff;color:var(--ink-soft);border:1px solid var(--hairline);font-weight:600;font-size:14px;padding:13px 20px;}
   .report-cta.tier-basic:hover{background:var(--paper-dark);}
-  .report-cta.tier-gold{background:linear-gradient(135deg,#E8C158,#B8860B);color:#241B02;box-shadow:0 12px 26px -10px rgba(184,134,11,0.55);}
-  .report-cta.tier-gold:hover{transform:translateY(-1px); box-shadow:0 16px 32px -10px rgba(184,134,11,0.65);}
+  .report-cta.tier-gold{background:linear-gradient(135deg,#E8C158,#B8860B);color:#241B02;font-size:17px;padding:20px 20px;box-shadow:0 12px 26px -10px rgba(184,134,11,0.55);animation:goldPulse 2.4s ease-in-out infinite;}
+  .report-cta.tier-gold:hover{transform:translateY(-1px); box-shadow:0 18px 36px -8px rgba(184,134,11,0.75); animation-play-state:paused;}
+  @keyframes goldPulse{0%,100%{box-shadow:0 12px 26px -10px rgba(184,134,11,0.55);}50%{box-shadow:0 16px 38px -8px rgba(184,134,11,0.9);}}
+  .next-step-badge{display:flex;align-items:center;justify-content:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#B8860B;margin:16px 0 4px;}
+  .next-step-badge .chevron{display:inline-block;animation:chevronBounce 1.3s ease-in-out infinite;}
+  @keyframes chevronBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
   .report-cta.recommended{box-shadow:0 0 0 3px var(--rust), 0 12px 26px -10px rgba(36,84,255,0.4);}
-  .report-cta:disabled{opacity:.55; cursor:default; transform:none;}
+  .report-cta:disabled{opacity:.55; cursor:default; transform:none; animation:none;}
   .deal-list{max-height:180px;overflow-y:auto;margin-top:9px;}
   .deal-item{display:flex;justify-content:space-between;font-size:12.5px;padding:7px 5px;border-bottom:1px solid var(--hairline);cursor:pointer;border-radius:6px;transition:background .1s;}
   .deal-item:hover{background:var(--paper-dark);}
@@ -314,6 +318,7 @@
             </div>
           </div>
           <button class="report-cta tier-basic" id="genReportBasic" data-tier="basic">Get your Custom Report — $199</button>
+          <div class="next-step-badge"><span class="chevron">↓</span> Next step <span class="chevron">↓</span></div>
           <button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed">Upgrade to Certified Prime Report — $799</button>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
@@ -1387,6 +1392,9 @@ function updateReportButtonLabels(){
   } else {
     $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $799';
   }
+
+  const nextStepBadge = document.querySelector('.next-step-badge');
+  if(nextStepBadge) nextStepBadge.style.display = ownsDetailed() ? 'none' : 'flex';
 }
 updateReportButtonLabels();
 
