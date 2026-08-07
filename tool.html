@@ -1582,7 +1582,7 @@ async function sendReportEmail(tier){
   reportEmailSent = true;
   $('checkoutStatus').textContent = 'Emailing your report to ' + email + '…';
   try{
-    const html = buildReportHTML(tier);
+    const html = buildReportHTML(tier, true);
     const resp = await fetch('/api/send-report-email', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -1606,7 +1606,7 @@ async function sendReportEmail(tier){
   }
 }
 
-function buildReportHTML(tier){
+function buildReportHTML(tier, forEmail){
   const isDetailed = tier === 'detailed';
   const c = state._computed;
   const v = state._valuation;
@@ -1842,34 +1842,36 @@ function buildReportHTML(tier){
     .upgrade-box{background:#EEF2FF;border:1px solid #C9D6FF;border-radius:12px;padding:18px 20px;margin-top:20px;}
     .upgrade-box p{margin:0;font-size:13px;color:#1F3A8F;}
     @media print{ .noprint{display:none;} body{padding:0 10px;} .hero{background:#0B0E14 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;} }
-  </style></head><body>
-  <div class="noprint" style="position:sticky;top:0;background:#fff;padding:10px 0;text-align:right;border-bottom:1px solid #E6E8EC;">
+  </style></head><body style="box-sizing:border-box;max-width:820px;margin:0 auto;padding:0 24px 60px;font-family:'Inter',-apple-system,sans-serif;color:#0B0E14;">
+  ${forEmail ? '' : `<div class="noprint" style="position:sticky;top:0;background:#fff;padding:10px 0;text-align:right;border-bottom:1px solid #E6E8EC;">
     <button onclick="window.print()" style="padding:8px 16px;border-radius:8px;border:none;background:#2454FF;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Print / Save as PDF</button>
-  </div>
+  </div>`}
 
-  <div class="brandbar">
+  <div class="brandbar" style="box-sizing:border-box;width:100%;max-width:100%;">
     <div class="word">Prime<span>BizValue</span></div>
     <span class="tierbadge">${isDetailed?'Prime Certified Detailed Report':'Basic Report'}</span>
   </div>
 
-  <div class="cover">
+  <div class="cover" style="box-sizing:border-box;width:100%;max-width:100%;overflow-wrap:break-word;">
     <div class="capsule">${isDetailed?'Detailed':'Preliminary'} Recast &amp; Estimate of Value</div>
     <h1>${escapeHtml(businessName)}</h1>
     <div class="meta">${reportDate}${preparedFor?' · Prepared for '+escapeHtml(preparedFor):''}${presentedBy?' · Presented by '+escapeHtml(presentedBy):''}${state.leaseTerm?' · Lease: '+escapeHtml(state.leaseTerm):''}</div>
-    <div class="hero">
+    <div class="hero" style="box-sizing:border-box;width:100%;max-width:100%;overflow-wrap:break-word;">
       <div class="capsule">Conclusion of Business Value</div>
       <div class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</div>
       <div class="range">Based on ${basis.toUpperCase()} of ${fmt(v.figure)} × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x (${escapeHtml(base.name)}, adjusted)</div>
     </div>
     ${isDetailed ? `
-    <div class="cert-seal">
-      <div class="ring"><svg viewBox="0 0 100 100" width="52" height="52">
+    <div class="cert-seal" style="box-sizing:border-box;width:100%;max-width:100%;overflow-wrap:break-word;">
+      ${forEmail
+        ? `<div style="width:52px;height:52px;min-width:52px;max-width:52px;border-radius:50%;background-color:#C79A2E;border:2px solid #8B6508;text-align:center;line-height:52px;font-size:24px;font-weight:bold;color:#241B02;font-family:Arial,Helvetica,sans-serif;flex-shrink:0;">&#10003;</div>`
+        : `<div class="ring"><svg viewBox="0 0 100 100" width="52" height="52">
         <defs><linearGradient id="sealGradReport" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F9E2A7"/><stop offset="55%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6508"/></linearGradient></defs>
         <circle cx="50" cy="50" r="47" fill="none" stroke="url(#sealGradReport)" stroke-width="2.5" stroke-dasharray="3.4 3.4"/>
         <circle cx="50" cy="50" r="38" fill="url(#sealGradReport)"/>
         <circle cx="50" cy="50" r="38" fill="none" stroke="#7A5A05" stroke-width="1.2" opacity="0.35"/>
         <path d="M34 51 L45 61 L68 37" fill="none" stroke="#241B02" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg></div>
+      </svg></div>`}
       <div>
         <div class="title">Prime Valuation Certification</div>
         <div class="sub">This report meets PrimeBizValue's certification standard: documented recast methodology, a benchmark multiple tied to published Main Street transaction data, a full deal-reality sanity-check review, and complete transparency on every adjustment made. See primebizvalue.com/certification for the full standard.</div>
