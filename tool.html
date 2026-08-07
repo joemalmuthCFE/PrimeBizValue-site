@@ -1366,10 +1366,27 @@ function ownsBasicOnly(){ return isPaidThisSession && paidTier === 'basic'; }
 // Keeps both button labels honest about what they'll actually do/cost —
 // called once at load and again right after any payment confirms.
 function updateReportButtonLabels(){
-  $('genReportBasic').textContent = (ownsBasicOnly() || ownsDetailed()) ? 'View your Custom Report' : 'Get your Custom Report — $199';
-  if(ownsDetailed()) $('genReportDetailed').textContent = 'View your Certified Prime Report';
-  else if(ownsBasicOnly()) $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $600';
-  else $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $799';
+  if(ownsBasicOnly() || ownsDetailed()){
+    $('genReportBasic').textContent = 'View your Custom Report';
+  } else if(preselectedTier === 'detailed'){
+    // They already chose the $799 path on the homepage — frame Basic as
+    // stepping down from that choice, not as the default first option.
+    $('genReportBasic').textContent = 'Downgrade to Basic Report — $199';
+  } else {
+    $('genReportBasic').textContent = 'Get your Custom Report — $199';
+  }
+
+  if(ownsDetailed()){
+    $('genReportDetailed').textContent = 'View your Certified Prime Report';
+  } else if(ownsBasicOnly()){
+    $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $600';
+  } else if(preselectedTier === 'detailed'){
+    // Same idea — they're finishing a decision already made, not being
+    // pitched on an upgrade from scratch.
+    $('genReportDetailed').textContent = 'Finalize your Certified Report — $799';
+  } else {
+    $('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $799';
+  }
 }
 updateReportButtonLabels();
 
