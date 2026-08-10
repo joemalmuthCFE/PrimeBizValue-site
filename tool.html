@@ -309,8 +309,9 @@
         <div class="valbox">
           <div class="lbl">Adjusted multiple applied</div>
           <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(255,255,255,.65);" id="multRange">—</div>
-          <div class="lbl" style="margin-top:10px;">Estimated business value range</div>
+          <div class="lbl" style="margin-top:10px;">Estimated business value</div>
           <div class="range" id="valRange">—</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.65);margin-top:6px;line-height:1.5;" id="valRangeSub"></div>
           <div class="bar-wrap">
             <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
           </div>
@@ -975,6 +976,7 @@ $('startOverBtn').addEventListener('click', () => {
   $('financingCard').style.display = 'none';
   $('tapeLines').innerHTML = '<div class="status" style="color:rgba(255,255,255,.5);">Waiting on line items…</div>';
   $('valRange').textContent = '—';
+  $('valRangeSub').textContent = '';
   $('multRange').textContent = '—';
   $('inventoryOut').textContent = '—';
   $('debtCashOut').textContent = '—';
@@ -1387,7 +1389,15 @@ function renderValuation(){
 
   const pickNote = state.baseCompManual ? 'Manually selected' : 'Auto-selected';
   $('multRange').textContent = `${pickNote} tier: ${base.name} (SDE ${fmt(state._computed.sde)} → ${base.low}x–${base.high}x), adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
-  $('valRange').textContent = figure > 0 ? `${fmt(lowVal)} – ${fmt(highVal)}` : '—';
+  const headlineLow = lowVal + inv, headlineHigh = highVal + inv;
+  $('valRange').textContent = figure > 0 ? `${fmt(headlineLow)} – ${fmt(headlineHigh)}` : '—';
+  if(figure > 0 && inv > 0){
+    $('valRangeSub').textContent = `Based on ${basis.toUpperCase()} of ${fmt(figure)} × ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x = ${fmt(lowVal)}–${fmt(highVal)} (income approach), plus ${fmt(inv)} inventory at cost`;
+  } else if(figure > 0){
+    $('valRangeSub').textContent = `Based on ${basis.toUpperCase()} of ${fmt(figure)} × ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x (income approach)`;
+  } else {
+    $('valRangeSub').textContent = '';
+  }
   $('inventoryOut').textContent = fmt(inv);
   $('debtCashOut').textContent = fmt(debtCashNet);
   $('closingCostsOut').textContent = fmt(closingCosts);
@@ -1928,8 +1938,8 @@ function buildReportHTML(tier, forEmail){
     <div class="meta">${reportDate}${preparedFor?' · Prepared for '+escapeHtml(preparedFor):''}${presentedBy?' · Presented by '+escapeHtml(presentedBy):''}${state.leaseTerm?' · Lease: '+escapeHtml(state.leaseTerm):''}</div>
     <div class="hero" style="box-sizing:border-box;width:100%;max-width:100%;overflow-wrap:break-word;">
       <div class="capsule">Conclusion of Business Value</div>
-      <div class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</div>
-      <div class="range">Based on ${basis.toUpperCase()} of ${fmt(v.figure)} × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x (${escapeHtml(base.name)}, adjusted)</div>
+      <div class="num">${fmt(v.lowVal + v.inv)} – ${fmt(v.highVal + v.inv)}</div>
+      <div class="range">${v.inv > 0 ? `Based on ${basis.toUpperCase()} of ${fmt(v.figure)} × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x = ${fmt(v.lowVal)}–${fmt(v.highVal)} (income approach, ${escapeHtml(base.name)}, adjusted), plus ${fmt(v.inv)} inventory at cost` : `Based on ${basis.toUpperCase()} of ${fmt(v.figure)} × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x (${escapeHtml(base.name)}, adjusted)`}</div>
     </div>
     ${isDetailed ? `
     <div class="cert-seal" style="box-sizing:border-box;width:100%;max-width:100%;overflow-wrap:break-word;">
