@@ -238,8 +238,17 @@
         <table><tbody id="balanceSheetBody"></tbody></table>
       </div>
 
+      <div class="card" id="trendHistoryCard" style="display:none;">
+        <h2><span class="step-badge">2d</span> Prior-period figures <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— optional, powers the multi-year trend table on the Detailed report</span></h2>
+        <p class="sub">If you have top-line revenue and SDE for the prior year or two, enter them here. Skip anything you don't have — the trend table only appears in the report if at least one prior period is filled in.</p>
+        <table>
+          <thead><tr><th>Period</th><th class="num">Revenue</th><th class="num">SDE</th></tr></thead>
+          <tbody id="trendHistoryBody"></tbody>
+        </table>
+      </div>
+
       <div class="card" id="financingCard" style="display:none;">
-        <h2><span class="step-badge">2d</span> Buyer financing <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— SBA 7(a) bankability check</span></h2>
+        <h2><span class="step-badge">2e</span> Buyer financing <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— SBA 7(a) bankability check</span></h2>
         <p class="sub">A rough DSCR check on whether the estimated price is financeable — not a lender underwrite.</p>
         <table><tbody id="financingBody"></tbody></table>
       </div>
@@ -484,6 +493,10 @@ let state = {
   ],
   reportInfo: {businessName:'', preparedFor:'', presentedBy:'', reportDate: new Date().toISOString().slice(0,10), email:''},
   balanceSheet: {cash:0, ar:0, ppe:0, intangibles:0, ap:0, accrued:0, longTermDebt:0},
+  trendHistory: [
+    {label:'2 years ago', revenue:0, sde:0},
+    {label:'1 year ago', revenue:0, sde:0}
+  ],
   financing: {downPaymentPct:20, interestRatePct:10.5, termYears:10},
   pctCosts: {brokerFeePct:0, fedCapGainsPct:0, stateCapGainsPct:0, ddHaircutPct:0}
 };
@@ -523,6 +536,23 @@ function renderBalanceSheet(){
   body.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',(e)=>{
     state.balanceSheet[e.target.dataset.bsf] = Number(e.target.value)||0;
     renderValuation();
+  }));
+}
+
+function renderTrendHistory(){
+  const body = $('trendHistoryBody');
+  if(!state.trendHistory) state.trendHistory = [
+    {label:'2 years ago', revenue:0, sde:0},
+    {label:'1 year ago', revenue:0, sde:0}
+  ];
+  body.innerHTML = state.trendHistory.map((row,i)=>
+    `<tr><td>${escapeHtml(row.label)}</td>
+      <td class="num"><input type="number" value="${row.revenue||''}" placeholder="0.00" data-trendi="${i}" data-trendf="revenue"></td>
+      <td class="num"><input type="number" value="${row.sde||''}" placeholder="0.00" data-trendi="${i}" data-trendf="sde"></td></tr>`
+  ).join('');
+  body.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',(e)=>{
+    const {trendi, trendf} = e.target.dataset;
+    state.trendHistory[trendi][trendf] = Number(e.target.value)||0;
   }));
 }
 
@@ -923,6 +953,10 @@ $('startOverBtn').addEventListener('click', () => {
     {name:'Other closing costs', amount:0}
   ];
   state.balanceSheet = {cash:0, ar:0, ppe:0, intangibles:0, ap:0, accrued:0, longTermDebt:0};
+  state.trendHistory = [
+    {label:'2 years ago', revenue:0, sde:0},
+    {label:'1 year ago', revenue:0, sde:0}
+  ];
   state.financing = {downPaymentPct:20, interestRatePct:10.5, termYears:10};
   state.pctCosts = {brokerFeePct:0, fedCapGainsPct:0, stateCapGainsPct:0, ddHaircutPct:0};
   $('inventoryInput').value = 0;
@@ -930,12 +964,14 @@ $('startOverBtn').addEventListener('click', () => {
   renderClosingCosts();
   renderSdeWorksheet();
   renderBalanceSheet();
+  renderTrendHistory();
   renderFinancing();
   renderPctCosts();
   $('rawInput').value = '';
   $('lineItemsCard').style.display = 'none';
   $('sdeWorksheetCard').style.display = 'none';
   $('balanceSheetCard').style.display = 'none';
+  $('trendHistoryCard').style.display = 'none';
   $('financingCard').style.display = 'none';
   $('tapeLines').innerHTML = '<div class="status" style="color:rgba(255,255,255,.5);">Waiting on line items…</div>';
   $('valRange').textContent = '—';
@@ -955,6 +991,7 @@ function render(){
   $('lineItemsCard').style.display = 'block';
   $('sdeWorksheetCard').style.display = 'block';
   $('balanceSheetCard').style.display = 'block';
+  $('trendHistoryCard').style.display = 'block';
   $('financingCard').style.display = 'block';
   $('inventoryInput').value = state.inventory || 0;
   $('leaseTermInput').value = state.leaseTerm || '';
@@ -970,6 +1007,10 @@ function render(){
   if(!state.sdeWorksheet) state.sdeWorksheet = defaultSdeWorksheetValues();
   if(!state.sdeWorksheetCustom) state.sdeWorksheetCustom = [];
   if(!state.balanceSheet) state.balanceSheet = {cash:0, ar:0, ppe:0, intangibles:0, ap:0, accrued:0, longTermDebt:0};
+  if(!state.trendHistory) state.trendHistory = [
+    {label:'2 years ago', revenue:0, sde:0},
+    {label:'1 year ago', revenue:0, sde:0}
+  ];
   if(!state.financing) state.financing = {downPaymentPct:20, interestRatePct:10.5, termYears:10};
   if(!state.pctCosts) state.pctCosts = {brokerFeePct:0, fedCapGainsPct:0, stateCapGainsPct:0, ddHaircutPct:0};
   if(!state.reportInfo) state.reportInfo = {businessName:'', preparedFor:'', presentedBy:'', reportDate: new Date().toISOString().slice(0,10)};
@@ -981,6 +1022,7 @@ function render(){
   renderClosingCosts();
   renderSdeWorksheet();
   renderBalanceSheet();
+  renderTrendHistory();
   renderFinancing();
   renderPctCosts();
   renderSimpleTable('revBody', state.rev, 'rev');
@@ -1684,11 +1726,37 @@ function buildReportHTML(tier, forEmail){
     <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:.01em;">${title}</span>
   </div>`;
 
+  // ---- Multi-year trend (only shown if at least one prior period was filled in) ----
+  const trendRowsRaw = [
+    ...(state.trendHistory || []).map(r => ({label: r.label, revenue: Number(r.revenue)||0, sde: Number(r.sde)||0})),
+    {label: 'Current period', revenue: c.revenue, sde: c.sde}
+  ].filter((r, i, arr) => i === arr.length - 1 || r.revenue > 0 || r.sde > 0); // keep current period always; drop blank prior periods
+  const hasTrendData = trendRowsRaw.length > 1;
+  const trendRowsHtml = trendRowsRaw.map((r, i) => {
+    const prev = trendRowsRaw[i-1];
+    const revGrowth = (i>0 && prev.revenue>0) ? (((r.revenue - prev.revenue)/prev.revenue)*100).toFixed(1)+'%' : '—';
+    const sdeGrowth = (i>0 && prev.sde>0) ? (((r.sde - prev.sde)/prev.sde)*100).toFixed(1)+'%' : '—';
+    return `<tr><td>${escapeHtml(r.label)}</td><td class="num">${fmt(r.revenue)}</td><td class="num">${revGrowth}</td><td class="num">${fmt(r.sde)}</td><td class="num">${sdeGrowth}</td></tr>`;
+  }).join('');
+
+  // ---- Multi-method valuation triangulation (Income approach vs. Asset approach) ----
+  const ntaValue = (state.balanceSheet.cash||0)+(state.balanceSheet.ar||0)+(v.inv||0)+(state.balanceSheet.ppe||0)-(state.balanceSheet.ap||0)-(state.balanceSheet.accrued||0)-(state.balanceSheet.longTermDebt||0);
+  const hasBalanceSheetData = Object.values(state.balanceSheet||{}).some(x => Number(x) > 0);
+
   const sectionARecast = isDetailed ? `
   ${sectionBanner('A','FINANCIAL RECAST')}
 
   <h2>Sanity check — ${checksOk} ok, ${checksWarn} review, ${checksBad} flagged</h2>
   <div>${checks.map(checkRow).join('')}</div>
+
+  ${hasTrendData ? `
+  <h2>Multi-year trend</h2>
+  <table>
+    <thead><tr><th>Period</th><th class="num">Revenue</th><th class="num">Rev. growth</th><th class="num">SDE</th><th class="num">SDE growth</th></tr></thead>
+    ${trendRowsHtml}
+  </table>
+  <p style="font-size:11.5px;color:#5B6470;margin-top:6px;">Prior-period figures as entered by the preparer; not independently verified against source documents for those periods.</p>
+  ` : ''}
 
   <h2>Revenue</h2>
   <table>${rowsHtml(state.rev)}<tr class="total"><td>Total revenue</td><td class="num">${fmt(c.revenue)}</td></tr></table>
@@ -1818,6 +1886,8 @@ function buildReportHTML(tier, forEmail){
     table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
     td{padding:6px 3px;border-bottom:1px solid #E6E8EC;font-family:'Inter',sans-serif;}
     td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-family:'IBM Plex Mono',monospace;}
+    th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#8A93A0;padding:6px 3px;border-bottom:1.5px solid #0B0E14;}
+    th.num{text-align:right;}
     tr.total td{font-weight:700;border-top:1.5px solid #0B0E14;border-bottom:none;}
     tr.result td{font-weight:700;font-size:14.5px;background:#EEF2FF;color:#0B0E14;}
     .reason{font-size:11px;color:#5B6470;font-style:italic;}
@@ -1893,6 +1963,16 @@ ${sectionARecast}
     <tr class="total"><td>Adjusted multiple</td><td class="num">${v.lowMult.toFixed(2)}x – ${v.highMult.toFixed(2)}x</td></tr>
     <tr class="result"><td>Estimated business value</td><td class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</td></tr>
   </table>
+
+  ${hasBalanceSheetData ? `
+  <h2>Methods compared</h2>
+  <table>
+    <thead><tr><th>Method</th><th class="num">Estimate</th></tr></thead>
+    <tr><td>Income approach — ${basis.toUpperCase()} × ${base.name} multiple</td><td class="num">${fmt(v.lowVal)} – ${fmt(v.highVal)}</td></tr>
+    <tr><td>Asset approach — Net tangible assets (see Section D)</td><td class="num">${fmt(ntaValue)}</td></tr>
+  </table>
+  <p style="font-size:11.5px;color:#5B6470;margin-top:6px;">These two approaches answer different questions and are not expected to converge: the income approach values the business as a going concern based on its earning power, while the asset approach values only the tangible assets on the balance sheet — it ignores goodwill, customer relationships, and earning capacity entirely. A wide gap between them is normal, not an error; a business worth far more on the income approach than its asset approach typically reflects strong intangible value (brand, location, customer base). A business where the asset approach exceeds the income approach may signal the earnings don't yet support the asset base.</p>
+  ` : ''}
 
   <h2>Deal reality check</h2>
   <div>${dealChecks.map(checkRow).join('')}</div>
@@ -1977,6 +2057,7 @@ loadComps();
 loadAdjustments();
 loadDealList();
 renderClosingCosts();
+renderTrendHistory();
 </script>
 </body>
 </html>
