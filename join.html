@@ -70,6 +70,12 @@
   .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
   .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-weight:600; font-size:15px; cursor:pointer; transition:background .15s ease;}
   .submit-btn:hover{background:var(--accent-2);}
+  .submit-btn:disabled{opacity:.55; cursor:default;}
+
+  .success-box{display:none;}
+  .success-box .check{width:44px;height:44px;border-radius:50%;background:#DCFCE7;color:#15803D;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:14px;}
+  .success-box h3{font-family:'Space Grotesk',sans-serif;font-size:19px;margin:0 0 8px;}
+  .success-box .code-chip{display:inline-block;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:15px;background:#0B0E14;color:#F3D68A;padding:8px 16px;border-radius:8px;letter-spacing:.04em;margin:10px 0 16px;}
 
   .contact-card{display:flex; align-items:center; justify-content:space-between; background:var(--text); color:#fff; border-radius:14px; padding:30px 32px; flex-wrap:wrap; gap:16px;}
   .contact-card h3{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
@@ -101,8 +107,8 @@
 <main>
   <div class="wrap">
     <span class="kicker">Join our list</span>
-    <h1>Stay ahead of your next deal</h1>
-    <p class="lede" style="margin-bottom:32px;">Get notified about new valuation features, franchise partner discounts, and updates that help you buy, sell, or finance with better numbers.</p>
+    <h1 id="pageHeading">Stay ahead of your next deal</h1>
+    <p class="lede" style="margin-bottom:32px;" id="pageLede">Get notified about new valuation features, franchise partner discounts, and updates that help you buy, sell, or finance with better numbers.</p>
 
     <div class="card">
       <form id="joinForm">
@@ -163,41 +169,69 @@
 
         <div class="consent-row">
           <input type="checkbox" id="consent" name="consent" required>
-          <p>By pressing Submit, you agree that PrimeBizValue / PrimeBizValue may call, text, or email you at the number and address provided, including for business purposes related to your inquiry. This contact may use automated or pre-recorded/artificial voice technology. Message and data rates may apply. You don't need to consent as a condition of any purchase, and you may opt out at any time. You also agree to our <a href="/privacy.html" target="_blank">Privacy Policy</a>.</p>
+          <p>By pressing Submit, you agree that PrimeBizValue may call, text, or email you at the number and address provided, including for business purposes related to your inquiry. This contact may use automated or pre-recorded/artificial voice technology. Message and data rates may apply. You don't need to consent as a condition of any purchase, and you may opt out at any time. You also agree to our <a href="/privacy.html" target="_blank">Privacy Policy</a>.</p>
         </div>
 
-        <button type="submit" class="submit-btn">Join the list</button>
+        <button type="submit" class="submit-btn" id="joinSubmitBtn">Join the list</button>
         <p id="joinStatus" style="font-size:13px;color:var(--text-muted);margin-top:14px;"></p>
       </form>
+
+      <div class="success-box" id="successBox">
+        <div class="check">✓</div>
+        <h3 id="successHeading">You're on the list.</h3>
+        <p id="successBody">Thanks for signing up — we'll be in touch with updates.</p>
+      </div>
     </div>
   </div>
 </main>
 <script>
-  document.getElementById('joinForm').addEventListener('submit', function(e){
+  const params = new URLSearchParams(window.location.search);
+  const src = params.get('src') || 'join-page';
+  const revealCode = params.get('code') || null;
+
+  if (src === 'seminar-bat50') {
+    document.getElementById('pageHeading').textContent = 'Claim your seminar discount';
+    document.getElementById('pageLede').textContent = "Quick signup so we can get you set up — then you'll have your discount code for PrimeBizValue.";
+  }
+
+  document.getElementById('joinForm').addEventListener('submit', async function(e){
     e.preventDefault();
     const f = e.target;
+    const btn = document.getElementById('joinSubmitBtn');
+    const status = document.getElementById('joinStatus');
     const data = {
       firstName: f.firstName.value,
       lastName: f.lastName.value,
       email: f.email.value,
       phone: f.phone.value,
       interest: f.interest.value,
-      state: f.state.value
+      state: f.state.value,
+      consent: f.consent.checked,
+      source: src,
     };
-    // Interim capture method — no database wired up yet (that's Stage 4).
-    // This sends the submission straight to your inbox until real backend
-    // storage is built, at which point this should POST to an API route instead.
-    const subject = encodeURIComponent('New PrimeBizValue list signup: ' + data.firstName + ' ' + data.lastName);
-    const body = encodeURIComponent(
-      'First Name: ' + data.firstName + '\n' +
-      'Last Name: ' + data.lastName + '\n' +
-      'Email: ' + data.email + '\n' +
-      'Phone: ' + data.phone + '\n' +
-      'Interest: ' + data.interest + '\n' +
-      'State: ' + data.state
-    );
-    window.location.href = 'mailto:hello@primebizvalue.com?subject=' + subject + '&body=' + body;
-    document.getElementById('joinStatus').textContent = 'Opening your email client to send this in — if nothing opens, email us directly at hello@primebizvalue.com.';
+    btn.disabled = true;
+    status.textContent = 'Submitting…';
+    try {
+      const resp = await fetch('/api/join-list', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await resp.json();
+      if (!resp.ok) throw new Error(result.error || 'Could not submit — please try again.');
+
+      f.style.display = 'none';
+      const successBox = document.getElementById('successBox');
+      successBox.style.display = 'block';
+      if (revealCode) {
+        document.getElementById('successHeading').textContent = "You're all set.";
+        document.getElementById('successBody').innerHTML =
+          `Use code <span class="code-chip">${revealCode.replace(/[^A-Za-z0-9]/g, '')}</span> at checkout on <a href="/tool.html">the valuation tool</a> for your discount.`;
+      }
+    } catch (err) {
+      status.textContent = err.message || 'Something went wrong — please try again or email hello@primebizvalue.com.';
+      btn.disabled = false;
+    }
   });
 </script>
 
