@@ -1,355 +1,224 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PrimeBizValue — Know what your business is really worth</title>
-<meta name="description" content="Upload your financials and get a professional-grade SDE and EBITDA valuation, built for franchise buyers and sellers.">
+<title>Business Valuation Report, Not Just a Free Number</title>
+<meta name="description" content="The number is free here and on twenty other calculators. The document is not: itemized recast, sourced multiple, arithmetic printed. From $199.">
+<link rel="canonical" href="https://primebizvalue.com/">
+<meta property="og:site_name" content="PrimeBizValue">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Get the valuation document, not just the number">
+<meta property="og:description" content="An itemized recast, a benchmarked multiple with its derivation shown, and a bankability check - in one document you can hand to somebody else.">
+<meta property="og:url" content="https://primebizvalue.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Get the valuation document, not just the number">
+<meta name="twitter:description" content="An itemized recast, a benchmarked multiple with its derivation shown, and a bankability check - in one document you can hand to somebody else.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Business Valuation Report, Not Just a Free Number", "url": "https://primebizvalue.com/", "description": "The number is free here and on twenty other calculators. The document is not: itemized recast, sourced multiple, arithmetic printed. From $199.", "isPartOf": {"@type": "WebSite", "name": "PrimeBizValue", "url": "https://primebizvalue.com/"}, "publisher": {"@type": "Organization", "name": "Rebellious Franchising LLC", "address": {"@type": "PostalAddress", "streetAddress": "110 Front Street, Suite 355", "addressLocality": "Jupiter", "addressRegion": "FL", "postalCode": "33477", "addressCountry": "US"}}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "url": "https://primebizvalue.com/", "mainEntity": [{"@type": "Question", "name": "Will my franchisor, my lender, or my buyer accept this?", "acceptedAnswer": {"@type": "Answer", "text": "It is not an accredited appraisal and we never claim it is. It is a documented, sourced valuation with its method printed, built to be read and checked by a third party. Read the sample report and judge whether it belongs in your packet. Read the full answer on the FAQ page →"}}, {"@type": "Question", "name": "Do I have to give you my phone number?", "acceptedAnswer": {"@type": "Answer", "text": "No. We don't want it. No one from here will ever call you, and we do not pass your details to brokers or lenders. Read the full answer on the FAQ page →"}}, {"@type": "Question", "name": "Is my P&L safe?", "acceptedAnswer": {"@type": "Answer", "text": "The About page sets out exactly who processes what, how long we keep it, and how to have it deleted. Email us from the address you used and we will delete your documents and confirm when it is done. Read the full answer on the FAQ page →"}}, {"@type": "Question", "name": "How is this different from the free calculator my broker sent me?", "acceptedAnswer": {"@type": "Answer", "text": "Theirs is paid for by the commission on your listing. Ours is paid for by you, which is why we are the only ones who can tell you a deal is overpriced. Read the full answer on the FAQ page →"}}, {"@type": "Question", "name": "What if my numbers are messy or my books aren't clean?", "acceptedAnswer": {"@type": "Answer", "text": "The tool parses your P&L and walks you through the add-backs line by line, flagging the ones you will need a document for. Messy books are the normal case, not the exception. Read the full answer on the FAQ page →"}}, {"@type": "Question", "name": "Can I use this for a divorce, an estate, or a court case?", "acceptedAnswer": {"@type": "Answer", "text": "No, and please don't buy it for that. Courts and the IRS require credentialed work. Email hello@primebizvalue.com and we will point you to the right professional instead of taking the order. Read the full answer on the FAQ page →"}}]}</script>
+<style>
+:root{--ink:#0B0E14;--muted:#5B6470;--line:#E6E8EC;--bg:#fff;--accent:#2454FF;--soft:#F7F8FA;}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.65 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);padding:14px 0}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-weight:700;letter-spacing:-.2px;text-decoration:none;color:var(--ink)}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:var(--accent)}
+h1{font-size:31px;line-height:1.25;letter-spacing:-.6px;margin:34px 0 10px}
+h2{font-size:22px;letter-spacing:-.3px;margin:38px 0 10px}
+h3{font-size:17px;margin:26px 0 6px}
+p{margin:0 0 14px}
+.lede{font-size:18px;color:var(--muted);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.src{font-size:12px;color:var(--muted)}
+.calc{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:20px;margin:26px 0}
+.out{margin-top:16px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.out .big{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:13px 22px;border-radius:8px;font-weight:600;margin-top:14px}
+.cta.alt{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+.note{background:#fffdf3;border:1px solid #f0e3b8;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.disc{font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:38px;padding-top:16px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0;font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}
+ul{padding-left:20px} li{margin-bottom:7px}
+ol{padding-left:22px} ol li{margin-bottom:12px}
+.doc{border:1px solid var(--line);border-radius:10px;margin:22px 0;overflow:hidden}
+.doc .dh{background:var(--soft);border-bottom:1px solid var(--line);padding:9px 14px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.doc .db{padding:4px 18px 14px}
+.doc table{margin:12px 0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.num{text-align:right;white-space:nowrap}
+th.num{text-align:right}
+.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:700}
+.sub td{font-weight:600;background:var(--soft)}
+.neg{color:#9b3129}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.ok{background:#eef7ee;border-color:#cfe6cf;color:#256b2b}
+.tag.warn{background:#fffdf3;border-color:#f0e3b8;color:#8a6d1a}
+.tag.no{background:#fdf0ef;border-color:#f2cfcb;color:#9b3129}
+.example{background:#eef4fb;border:1px solid #cfe0f2;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.stop{background:#fdf0ef;border:1px solid #f2cfcb;border-left:4px solid #9b3129;border-radius:8px;padding:16px 18px;margin:24px 0;font-size:15px}
+.stop strong{color:#9b3129}
+.kv{font-size:15px}
+.kv td:first-child{color:var(--muted);width:52%}
+.check{list-style:none;padding-left:0}
+.check>li{border-bottom:1px solid var(--line);padding:14px 0;margin:0}
+.check>li:last-child{border-bottom:none}
+.check .n{display:inline-block;min-width:26px;font-weight:700;color:var(--accent)}
+@media(max-width:560px){h1{font-size:26px} nav a{margin-left:12px;font-size:13px} table{font-size:14px} th,td{padding:8px 9px}}
+h1,h2,h3{font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-.02em}
+.logo{font-family:'Space Grotesk',sans-serif}
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#FFFFFF;
-    --surface:#F7F8FA;
-    --border:#E6E8EC;
-    --text:#0B0E14;
-    --text-secondary:#5B6470;
-    --text-muted:#8A93A0;
-    --accent:#2454FF;
-    --accent-2:#0033B8;
-    --accent-bg:#EEF2FF;
-    --dark:#0B0E14;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter', -apple-system, sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .display{font-family:'Space Grotesk', sans-serif;}
-  .mono{font-family:'IBM Plex Mono', monospace;}
-  a{color:inherit;}
-  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
-  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
-
-  /* Nav */
-  nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px 24px; max-width:1120px; margin:0 auto; position:relative; z-index:2;
-  }
-  .brand{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.3px;}
-  .brand span{color:var(--accent);}
-  .nav-links{display:flex; gap:28px; align-items:center;}
-  .nav-links a{font-size:14.5px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
-  .nav-links a:hover{color:var(--text);}
-  .nav-cta{
-    background:var(--dark); color:#fff; padding:10px 18px; border-radius:8px;
-    text-decoration:none; font-size:14px; font-weight:600; transition:background .15s ease;
-  }
-  .nav-cta:hover{background:#000;}
-
-  /* Hero */
-  header.hero{
-    position:relative; padding:64px 0 76px; overflow:hidden;
-  }
-  .hero-bg{
-    position:absolute; inset:0; z-index:0; pointer-events:none;
-    background:
-      radial-gradient(560px 340px at 78% 8%, rgba(36,84,255,0.10), transparent 70%),
-      radial-gradient(circle, rgba(11,14,20,0.05) 1px, transparent 1px);
-    background-size:auto, 26px 26px;
-    mask-image:linear-gradient(to bottom, black, transparent 88%);
-  }
-  .hero-grid{
-    position:relative; z-index:1;
-    display:grid; grid-template-columns:1.05fr 0.95fr; gap:52px; align-items:center;
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    background:var(--accent-bg); color:var(--accent);
-    font-size:12.5px; font-weight:600; padding:6px 14px; border-radius:20px; margin-bottom:22px;
-  }
-  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block;}
-  h1{
-    font-family:'Space Grotesk', sans-serif;
-    font-size:clamp(2.2rem, 3.8vw, 3.35rem); line-height:1.08; font-weight:700; margin:0 0 18px;
-    letter-spacing:-0.02em;
-  }
-  .sub{
-    font-size:17.5px; line-height:1.6; color:var(--text-secondary); max-width:46ch; margin:0 0 30px;
-  }
-  .cta-row{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
-  .cta-primary{
-    display:inline-block; background:linear-gradient(135deg, var(--accent), var(--accent-2));
-    color:#fff; padding:14px 28px; border-radius:9px;
-    text-decoration:none; font-weight:600; font-size:15.5px;
-    box-shadow:0 10px 24px -8px rgba(36,84,255,0.45);
-    transition:transform .15s ease, box-shadow .15s ease;
-  }
-  .cta-primary:hover{transform:translateY(-1px); box-shadow:0 14px 30px -8px rgba(36,84,255,0.55);}
-  .cta-note{font-size:13.5px; color:var(--text-muted);}
-
-  /* Signature: live valuation ticker */
-  .ticker{
-    background:var(--dark); border-radius:14px; padding:26px 26px 22px;
-    box-shadow:0 30px 60px -24px rgba(11,14,20,0.45);
-    position:relative; overflow:hidden;
-  }
-  .ticker::before{
-    content:'LIVE RECAST'; position:absolute; top:18px; right:22px;
-    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em;
-    color:rgba(36,84,255,0.7);
-  }
-  .ticker::before{ }
-  .ticker-dot{
-    display:inline-block; width:7px; height:7px; border-radius:50%; background:#3D8B5F;
-    margin-right:6px; animation:pulse 1.8s ease infinite;
-  }
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
-  .ticker-label{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
-    color:rgba(255,255,255,0.4); margin-bottom:16px; display:flex; align-items:center;
-  }
-  .ticker-line{
-    display:flex; justify-content:space-between; align-items:baseline;
-    padding:9px 0; border-bottom:1px dashed rgba(255,255,255,0.1);
-    font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:rgba(255,255,255,0.72);
-    opacity:0; transform:translateY(6px);
-    animation:lineIn .5s ease forwards;
-  }
-  .ticker-line:last-of-type{border-bottom:none;}
-  .ticker-line .amt{color:#fff; font-weight:500;}
-  .ticker-result{
-    margin-top:14px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.14);
-    opacity:0; transform:translateY(6px); animation:lineIn .5s ease forwards;
-  }
-  .ticker-result .k{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#6E93FF; margin-bottom:6px;}
-  .ticker-result .v{font-family:'Space Grotesk',serif; font-size:28px; color:#fff; font-weight:700;}
-  @keyframes lineIn{to{opacity:1; transform:translateY(0);}}
-  @media (prefers-reduced-motion: reduce){
-    .ticker-line, .ticker-result, .ticker-dot{animation:none; opacity:1; transform:none;}
-  }
-
-  /* Stats row */
-  .stats{
-    position:relative; z-index:1;
-    display:grid; grid-template-columns:repeat(3,1fr);
-    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-    padding:28px 0; margin-top:12px;
-  }
-  .stat{text-align:center; padding:0 20px;}
-  .stat + .stat{border-left:1px solid var(--border);}
-  .stat .num{font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:700; margin:0;}
-  .stat .lbl{font-size:13.5px; color:var(--text-secondary); margin:4px 0 0;}
-
-  /* How it works */
-  section{padding:64px 0;}
-  h2{font-family:'Space Grotesk',sans-serif; font-size:clamp(1.5rem,2.6vw,1.9rem); font-weight:700; text-align:center; margin:0 0 36px; letter-spacing:-0.01em;}
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .step{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:26px 22px; transition:transform .15s ease, box-shadow .15s ease;}
-  .step:hover{transform:translateY(-3px); box-shadow:0 16px 30px -18px rgba(11,14,20,0.25);}
-  .step .icon{
-    width:36px; height:36px; border-radius:8px; background:var(--accent-bg); color:var(--accent);
-    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; margin-bottom:16px;
-    font-family:'Space Grotesk',sans-serif;
-  }
-  .step h3{font-size:16px; font-weight:600; margin:0 0 8px;}
-  .step p{font-size:14px; line-height:1.6; color:var(--text-secondary); margin:0;}
-
-  /* Pricing */
-  .price-card{
-    background:var(--dark); color:#fff; border-radius:16px;
-    padding:48px 36px; text-align:center; position:relative; overflow:hidden;
-    border:2px solid #3D5CFF; box-shadow:0 24px 50px -20px rgba(36,84,255,0.5);
-  }
-  .price-card::before{
-    content:''; position:absolute; inset:0;
-    background:radial-gradient(420px 200px at 50% -10%, rgba(36,84,255,0.35), transparent 70%);
-  }
-  .price-card > *{position:relative;}
-  .price-card .p-lbl{font-size:14px; color:rgba(255,255,255,0.55); margin:0 0 8px;}
-  .price-card .p-amt{font-family:'Space Grotesk',sans-serif; font-size:44px; font-weight:700; margin:0 0 10px; letter-spacing:-0.02em;}
-  .price-card .p-compare{font-size:14px; color:rgba(255,255,255,0.6); margin:0 0 26px;}
-
-  .price-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:stretch;}
-  @media (max-width:760px){.price-grid{grid-template-columns:1fr;}}
-  .price-card-basic{
-    background:#fff; border:1px solid var(--border); border-radius:16px;
-    padding:40px 32px; text-align:center; display:flex; flex-direction:column;
-    opacity:.82;
-  }
-  .price-card-basic .p-lbl{font-size:13.5px; color:var(--text-muted); margin:0 0 8px;}
-  .price-card-basic .p-amt{font-family:'Space Grotesk',sans-serif; font-size:34px; font-weight:600; margin:0 0 10px; letter-spacing:-0.02em; color:var(--text-secondary);}
-  .price-card-basic .p-desc{font-size:13.5px; color:var(--text-muted); margin:0 0 26px; flex:1;}
-  .price-card-basic .cta-primary{background:var(--surface); color:var(--text-secondary); border:1px solid var(--border); box-shadow:none; font-weight:500;}
-  .price-card-basic .cta-primary:hover{background:#EDEFF2;}
-  .badge-popular{
-    display:inline-block; background:var(--accent-bg); color:var(--accent); font-size:11.5px; font-weight:700;
-    letter-spacing:0.04em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:14px;
-  }
-  .cert-chip{
-    display:inline-flex; align-items:center; gap:10px; text-align:left;
-    background:linear-gradient(135deg,#1A1206,#241B02); border:1px solid #B8860B; border-radius:12px;
-    padding:12px 16px; margin:0 0 22px;
-  }
-  .cert-chip .ring{
-    flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    filter:drop-shadow(0 3px 8px rgba(184,134,11,0.5));
-  }
-  .cert-chip .txt{font-size:12px; color:rgba(255,255,255,0.75); line-height:1.5;}
-  .cert-chip .txt strong{color:#F3D68A; font-family:'Space Grotesk',sans-serif; display:block; font-size:12.5px; margin-bottom:1px;}
-  .cert-chip .txt a{color:#8FADFF;}
-
-  footer{padding:32px 0 44px; border-top:1px solid var(--border);}
-  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
-  footer p{margin:0; font-size:12.5px; color:var(--text-muted);}
-
-  @media (max-width:860px){
-    .hero-grid{grid-template-columns:1fr;}
-    .stats{grid-template-columns:1fr; gap:16px;}
-    .stat + .stat{border-left:none; border-top:1px solid var(--border); padding-top:16px;}
-    .steps{grid-template-columns:1fr;}
-    .nav-links{display:none;}
-  }
-</style>
 </head>
 <body>
+<header><div class="wrap">
+  <a class="logo" href="https://primebizvalue.com/">PrimeBizValue</a>
+  <nav><a href="https://primebizvalue.com/">Home</a><a href="https://primebizvalue.com/sample-report.html">Sample report</a><a href="https://primebizvalue.com/faq.html">FAQ</a><a href="https://primebizvalue.com/tool.html">Get a valuation</a></nav>
+</div></header>
 
-<nav>
-  <a href="/" class="brand" style="text-decoration:none;">Prime<span>BizValue</span></a>
-  <div class="nav-links">
-    <a href="#how-it-works">How it works</a>
-    <a href="/about.html">About</a>
-    <a href="/certification.html">Certification</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
-  </div>
-  <a href="/tool.html" class="nav-cta">Get your valuation</a>
-</nav>
+<main class="wrap">
 
-<header class="hero">
-  <div class="hero-bg"></div>
-  <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="eyebrow">Built for franchise buyers and sellers</span>
-        <h1>Know what your business is really worth</h1>
-        <p class="sub">Upload your financials and get a professional-grade SDE and EBITDA valuation in minutes, not weeks.</p>
-        <div class="cta-row">
-          <a href="#get-report" class="cta-primary">Start my valuation</a>
-          <span class="cta-note">One-time report. No subscription.</span>
-        </div>
-      </div>
+<h1>Get the valuation document, not just the number.</h1>
+<p class="lede">The number is free &mdash; here, and on twenty other calculators. What you can't get free is an itemized recast of your earnings, a benchmarked multiple with the arithmetic shown, and a bankability check, in one document you can hand to a franchisor, a lender, a partner, or the person across the table.</p>
+<p><a class="cta" href="https://primebizvalue.com/tool.html" onclick="if(window.plausible)plausible('cta_start_valuation',{props:{source:'home-hero'}})">Start my valuation &mdash; free</a>&nbsp;&nbsp;<a class="cta alt" href="https://primebizvalue.com/sample-report.html" onclick="if(window.plausible)plausible('cta_sample_report',{props:{source:'home-hero'}})">See what's in the report</a></p>
+<p class="src">Free to run. You'll see your valuation range on screen before you're asked to pay for anything. No phone number required, and no sales call, ever.</p>
 
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker-label"><span class="ticker-dot"></span>Live recast preview</div>
-        <div class="ticker-line" style="animation-delay:.05s"><span>Net income (reported)</span><span class="amt">$96,400</span></div>
-        <div class="ticker-line" style="animation-delay:.18s"><span>+ Owner salary &amp; payroll tax</span><span class="amt">$68,000</span></div>
-        <div class="ticker-line" style="animation-delay:.31s"><span>+ Depreciation &amp; interest</span><span class="amt">$22,150</span></div>
-        <div class="ticker-line" style="animation-delay:.44s"><span>+ Discretionary add-backs</span><span class="amt">$14,900</span></div>
-        <div class="ticker-result" style="animation-delay:.58s">
-          <div class="k">Seller's discretionary earnings</div>
-          <div class="v">$201,450</div>
-        </div>
-        <div class="ticker-result" style="animation-delay:.74s">
-          <div class="k">Estimated valuation range</div>
-          <div class="v">$460K – $625K</div>
-        </div>
-      </div>
-    </div>
+<h2>What's in the document</h2>
+<ul class="check">
+<li><span class="n">1</span><strong>An itemized recast worksheet.</strong> Every add-back on its own line, with the document that supports it &mdash; and a flag on the ones a buyer's accountant will strike out. This is the section a calculator cannot produce, because a calculator never sees your ledger. <a href="https://primebizvalue.com/sample-report.html#recast">See this section worked through &rarr;</a></li>
+<li><span class="n">2</span><strong>The multiple, with its derivation printed.</strong> Your size band, the published transaction data it comes from, and every adjustment that moved you within it. A number you can argue with is a number you can defend. <a href="https://primebizvalue.com/sample-report.html#multiple">See the derivation &rarr;</a></li>
+<li><span class="n">3</span><strong>A bankability screen.</strong> Most small businesses are bought with borrowed money. We show whether the deal services its own debt at your price &mdash; before anyone spends three weeks finding out. Pre-application screen, not an SBA-compliant valuation. <a href="https://primebizvalue.com/sba-pre-screen.html">We explain the difference &rarr;</a></li>
+<li><span class="n">4</span><strong>What you actually walk away with.</strong> Price, less the seller note, less commission, less debt payoff, less estimated tax. The headline number and the wire are not the same number. <a href="https://primebizvalue.com/sample-report.html#net-cash">See the waterfall &rarr;</a></li>
+</ul>
 
-    <div class="stats">
-      <div class="stat">
-        <p class="num">SDE + EBITDA</p>
-        <p class="lbl">Dual methodology</p>
-      </div>
-      <div class="stat">
-        <p class="num">SBA DSCR</p>
-        <p class="lbl">Bankability check</p>
-      </div>
-      <div class="stat">
-        <p class="num">Under 10 min</p>
-        <p class="lbl">Upload to report</p>
-      </div>
-    </div>
-  </div>
-</header>
+<h2>Judge it on the deliverable, not on the sales page</h2>
+<p>The whole report is published, worked end to end, free to read, with nothing withheld. Here is the top of the recast worksheet from it &mdash; four lines out of eleven:</p>
 
-<section id="how-it-works">
-  <div class="wrap">
-    <h2>How it works</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="icon">1</div>
-        <h3>Upload financials</h3>
-        <p>P&amp;L, tax returns, or a simple spreadsheet — whatever you've got on hand.</p>
-      </div>
-      <div class="step">
-        <div class="icon">2</div>
-        <h3>We recast and value</h3>
-        <p>Add-backs, multiples, and buyer financing, run through the same logic a broker uses.</p>
-      </div>
-      <div class="step">
-        <div class="icon">3</div>
-        <h3>Get your report</h3>
-        <p>On screen and in your inbox, instantly, with a defensible valuation range.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="doc">
+<div class="dh">Sample report &middot; section 1 of 5 &middot; recast worksheet (excerpt)</div>
+<div class="db">
+<div class="scroll">
+<table>
+<thead><tr><th>Adjustment</th><th class="num">Amount</th><th>Supporting document</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Net income, as reported</td><td class="num">$99,000</td><td>2025 P&amp;L / return</td><td><span class="tag ok">Filed</span></td></tr>
+<tr><td>Owner's W-2 compensation</td><td class="num">$145,000</td><td>Payroll register, W-2</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Owner's personal-use vehicle</td><td class="num">$9,600</td><td class="neg">Mileage log missing</td><td><span class="tag warn">Needs proof</span></td></tr>
+<tr><td>Sponsorships with personal benefit</td><td class="num">$6,200</td><td class="neg">None</td><td><span class="tag no">Likely struck</span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="src" style="margin-top:0">Illustrative example. &ldquo;Harborline Mechanical&rdquo; is a business we invented for the sample page. It is not a customer, and we have never published a customer's numbers.</p>
+</div>
+</div>
 
-<section id="get-report">
-  <div class="wrap">
-    <div class="price-grid">
-      <div class="price-card-basic">
-        <p class="p-lbl">Basic Report</p>
-        <p class="p-amt">$199</p>
-        <p class="p-desc">Your recast top-line numbers — revenue, gross profit, SDE, and Adjusted EBITDA — plus your estimated valuation range and the multiple behind it.</p>
-        <a href="/tool.html?tier=basic" class="cta-primary">Get the basic report</a>
-      </div>
-      <div class="price-card">
-        <span class="badge-popular">Most thorough</span>
-        <p class="p-lbl">Detailed Report</p>
-        <p class="p-amt">$799</p>
-        <p class="p-compare">Everything in Basic, plus the full itemized recast worksheet, SBA financing &amp; DSCR analysis, and a closing cash-to-seller breakdown. Compare to a broker opinion of value: typically $2,500&ndash;$10,000+</p>
-        <div class="cert-chip">
-          <div class="ring"><svg viewBox="0 0 100 100" width="34" height="34">
-            <defs><linearGradient id="sealGradHome" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F9E2A7"/><stop offset="55%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6508"/></linearGradient></defs>
-            <circle cx="50" cy="50" r="47" fill="none" stroke="url(#sealGradHome)" stroke-width="3" stroke-dasharray="3.6 3.6"/>
-            <circle cx="50" cy="50" r="38" fill="url(#sealGradHome)"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#7A5A05" stroke-width="1.4" opacity="0.35"/>
-            <path d="M34 51 L45 61 L68 37" fill="none" stroke="#241B02" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg></div>
-          <div class="txt"><strong>Prime Valuation Certification</strong>Our transparent standard for a rigorous recast — <a href="/certification.html">see it</a></div>
-        </div>
-        <a href="/tool.html?tier=detailed" class="cta-primary">Get the detailed report</a>
-      </div>
-    </div>
-  </div>
-</section>
+<p><a class="cta" href="https://primebizvalue.com/sample-report.html" onclick="if(window.plausible)plausible('cta_sample_report',{props:{source:'home-band'}})">See the whole thing &rarr;</a></p>
 
-<footer>
-  <div class="wrap foot-row" style="flex-direction:column; align-items:flex-start; gap:14px;">
-    <div style="display:flex; gap:20px; flex-wrap:wrap;">
-      <a href="/about.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">About</a>
-      <a href="/certification.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">Certification</a>
-      <a href="/faq.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">FAQ</a>
-      <a href="/contact.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">Contact</a>
-      <a href="/join.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">Join our list</a>
-      <a href="/confidentiality.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">Confidentiality</a>
-      <a href="/terms.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">Terms of Service</a>
-      <a href="/privacy.html" style="font-size:13px; color:var(--text-secondary); text-decoration:none;">Privacy Policy</a>
-    </div>
-    <div class="foot-row" style="width:100%;">
-      <p>© 2026 PrimeBizValue.com</p>
-      <p>For informational purposes only. Not certified appraisal, financial, legal, or investment advice.</p>
-    </div>
-  </div>
-</footer>
+<h2>Where people usually are when they find us</h2>
+<ul>
+<li><strong>A franchisee transferring a unit.</strong> Your franchisor has to approve the buyer, and a right of first refusal usually runs off your price. Roughly 34,000 franchise units change hands each year and almost none of them do it without a documented number. <a href="https://primebizvalue.com/franchise-transfer.html">What a transfer actually takes &rarr;</a></li>
+<li><strong>A buyer with an LOI in front of them.</strong> Every free valuation in this market is sell-side, because every free valuation is paid for by a commission, a listing, or a loan. <a href="https://primebizvalue.com/before-you-sign-an-loi.html">Ten things to check before you sign &rarr;</a></li>
+<li><strong>A borrower before an SBA application.</strong> There were 7,003 SBA 7(a) acquisition loans in FY2025, and the question that decides all of them is whether the deal clears debt service at your price. <a href="https://primebizvalue.com/sba-pre-screen.html">The pre-screen, and the SOP 50 10 8 rule that governs it &rarr;</a></li>
+<li><strong>An owner who just got an unsolicited offer.</strong> Phoning three brokers to find out if it's fair is also how a rumour starts. <a href="https://primebizvalue.com/vs-free-broker-valuation.html">What a free broker valuation is, and is not &rarr;</a></li>
+</ul>
+
+<h2>&ldquo;Why would I pay for this?&rdquo;</h2>
+<p>Fair. Here is the honest answer to each version of that question.</p>
+
+<h3>&ldquo;I can get a valuation free from a broker.&rdquo;</h3>
+<p>You can, and you should &mdash; get several. But understand what you're being given. A broker's opinion of value is not a product they sell; it's bundled into the commission they earn if you list with them. That's a real service, honestly offered, and it is also produced by someone whose income depends on winning your listing and on the deal closing.</p>
+<p>Two consequences worth knowing. A broker will not hand you a documented add-back worksheet you can take somewhere else. And if you are the buyer, there is no free valuation in this market written for you &mdash; every one of them is sell-side.</p>
+<p>We take no commission and we don't want your listing. We have no stake in your number being high. That is the entire reason to pay for one. <a href="https://primebizvalue.com/vs-free-broker-valuation.html">The long version, written fairly to brokers &rarr;</a></p>
+
+<h3>&ldquo;Why not just ask ChatGPT?&rdquo;</h3>
+<p>Honestly? For a rough number, do. Paste your P&amp;L into a chatbot and it will apply a multiple to a rough SDE, and it will be roughly right, and it is free. We would rather say that than pretend otherwise.</p>
+<p>Here is what you won't have afterwards. An itemized recast tied to source documents, with a note on which add-backs will not survive diligence. A multiple tied to a published transaction dataset and a specific size band, with the derivation shown. A debt-service screen. A net-cash-to-seller waterfall. And a document &mdash; with a date, a method, and a stated basis &mdash; that you can put in front of a franchisor's transfer desk or a credit analyst.</p>
+<p>A chatbot gives you an answer. This gives you something to hand to the person who has to say yes. <a href="https://primebizvalue.com/vs-chatgpt.html">The four places AI stops being the right tool &rarr;</a></p>
+
+<h3>&ldquo;Shouldn't I just get a real appraisal?&rdquo;</h3>
+<p>Sometimes, yes &mdash; and we will tell you when.</p>
+<p>If you need a valuation for a court, a divorce, an estate tax filing, or an IRS matter, do not buy this. It will not be accepted. Engage a credentialed appraiser (ASA, CVA, or ABV). Email us and we'll point you in the right direction.</p>
+<p>If you are borrowing through the SBA and the financed intangible portion exceeds $250,000, your lender is required to order an independent valuation from a credentialed appraiser &mdash; you cannot buy that one yourself, from us or from anyone. Formal appraisals of that kind typically run into the thousands of dollars and take one to three weeks.</p>
+<p>What we sell is the step before all of that: a fast, documented, defensible read you can act on this afternoon, for $199. If it tells you the deal doesn't work, you've saved the appraisal fee entirely. <a href="https://primebizvalue.com/vs-certified-appraisal.html">When you need the credentialed appraisal instead of us &rarr;</a></p>
+
+<h3>&ldquo;Who even are you?&rdquo;</h3>
+<p>A small, independent shop that makes one product. Our method, our data sources, our subprocessors, and the things we refuse to do are all on our About page &mdash; including why there are no testimonials anywhere on this site. <a href="https://primebizvalue.com/about.html">About PrimeBizValue &rarr;</a></p>
+
+<h2>What we'll put in writing</h2>
+
+<h3>No sales call, ever.</h3>
+<p>There's no sales team here. Nobody phones you, nobody &ldquo;follows up,&rdquo; and we never pass your details to a broker, a lender, or anyone else.</p>
+
+<h3>We show our sources.</h3>
+<p>Size-band multiples calibrated to IBBA / M&amp;A Source Market Pulse (Q1 2026) and BizBuySell's 2025 transaction data. Named, dated, and checkable by you.</p>
+
+<h3>We show our arithmetic.</h3>
+<p>Every add-back, every adjustment, and the multiple derivation are printed in the report. Nothing is a black box.</p>
+
+<h3>We say what this isn't.</h3>
+<p>Not an accredited appraisal. Not USPAP. Not an SBA-compliant valuation. Not admissible in court. Our <a href="https://primebizvalue.com/certification.html">Prime Valuation Certification</a> is our own internal quality standard and we say so on its own page rather than hiding it.</p>
+
+<h3>No testimonials, because we haven't earned any yet.</h3>
+<p>We're young and we're not going to invent the easiest thing to invent. Judge us on the sample report instead &mdash; it's the whole deliverable, free to read.</p>
+
+<h2>What it costs</h2>
+<p>Three rungs, one ladder, and the bottom one is genuinely free. The number is not the product; the document is.</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Tier</th><th class="num">Price</th><th>What you get</th></tr></thead>
+<tbody>
+<tr><td><strong>Instant Estimate</strong></td><td class="num"><strong>Free</strong></td><td>Run the tool, answer the add-back questions, and see your valuation range and net-cash estimate on screen. No charge, no phone number, no sales call.</td></tr>
+<tr><td><strong>Valuation Report</strong></td><td class="num"><strong>$199</strong></td><td>The document. Itemized recast worksheet with a documentation status on every add-back, the multiple derivation printed as arithmetic, the valuation range, and the net-cash-at-close waterfall. Emailed in minutes.</td></tr>
+<tr><td><strong>Deal Report</strong></td><td class="num"><strong>$799</strong></td><td>Everything in the Valuation Report, plus the debt-service coverage screen, balance-sheet and working-capital review, prior-period trend analysis, and written risk and upside commentary. For deals where somebody else &mdash; a lender, a franchisor, a partner &mdash; has to underwrite your number rather than just read it. <strong>Covered by the 14-day money-back guarantee.</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note"><strong>14-day money-back guarantee on the Deal Report.</strong> Read it, use it, show it to whoever has to say yes. If it was not worth $799 to you, reply to the delivery email within 14 days and we refund you in full &mdash; no questions, no forms, and nobody calls you to ask why.</div>
+
+<p class="src">One-time. No subscription, no account, nothing recurring. Card handled by Stripe &mdash; we never see it. Not sure which one? Start with the free Instant Estimate; you will have seen your range before you are asked for anything.</p>
+<p>Broker valuations are free because they're paid for by the commission. Formal appraisals cost thousands because a credentialed appraiser signs them. We're $199 because we're paid by you and nobody else.</p>
+
+<h2>Questions people actually ask</h2>
+<h3>Will my franchisor, my lender, or my buyer accept this?</h3>
+<p>It is not an accredited appraisal and we never claim it is. It is a documented, sourced valuation with its method printed, built to be read and checked by a third party. Read the sample report and judge whether it belongs in your packet. <a href="https://primebizvalue.com/faq.html">Read the full answer on the FAQ page &rarr;</a></p>
+<h3>Do I have to give you my phone number?</h3>
+<p>No. We don't want it. No one from here will ever call you, and we do not pass your details to brokers or lenders. <a href="https://primebizvalue.com/faq.html">Read the full answer on the FAQ page &rarr;</a></p>
+<h3>Is my P&amp;L safe?</h3>
+<p>The About page sets out exactly who processes what, how long we keep it, and how to have it deleted. Email us from the address you used and we will delete your documents and confirm when it is done. <a href="https://primebizvalue.com/faq.html">Read the full answer on the FAQ page &rarr;</a></p>
+<h3>How is this different from the free calculator my broker sent me?</h3>
+<p>Theirs is paid for by the commission on your listing. Ours is paid for by you, which is why we are the only ones who can tell you a deal is overpriced. <a href="https://primebizvalue.com/faq.html">Read the full answer on the FAQ page &rarr;</a></p>
+<h3>What if my numbers are messy or my books aren't clean?</h3>
+<p>The tool parses your P&amp;L and walks you through the add-backs line by line, flagging the ones you will need a document for. Messy books are the normal case, not the exception. <a href="https://primebizvalue.com/faq.html">Read the full answer on the FAQ page &rarr;</a></p>
+<h3>Can I use this for a divorce, an estate, or a court case?</h3>
+<p>No, and please don't buy it for that. Courts and the IRS require credentialed work. Email hello@primebizvalue.com and we will point you to the right professional instead of taking the order. <a href="https://primebizvalue.com/faq.html">Read the full answer on the FAQ page &rarr;</a></p>
+
+<h2>Start with the free number</h2>
+<p>See your range on screen first. Decide about the document afterwards, with the whole sample report in front of you.</p>
+<p><a class="cta" href="https://primebizvalue.com/tool.html" onclick="if(window.plausible)plausible('cta_start_valuation',{props:{source:'home-footer'}})">Start my valuation &mdash; free</a>&nbsp;&nbsp;<a class="cta alt" href="https://primebizvalue.com/sample-report.html" onclick="if(window.plausible)plausible('cta_sample_report',{props:{source:'home-footer'}})">Read the sample report</a></p>
+<p class="src">Question about the method before you buy? Email <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> &mdash; a person answers.</p>
+
+
+<div class="disc">
+<strong>Important.</strong> PrimeBizValue reports are informational and directional. They are not a certified appraisal, a formal valuation, an audit, or a fairness opinion, and they are not an SBA-compliant independent business valuation &mdash; under SBA SOP 50 10 8 an independent valuation must be ordered by the lender from a credentialed appraiser (ASA, CBA, ABV, CVA, AVA, or BCA) when the financed intangible portion exceeds $250,000. Nothing on this site is legal, tax, or investment advice. For court, tax, or formal transaction purposes, engage a credentialed appraiser.
+</div>
+
+</main>
+<footer><div class="wrap">
+&copy; 2026 PrimeBizValue.com &mdash; operated by <strong>Rebellious Franchising LLC</strong>, 110 Front Street, Suite 355, Jupiter, FL 33477<br>
+<a href="https://primebizvalue.com/sample-report.html">Sample report</a> &middot;
+<a href="https://primebizvalue.com/faq.html">FAQ</a> &middot;
+<a href="https://primebizvalue.com/certification.html">Certification</a> &middot;
+<a href="https://primebizvalue.com/confidentiality.html">Confidentiality</a> &middot;
+<a href="https://primebizvalue.com/contact.html">Contact</a>
+</div></footer>
 
 </body>
 </html>

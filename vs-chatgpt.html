@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrimeBizValue vs ChatGPT for a Business Valuation</title>
+<meta name="description" content="AI can do a rough SDE recast, and we will not pretend otherwise. Here are the four specific places it stops being the right tool for a business valuation.">
+<link rel="canonical" href="https://primebizvalue.com/vs-chatgpt.html">
+<meta property="og:site_name" content="PrimeBizValue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ChatGPT vs PrimeBizValue for a business valuation">
+<meta property="og:description" content="AI genuinely does a decent rough recast. The gap is the artifact, the citable multiple, the add-back flags, and method consistency.">
+<meta property="og:url" content="https://primebizvalue.com/vs-chatgpt.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChatGPT vs PrimeBizValue for a business valuation">
+<meta name="twitter:description" content="AI genuinely does a decent rough recast. The gap is the artifact, the citable multiple, the add-back flags, and method consistency.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "PrimeBizValue vs ChatGPT for a Business Valuation", "url": "https://primebizvalue.com/vs-chatgpt.html", "description": "AI can do a rough SDE recast, and we will not pretend otherwise. Here are the four specific places it stops being the right tool for a business valuation.", "isPartOf": {"@type": "WebSite", "name": "PrimeBizValue", "url": "https://primebizvalue.com/"}, "publisher": {"@type": "Organization", "name": "Rebellious Franchising LLC", "address": {"@type": "PostalAddress", "streetAddress": "110 Front Street, Suite 355", "addressLocality": "Jupiter", "addressRegion": "FL", "postalCode": "33477", "addressCountry": "US"}}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "url": "https://primebizvalue.com/vs-chatgpt.html", "mainEntity": [{"@type": "Question", "name": "Can ChatGPT value my business?", "acceptedAnswer": {"@type": "Answer", "text": "For a rough number, genuinely yes. Paste in a profit and loss statement and a competent model will identify the obvious add-backs, compute something close to seller's discretionary earnings, apply a plausible multiple, and explain what it did. It is fast, it is free, and it is roughly right. We would rather say that than pretend otherwise - anyone who has tried it already knows."}}, {"@type": "Question", "name": "So what does a paid valuation report add?", "acceptedAnswer": {"@type": "Answer", "text": "A document rather than an answer. An itemized recast tied to source documents with a status on each add-back, a multiple tied to a named and dated transaction dataset and a specific size band with the derivation printed, a debt-service screen, a net-cash-to-seller waterfall, and a dated artifact with a stated basis and stated limitations that a franchisor's transfer desk, a credit analyst, or a buyer's accountant can read and check. A chat session is not that, however good the answer inside it was."}}, {"@type": "Question", "name": "Where do your multiples come from, and where do a model's come from?", "acceptedAnswer": {"@type": "Answer", "text": "Ours are calibrated to published transaction data we name and date - size-band averages from IBBA / M&A Source Market Pulse (Q1 2026) and market context from BizBuySell's 2025 transaction data - and the report prints which band was used and why. A general-purpose model produces a multiple from its training data, without telling you the vintage, the source, or the deal-size mix behind it. The number may well be reasonable. You just cannot cite it, check it, or defend it."}}, {"@type": "Question", "name": "Is an AI valuation consistent?", "acceptedAnswer": {"@type": "Answer", "text": "Not reliably. Ask the same model the same question twice, or change the order in which you paste the accounts, and the recast and the multiple can move. That is fine when you are exploring and a problem when you are comparing three acquisition targets or explaining to a lender why your number changed between April and June. A fixed method applied the same way every time is worth more than a slightly better answer produced differently each run."}}, {"@type": "Question", "name": "Do you use AI in your reports?", "acceptedAnswer": {"@type": "Answer", "text": "Parsing a messy profit and loss statement and mapping it to a standard chart of accounts is exactly the kind of work software should do, and we use software to do it. The valuation method itself is fixed and printed in the report: the same size bands, the same adjustment factors, the same arithmetic, every time. The point is not that a machine is not involved. The point is that the method is written down and does not change between runs."}}]}</script>
+<style>
+:root{--ink:#0B0E14;--muted:#5B6470;--line:#E6E8EC;--bg:#fff;--accent:#2454FF;--soft:#F7F8FA;}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.65 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);padding:14px 0}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-weight:700;letter-spacing:-.2px;text-decoration:none;color:var(--ink)}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:var(--accent)}
+h1{font-size:31px;line-height:1.25;letter-spacing:-.6px;margin:34px 0 10px}
+h2{font-size:22px;letter-spacing:-.3px;margin:38px 0 10px}
+h3{font-size:17px;margin:26px 0 6px}
+p{margin:0 0 14px}
+.lede{font-size:18px;color:var(--muted);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.src{font-size:12px;color:var(--muted)}
+.calc{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:20px;margin:26px 0}
+.out{margin-top:16px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.out .big{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:13px 22px;border-radius:8px;font-weight:600;margin-top:14px}
+.cta.alt{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+.note{background:#fffdf3;border:1px solid #f0e3b8;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.disc{font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:38px;padding-top:16px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0;font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}
+ul{padding-left:20px} li{margin-bottom:7px}
+ol{padding-left:22px} ol li{margin-bottom:12px}
+.doc{border:1px solid var(--line);border-radius:10px;margin:22px 0;overflow:hidden}
+.doc .dh{background:var(--soft);border-bottom:1px solid var(--line);padding:9px 14px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.doc .db{padding:4px 18px 14px}
+.doc table{margin:12px 0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.num{text-align:right;white-space:nowrap}
+th.num{text-align:right}
+.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:700}
+.sub td{font-weight:600;background:var(--soft)}
+.neg{color:#9b3129}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.ok{background:#eef7ee;border-color:#cfe6cf;color:#256b2b}
+.tag.warn{background:#fffdf3;border-color:#f0e3b8;color:#8a6d1a}
+.tag.no{background:#fdf0ef;border-color:#f2cfcb;color:#9b3129}
+.example{background:#eef4fb;border:1px solid #cfe0f2;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.stop{background:#fdf0ef;border:1px solid #f2cfcb;border-left:4px solid #9b3129;border-radius:8px;padding:16px 18px;margin:24px 0;font-size:15px}
+.stop strong{color:#9b3129}
+.kv{font-size:15px}
+.kv td:first-child{color:var(--muted);width:52%}
+.check{list-style:none;padding-left:0}
+.check>li{border-bottom:1px solid var(--line);padding:14px 0;margin:0}
+.check>li:last-child{border-bottom:none}
+.check .n{display:inline-block;min-width:26px;font-weight:700;color:var(--accent)}
+@media(max-width:560px){h1{font-size:26px} nav a{margin-left:12px;font-size:13px} table{font-size:14px} th,td{padding:8px 9px}}
+h1,h2,h3{font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-.02em}
+.logo{font-family:'Space Grotesk',sans-serif}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="https://primebizvalue.com/">PrimeBizValue</a>
+  <nav><a href="https://primebizvalue.com/">Home</a><a href="https://primebizvalue.com/sample-report.html">Sample report</a><a href="https://primebizvalue.com/faq.html">FAQ</a><a href="https://primebizvalue.com/tool.html">Get a valuation</a></nav>
+</div></header>
+
+<main class="wrap">
+
+<h1>Yes, ChatGPT can value your business. Here is where that stops working.</h1>
+<p class="lede">Paste your P&amp;L into a good AI model and ask for an SDE recast and a multiple, and you will get a competent answer in thirty seconds for nothing. Pretending otherwise would insult you, and you would catch us at it inside a minute. So let us start with what it does well, and then be specific about the point at which it stops being the right tool.</p>
+
+<h2>What an AI model genuinely does well</h2>
+<ul>
+<li><strong>The recast arithmetic.</strong> It will find owner compensation, payroll taxes on it, depreciation and amortisation, interest, health insurance, and the obvious personal expenses, and add them back correctly.</li>
+<li><strong>Explaining the concepts.</strong> SDE versus EBITDA, why a buyer cares about owner dependency, what an earn-out does &mdash; it explains all of it clearly and patiently, at two in the morning, as many times as you ask.</li>
+<li><strong>Sanity-checking a number you were given.</strong> If a broker or a buyer quoted you something wild, a model will usually tell you it is wild.</li>
+<li><strong>Drafting the questions to ask.</strong> Genuinely useful before a first meeting with a seller or a broker.</li>
+</ul>
+<p>If a rough number is all you need this afternoon, use it. Our own free Instant Estimate exists for the same reason: the number is not the scarce thing.</p>
+
+<h2>The four places it stops</h2>
+
+<h3>1. It produces an answer, not an artifact</h3>
+<p>Almost nobody buys a valuation for themselves. They buy it because somebody else has to be convinced &mdash; a franchisor's transfer desk approving a unit transfer, a credit analyst, a buyer's accountant, a business partner, a spouse. That second reader needs a dated document with a stated method, stated inputs, stated limitations, and arithmetic they can follow and disagree with. A chat transcript is not that, no matter how good the reasoning inside it was. This is the whole product, and it is the one thing a chatbot is not trying to be.</p>
+
+<h3>2. The multiple comes from recollection, not from a citable dataset</h3>
+<p>Ask a model for a multiple and you get a number with a confident tone and no provenance: no source, no vintage, no deal-size mix. That matters more than it sounds, because the single biggest error in small-business valuation is applying a blended market average to a business that is nowhere near the average size.</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Benchmark</th><th class="num">Multiple</th><th>What it actually describes</th></tr></thead>
+<tbody>
+<tr><td>Average sale price to cash flow, all reported 2025 transactions</td><td class="num">2.61&times;</td><td>A blend across every deal size in the market. Quoted constantly. Wrong for most Main Street businesses.</td></tr>
+<tr><td>Under $500K SDE</td><td class="num">2.0&times;</td><td>Where most owner-operated businesses actually sit</td></tr>
+<tr><td>$500K &ndash; $1M SDE</td><td class="num">2.5&times;</td><td></td></tr>
+<tr><td>$1M &ndash; $2M SDE</td><td class="num">2.8&times;</td><td></td></tr>
+</tbody>
+</table>
+</div>
+<p class="src">Size bands: IBBA / M&amp;A Source Market Pulse, Q1 2026. Blended average: BizBuySell 2025 Year in Review. We print the source and the band in the report so you, or the person reading it, can agree or disagree with the choice rather than with a black box.</p>
+<p>Applying 2.61&times; to a business with $300,000 of SDE overstates it by roughly 30%. A model will do that cheerfully if that is the figure most represented in what it read.</p>
+
+<h3>3. It does not flag which add-backs will die</h3>
+<p>An AI will add back the personal vehicle. It will not tell you that without a mileage log the buyer's accountant strikes it, and that at a 2.2&times; multiple a $9,600 add-back you cannot evidence is roughly $21,000 of purchase price you are about to lose in diligence. The recast worksheet in our report carries a documentation status on every line &mdash; supported, needs proof, likely struck &mdash; and totals two SDE figures: as claimed, and as defensible today. That is not a cleverness gap. It is a design choice about who the document is for.</p>
+
+<h3>4. It is not consistent, and consistency is what comparison requires</h3>
+<p>Ask twice, get two answers. Reorder the accounts, get a third. That is fine when exploring and expensive when you are comparing three acquisition targets, or explaining to a lender why the number moved between April and June. A fixed, printed method applied identically every time is worth more than a marginally better answer produced differently each run.</p>
+
+<h2>The honest comparison</h2>
+<div class="scroll">
+<table>
+<thead><tr><th></th><th>AI chat</th><th>PrimeBizValue</th></tr></thead>
+<tbody>
+<tr><td>Cost</td><td>Free or a subscription you already have</td><td>Free estimate; $199 or $799 for the document</td></tr>
+<tr><td>Speed</td><td>Seconds</td><td>Minutes</td></tr>
+<tr><td>Rough SDE recast</td><td><span class="tag ok">Yes, genuinely</span></td><td><span class="tag ok">Yes</span></td></tr>
+<tr><td>Explains the concepts</td><td><span class="tag ok">Excellent</span></td><td><span class="tag warn">Only as far as the report goes</span></td></tr>
+<tr><td>Named, dated source for the multiple</td><td><span class="tag no">No</span></td><td><span class="tag ok">Yes, printed</span></td></tr>
+<tr><td>Documentation status on each add-back</td><td><span class="tag no">No</span></td><td><span class="tag ok">Yes</span></td></tr>
+<tr><td>Same method every time</td><td><span class="tag no">No</span></td><td><span class="tag ok">Yes</span></td></tr>
+<tr><td>Dated document with stated basis and limitations</td><td><span class="tag no">No</span></td><td><span class="tag ok">Yes</span></td></tr>
+<tr><td>Debt-service coverage screen</td><td><span class="tag warn">If you ask precisely enough</span></td><td><span class="tag ok">Yes, in the Deal Report</span></td></tr>
+<tr><td>Net cash to seller after note, commission, debt and tax</td><td><span class="tag warn">If you ask precisely enough</span></td><td><span class="tag ok">Yes</span></td></tr>
+<tr><td>Accepted by a court, the IRS, or an SBA loan file</td><td><span class="tag no">No</span></td><td><span class="tag no">No</span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="src">Note the last row. Neither of us is a credentialed appraisal, and <a href="https://primebizvalue.com/vs-certified-appraisal.html">there are situations where only that will do</a>.</p>
+
+<div class="example"><strong>The test worth applying.</strong> Ask yourself who else has to read this. If the answer is &ldquo;nobody, I just want to know&rdquo; &mdash; use the chatbot, or use our free estimate, and keep your $199. If the answer is a franchisor, a lender, a partner, a buyer's accountant, or anyone whose approval you need, then you are not shopping for a number. You are shopping for something to hand them.</div>
+
+<h2>What it costs</h2>
+<div class="scroll">
+<table>
+<thead><tr><th>Tier</th><th class="num">Price</th><th>What you get</th></tr></thead>
+<tbody>
+<tr><td><strong>Instant Estimate</strong></td><td class="num"><strong>Free</strong></td><td>Run the tool, answer the add-back questions, and see your valuation range on screen. No phone number, no email gate on the range itself, no sales call.</td></tr>
+<tr><td><strong>Valuation Report</strong></td><td class="num"><strong>$199</strong></td><td>The document. Itemized recast worksheet with a documentation status on every add-back, the multiple derivation printed as arithmetic, the valuation range, and the net-cash-at-close waterfall. Emailed in minutes.</td></tr>
+<tr><td><strong>Deal Report</strong></td><td class="num"><strong>$799</strong></td><td>Everything in the Valuation Report, plus the debt-service coverage screen, balance-sheet and working-capital review, prior-period trend analysis, and written risk and upside commentary. For deals where somebody else has to underwrite your number rather than just read it.</td></tr>
+</tbody>
+</table>
+</div>
+
+<p><a class="cta" href="https://primebizvalue.com/tool.html" onclick="if(window.plausible)plausible('cta_start_valuation',{props:{source:'vs_chatgpt'}})">Start with the free Instant Estimate</a>&nbsp;&nbsp;<a class="cta alt" href="https://primebizvalue.com/sample-report.html" onclick="if(window.plausible)plausible('cta_sample_report',{props:{source:'vs_chatgpt'}})">See a full sample report</a></p>
+<p class="src">You see your valuation range on screen before you are asked to pay for anything. No sales call, ever &mdash; there is nobody here whose job is to phone you, and we do not pass your details to brokers, lenders, or anyone else.</p>
+
+
+<h2>What this is not</h2>
+<p>We would rather lose the sale than have a report bounce out of a loan file or a courtroom. So, plainly:</p>
+<ul>
+<li><strong>Not a certified or accredited appraisal.</strong> Our &ldquo;Prime Valuation Certification&rdquo; is our own internal standard, not an accreditation from any professional body, and we say so on the <a href="https://primebizvalue.com/certification.html">certification page</a> rather than burying it.</li>
+<li><strong>Not a USPAP-compliant report</strong>, and not signed by a credentialed appraiser.</li>
+<li><strong>Not an SBA-compliant independent business valuation.</strong> Your lender orders that one. <a href="https://primebizvalue.com/sba-pre-screen.html">Here is the rule, in full.</a></li>
+<li><strong>Not admissible for divorce, probate, estate tax, or litigation.</strong> If that is your situation, <a href="https://primebizvalue.com/vs-certified-appraisal.html">read this instead and go buy the credentialed appraisal</a>. We will tell you that rather than take the order.</li>
+<li><strong>Not an audit.</strong> We do not verify your figures, visit the premises, interview management, call the landlord, or read the lease. The report is only as good as what goes into it, and it says so on its own first page.</li>
+<li><strong>Not a guarantee of price.</strong> Nobody can give you that. What sells a business is a buyer.</li>
+<li><strong>Not a listing agreement.</strong> We are not brokers. We take no commission, we do not want your listing, and we have no financial interest in your number being high or low.</li>
+</ul>
+
+<h2>Where to go next</h2>
+<ul>
+<li><a href="https://primebizvalue.com/before-you-sign-an-loi.html">Buying? Ten things to check before you sign an LOI</a> &mdash; the list an AI will not think to give you unprompted.</li>
+<li><a href="https://primebizvalue.com/franchise-transfer.html">Transferring a franchised unit?</a> The mechanics that no general-purpose model has your agreement in front of it to catch.</li>
+<li><a href="https://primebizvalue.com/sample-report.html">See the whole deliverable</a> and judge for yourself whether it beats a chat window.</li>
+</ul>
+
+<h2>Questions people actually ask</h2>
+<h3>Can ChatGPT value my business?</h3>
+<p>For a rough number, genuinely yes. Paste in a profit and loss statement and a competent model will identify the obvious add-backs, compute something close to seller's discretionary earnings, apply a plausible multiple, and explain what it did. It is fast, it is free, and it is roughly right. We would rather say that than pretend otherwise - anyone who has tried it already knows.</p>
+<h3>So what does a paid valuation report add?</h3>
+<p>A document rather than an answer. An itemized recast tied to source documents with a status on each add-back, a multiple tied to a named and dated transaction dataset and a specific size band with the derivation printed, a debt-service screen, a net-cash-to-seller waterfall, and a dated artifact with a stated basis and stated limitations that a franchisor's transfer desk, a credit analyst, or a buyer's accountant can read and check. A chat session is not that, however good the answer inside it was.</p>
+<h3>Where do your multiples come from, and where do a model's come from?</h3>
+<p>Ours are calibrated to published transaction data we name and date - size-band averages from IBBA / M&A Source Market Pulse (Q1 2026) and market context from BizBuySell's 2025 transaction data - and the report prints which band was used and why. A general-purpose model produces a multiple from its training data, without telling you the vintage, the source, or the deal-size mix behind it. The number may well be reasonable. You just cannot cite it, check it, or defend it.</p>
+<h3>Is an AI valuation consistent?</h3>
+<p>Not reliably. Ask the same model the same question twice, or change the order in which you paste the accounts, and the recast and the multiple can move. That is fine when you are exploring and a problem when you are comparing three acquisition targets or explaining to a lender why your number changed between April and June. A fixed method applied the same way every time is worth more than a slightly better answer produced differently each run.</p>
+<h3>Do you use AI in your reports?</h3>
+<p>Parsing a messy profit and loss statement and mapping it to a standard chart of accounts is exactly the kind of work software should do, and we use software to do it. The valuation method itself is fixed and printed in the report: the same size bands, the same adjustment factors, the same arithmetic, every time. The point is not that a machine is not involved. The point is that the method is written down and does not change between runs.</p>
+
+
+<div class="disc">
+<strong>Important.</strong> PrimeBizValue reports are informational and directional. They are not a certified appraisal, a formal valuation, an audit, or a fairness opinion, and they are not an SBA-compliant independent business valuation &mdash; under SBA SOP 50 10 8 an independent valuation must be ordered by the lender from a credentialed appraiser (ASA, CBA, ABV, CVA, AVA, or BCA) when the financed intangible portion exceeds $250,000. Nothing on this site is legal, tax, or investment advice. For court, tax, or formal transaction purposes, engage a credentialed appraiser.
+</div>
+
+</main>
+<footer><div class="wrap">
+&copy; 2026 PrimeBizValue.com &mdash; operated by <strong>Rebellious Franchising LLC</strong>, 110 Front Street, Suite 355, Jupiter, FL 33477<br>
+<a href="https://primebizvalue.com/sample-report.html">Sample report</a> &middot;
+<a href="https://primebizvalue.com/faq.html">FAQ</a> &middot;
+<a href="https://primebizvalue.com/certification.html">Certification</a> &middot;
+<a href="https://primebizvalue.com/confidentiality.html">Confidentiality</a> &middot;
+<a href="https://primebizvalue.com/contact.html">Contact</a>
+</div></footer>
+
+</body>
+</html>

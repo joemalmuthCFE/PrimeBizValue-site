@@ -1,0 +1,27 @@
+# robots.txt for primebizvalue.com
+# Deploy to: https://primebizvalue.com/robots.txt
+# Created 2026-08-15 — the site currently returns 404 for this path.
+
+User-agent: *
+Allow: /
+
+# Keep parameterised tool URLs out of the index to avoid duplicate content.
+# The canonical tool page is /tool.html
+Disallow: /tool.html?tier=
+Disallow: /*?tier=
+
+# AI crawlers — allowed. Being cited by an assistant when someone asks
+# "how much is my business worth" is a distribution channel, not a threat.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://primebizvalue.com/sitemap.xml

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Report — What's Actually In A PrimeBizValue Valuation</title>
+<meta name="description" content="A full worked example of a PrimeBizValue Deal Report: the itemized recast, the multiple, the DSCR screen, and net cash to seller.">
+<link rel="canonical" href="https://primebizvalue.com/sample-report.html">
+<meta property="og:site_name" content="PrimeBizValue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sample Report — What's Actually In A PrimeBizValue Valuation">
+<meta property="og:description" content="A full worked example: itemized recast, multiple derivation, valuation range, debt-service coverage screen, and net cash to seller.">
+<meta property="og:url" content="https://primebizvalue.com/sample-report.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Sample Report — What's Actually In A PrimeBizValue Valuation","url":"https://primebizvalue.com/sample-report.html","description":"A full worked example of a PrimeBizValue Deal Report, using an illustrative example business.","isPartOf":{"@type":"WebSite","name":"PrimeBizValue","url":"https://primebizvalue.com/"}}</script>
+<style>
+:root{--ink:#0B0E14;--muted:#5B6470;--line:#E6E8EC;--bg:#fff;--accent:#2454FF;--soft:#F7F8FA;}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.65 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);padding:14px 0}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-weight:700;letter-spacing:-.2px;text-decoration:none;color:var(--ink)}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:var(--accent)}
+h1{font-size:31px;line-height:1.25;letter-spacing:-.6px;margin:34px 0 10px}
+h2{font-size:22px;letter-spacing:-.3px;margin:38px 0 10px}
+h3{font-size:17px;margin:26px 0 6px}
+p{margin:0 0 14px}
+.lede{font-size:18px;color:var(--muted);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.src{font-size:12px;color:var(--muted)}
+.calc{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:20px;margin:26px 0}
+.out{margin-top:16px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.out .big{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:13px 22px;border-radius:8px;font-weight:600;margin-top:14px}
+.cta.alt{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+.note{background:#fffdf3;border:1px solid #f0e3b8;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.disc{font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:38px;padding-top:16px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0;font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}
+ul{padding-left:20px} li{margin-bottom:7px}
+/* --- additions for the document walkthrough, same idiom as above --- */
+.doc{border:1px solid var(--line);border-radius:10px;margin:22px 0;overflow:hidden}
+.doc .dh{background:var(--soft);border-bottom:1px solid var(--line);padding:9px 14px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.doc .db{padding:4px 18px 14px}
+.doc table{margin:12px 0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.num{text-align:right;white-space:nowrap}
+th.num{text-align:right}
+.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:700}
+.sub td{font-weight:600;background:var(--soft)}
+.neg{color:#9b3129}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.ok{background:#eef7ee;border-color:#cfe6cf;color:#256b2b}
+.tag.warn{background:#fffdf3;border-color:#f0e3b8;color:#8a6d1a}
+.tag.no{background:#fdf0ef;border-color:#f2cfcb;color:#9b3129}
+.example{background:#eef4fb;border:1px solid #cfe0f2;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.kv{font-size:15px}
+.kv td:first-child{color:var(--muted);width:52%}
+@media(max-width:560px){h1{font-size:26px} nav a{margin-left:12px;font-size:13px} table{font-size:14px} th,td{padding:8px 9px}}
+h1,h2,h3{font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-.02em}
+.logo{font-family:'Space Grotesk',sans-serif}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="https://primebizvalue.com/">PrimeBizValue</a>
+  <nav><a href="https://primebizvalue.com/">Home</a><a href="https://primebizvalue.com/faq.html">FAQ</a><a href="https://primebizvalue.com/tool.html">Get a valuation</a></nav>
+</div></header>
+
+<main class="wrap">
+
+<h1>What's actually in the report</h1>
+<p class="lede">You can get a valuation <em>number</em> free in about ninety seconds &mdash; from us, from twenty broker calculators, or from an AI chatbot. This page is about the other thing: the document you hand to a franchisor, a lender, a partner, or the person across the table from you. Here is every section of it, worked end to end on a real-shaped set of numbers.</p>
+
+<div class="note"><strong>Everything below is an illustrative example.</strong> &ldquo;Harborline Mechanical&rdquo; is a business we made up for this page. It is not a customer, and none of these figures came from a real report. We have not published any customer's numbers and we won't. The <em>structure</em>, the calculations, and the data sources are exactly what a real report uses.</div>
+
+<h2>The example business</h2>
+<p>A single-location residential HVAC service and replacement company, nine employees, owner-operated, trailing twelve months ended 31 December 2025. The owner is considering an exit and has been told by a competitor that &ldquo;these businesses go for about 0.75&times; revenue&rdquo; &mdash; which would be $1.39M.</p>
+
+<table class="kv">
+<tbody>
+<tr><td>Revenue (TTM)</td><td class="num"><strong>$1,850,000</strong></td></tr>
+<tr><td>Cost of goods sold (materials + field labor)</td><td class="num">$1,072,000</td></tr>
+<tr><td>Gross profit</td><td class="num">$778,000 <span class="src">(42.1%)</span></td></tr>
+<tr><td>Operating expenses</td><td class="num">$610,000</td></tr>
+<tr><td>Operating income</td><td class="num">$168,000</td></tr>
+<tr><td>Interest expense</td><td class="num">$21,400</td></tr>
+<tr><td>Depreciation &amp; amortization</td><td class="num">$47,600</td></tr>
+<tr class="tot"><td>Net income, as reported</td><td class="num">$99,000</td></tr>
+</tbody>
+</table>
+<p class="src">This is the number on the tax return. It is not the number the business sells on, and the gap between the two is where most Main Street deals are won or lost.</p>
+
+<!-- ============ SECTION 1: RECAST ============ -->
+<h2 id="recast">1. The recast worksheet</h2>
+<p>This is the section a free calculator structurally cannot produce, because a calculator never sees your general ledger. Recasting restates the P&amp;L as it would look to a buyer: earnings before one full-time working owner's compensation, before financing, before non-cash charges, and before anything that will not recur under new ownership. The result is <strong>Seller's Discretionary Earnings (SDE)</strong>.</p>
+<p>Two things make this worksheet worth paying for. It is <strong>itemized</strong> &mdash; every adjustment is a separate line with a dollar amount, not a lump &ldquo;add-backs: $317,800&rdquo;. And every line carries a <strong>documentation status</strong>, because an add-back you cannot evidence will be struck out by the buyer's accountant, and you should find that out now rather than in diligence.</p>
+
+<div class="doc">
+<div class="dh">Report section 1 of 5 &middot; Recast / Seller's Discretionary Earnings</div>
+<div class="db">
+<div class="scroll">
+<table>
+<thead><tr><th>Adjustment</th><th class="num">Amount</th><th>Supporting document</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Net income, as reported</td><td class="num">$99,000</td><td>2025 P&amp;L / return</td><td><span class="tag ok">Filed</span></td></tr>
+<tr><td>Owner's W-2 compensation</td><td class="num">$145,000</td><td>Payroll register, W-2</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Employer payroll taxes on owner's comp</td><td class="num">$11,100</td><td>Form 941s</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Depreciation &amp; amortization</td><td class="num">$47,600</td><td>Form 4562</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Interest expense</td><td class="num">$21,400</td><td>Lender statements</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Owner's health insurance premiums</td><td class="num">$14,400</td><td>Carrier invoices</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Spouse on payroll above market rate<br><span class="src">Paid $52,000; ~6 hrs/wk bookkeeping; market rate for the work performed $18,000. Only the $34,000 excess is an add-back.</span></td><td class="num">$34,000</td><td>Payroll register + job description</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>One-time employment claim settlement (Mar 2025)</td><td class="num">$28,500</td><td>Settlement agreement</td><td><span class="tag ok">Supported</span></td></tr>
+<tr><td>Owner's personal-use vehicle (1 of 6)<br><span class="src">Lease + fuel. Business-use percentage is not documented.</span></td><td class="num">$9,600</td><td class="neg">Mileage log missing</td><td><span class="tag warn">Needs proof</span></td></tr>
+<tr><td>Sponsorships with personal benefit<br><span class="src">Youth sports and a golf membership booked to advertising. A buyer will argue at least part of this is real marketing spend.</span></td><td class="num">$6,200</td><td class="neg">None</td><td><span class="tag no">Likely struck</span></td></tr>
+<tr class="sub"><td>SDE as claimed &mdash; all adjustments taken</td><td class="num">$416,800</td><td colspan="2"></td></tr>
+<tr class="tot"><td>SDE as defensible today &mdash; supported adjustments only</td><td class="num">$401,000</td><td colspan="2"></td></tr>
+</tbody>
+</table>
+</div>
+<p class="src" style="margin-top:0"><strong>Why the report leads with $401,000, not $416,800.</strong> The gap is $15,800 of earnings. At the multiple concluded in section 2, that is <strong>$34,760 of purchase price</strong> resting on a mileage log and a golf membership. The report tells you which line items to go document this week &mdash; and if you produce the mileage log, $9,600 of that comes back.</p>
+</div>
+</div>
+
+<div class="example"><strong>What the second reader sees.</strong> A buyer's accountant, a franchisor's transfer desk, and a credit analyst all do the same thing with a valuation: they look for the add-backs and try to remove them. A worksheet that has already flagged its own weak lines survives that review. A single &ldquo;add-backs&rdquo; total does not.</div>
+
+<!-- ============ SECTION 2: MULTIPLE ============ -->
+<h2 id="multiple">2. Where the multiple comes from</h2>
+<p>The most common complaint about automated valuations is that a multiple appears with no explanation. This section shows the derivation as arithmetic you can check.</p>
+
+<div class="doc">
+<div class="dh">Report section 2 of 5 &middot; Multiple derivation</div>
+<div class="db">
+<p><strong>Step one &mdash; the size band.</strong> On Main Street the strongest determinant of the multiple is the <em>size</em> of the cash flow, not the industry label. Defensible SDE of $401,000 places this business in the under-$500K band.</p>
+<table>
+<thead><tr><th>Cash flow band</th><th class="num">Average multiple paid</th></tr></thead>
+<tbody>
+<tr><td><strong>Under $500K SDE &mdash; this business</strong></td><td class="num"><strong>2.0&times;</strong></td></tr>
+<tr><td>$500K &ndash; $1M SDE</td><td class="num">2.5&times;</td></tr>
+<tr><td>$1M &ndash; $2M SDE</td><td class="num">2.8&times;</td></tr>
+</tbody>
+</table>
+<p class="src">Source: IBBA / M&amp;A Source Market Pulse, Q1 2026.</p>
+
+<p><strong>Why not 2.61&times;?</strong> Across all reported 2025 transactions the average sale-price-to-cash-flow multiple was 2.61&times; (BizBuySell 2025 Year in Review) &mdash; and you will see that number quoted at you. It is a blended average across every deal size in the market. Applying it to a sub-$500K-SDE business overstates the value by roughly 30%. The report states which comparator it used and why, so a lender or a buyer can agree or disagree with the choice rather than with a black box.</p>
+
+<p><strong>Step two &mdash; the adjustments.</strong> Each one moves the multiple within the band, and each is tied to something observable in your submission:</p>
+<div class="scroll">
+<table>
+<thead><tr><th>Factor</th><th>Finding in this business</th><th class="num">Effect</th></tr></thead>
+<tbody>
+<tr><td>Base &mdash; size band</td><td>SDE $401,000, under-$500K band</td><td class="num">2.00&times;</td></tr>
+<tr><td>Earnings trend</td><td>Revenue +9%, SDE +14% vs prior year</td><td class="num">+0.20</td></tr>
+<tr><td>Owner dependency</td><td>Owner still sells, estimates, and holds the license. No service manager.</td><td class="num neg">&minus;0.25</td></tr>
+<tr><td>Recurring revenue</td><td>412 maintenance agreements, ~22% of revenue, transferable</td><td class="num">+0.15</td></tr>
+<tr><td>Customer concentration</td><td>Largest customer 6% of revenue</td><td class="num">+0.05</td></tr>
+<tr><td>Premises / lease</td><td>3 years remaining plus one 5-year option</td><td class="num">+0.05</td></tr>
+<tr class="tot"><td>Concluded multiple</td><td>Applied to defensible SDE</td><td class="num">2.20&times;</td></tr>
+</tbody>
+</table>
+</div>
+<p class="src">Adjustment weights are the model's, not a published standard. The report prints them so you can argue with them. That is the point &mdash; a number you can argue with is a number you can defend.</p>
+</div>
+</div>
+
+<!-- ============ SECTION 3: RANGE ============ -->
+<h2 id="range">3. The valuation range</h2>
+<p>A single number is a sales tactic. A range with a stated basis is a negotiating position.</p>
+
+<div class="doc">
+<div class="dh">Report section 3 of 5 &middot; Indicated value</div>
+<div class="db">
+<table>
+<thead><tr><th>Basis</th><th class="num">Multiple</th><th class="num">Indicated value</th></tr></thead>
+<tbody>
+<tr><td>Conservative &mdash; buyer strikes the weak add-backs and prices owner dependency hard</td><td class="num">2.0&times;</td><td class="num">$802,000</td></tr>
+<tr class="sub"><td>Concluded midpoint</td><td class="num">2.2&times;</td><td class="num">$882,000</td></tr>
+<tr><td>Upper &mdash; documentation completed, service manager in place before close</td><td class="num">2.4&times;</td><td class="num">$962,000</td></tr>
+</tbody>
+</table>
+<p><strong>Indicated range: $800,000 &ndash; $960,000</strong>, on a debt-free, cash-free basis. Transferable parts and materials inventory of $38,000 at cost is conveyed in addition, as is normal in an asset sale.</p>
+<p class="src">Context for the range, not a prediction: the median reported Main Street sale price in 2025 was $350,000 on median cash flow of $158,950, and businesses that sold achieved 94% of asking price over 169&ndash;207 days on market (BizBuySell 2025). This business is materially above the market median on cash flow, which is why it prices above the median sale price.</p>
+<div class="note" style="margin-bottom:6px"><strong>The &ldquo;0.75&times; revenue&rdquo; number the owner was given was $1,390,000.</strong> The report does not simply say that is wrong. It shows what would have to be true for it to be right: defensible SDE of roughly $560,000 to $630,000, depending on which size band the business lands in, against $401,000 today. That is a conversation the owner can have with a buyer. &ldquo;My friend said 0.75&times; revenue&rdquo; is not.</div>
+</div>
+</div>
+
+<!-- ============ SECTION 4: DSCR ============ -->
+<h2 id="bankability">4. The bankability screen</h2>
+<p>Most Main Street businesses are bought with borrowed money. So the real question underneath the valuation is not &ldquo;what is it worth&rdquo; &mdash; it is <strong>&ldquo;at this price, does the deal service its own debt?&rdquo;</strong> If it doesn't, the buyer pool collapses to cash buyers, and cash buyers pay less. This section runs that arithmetic before anyone spends money finding out.</p>
+
+<div class="doc">
+<div class="dh">Report section 4 of 5 &middot; Debt-service coverage screen</div>
+<div class="db">
+<p><strong>Assumed structure</strong> (you set every one of these inputs; these are the example's):</p>
+<table class="kv">
+<tbody>
+<tr><td>Business price &mdash; concluded midpoint</td><td class="num">$882,000</td></tr>
+<tr><td>Plus inventory conveyed</td><td class="num">$38,000</td></tr>
+<tr><td>Plus working capital funded into the loan</td><td class="num">$32,000</td></tr>
+<tr><td>Plus closing costs, fees, and guaranty fee</td><td class="num">$25,000</td></tr>
+<tr class="sub"><td>Total project cost</td><td class="num">$977,000</td></tr>
+<tr><td>Buyer equity injection (10% &mdash; the SBA minimum)</td><td class="num">$97,700</td></tr>
+<tr><td>Seller note, full standby</td><td class="num">$97,700</td></tr>
+<tr class="tot"><td>Bank loan</td><td class="num">$781,600</td></tr>
+</tbody>
+</table>
+<p><strong>Cash available to service it:</strong></p>
+<table class="kv">
+<tbody>
+<tr><td>Defensible SDE</td><td class="num">$401,000</td></tr>
+<tr><td>Less a market salary for the incoming owner</td><td class="num neg">&minus;$95,000</td></tr>
+<tr><td>Less annual capital replacement reserve (trucks, equipment)</td><td class="num neg">&minus;$18,000</td></tr>
+<tr class="tot"><td>Cash available for debt service</td><td class="num">$288,000</td></tr>
+</tbody>
+</table>
+<p><strong>Result at 10.5% over 10 years:</strong> annual debt service of $126,600 against $288,000 available &mdash; a coverage ratio of <strong>2.28&times;</strong>. Seller note is on full standby and carries no payment during the bank loan.</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th>Price scenario</th><th class="num">Bank loan</th><th class="num">Annual debt service</th><th class="num">Coverage</th></tr></thead>
+<tbody>
+<tr><td>Low of range &mdash; $802,000</td><td class="num">$717,600</td><td class="num">$116,200</td><td class="num">2.48&times;</td></tr>
+<tr><td>Midpoint &mdash; $882,000</td><td class="num">$781,600</td><td class="num">$126,600</td><td class="num">2.28&times;</td></tr>
+<tr><td>High of range &mdash; $962,000</td><td class="num">$845,600</td><td class="num">$136,900</td><td class="num">2.10&times;</td></tr>
+<tr><td>The &ldquo;0.75&times; revenue&rdquo; ask &mdash; $1,390,000</td><td class="num">$1,188,000</td><td class="num">$192,400</td><td class="num">1.50&times;</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>What the report concludes here.</strong> Coverage holds across the entire indicated range, and does not fall to a 1.25&times; threshold until roughly a $1.68M price. So financing is <em>not</em> the binding constraint on this deal &mdash; buyer willingness to pay is. That is a genuinely useful answer, and it is the opposite of what a seller is usually told.</p>
+<p class="src">Not every business gets that answer. The screen bites hardest when SDE is under about $250,000, when the incoming owner needs a large salary, or when the amortization is short. Those are exactly the deals that die three weeks into underwriting. 1.25&times; is a coverage level commonly applied in acquisition underwriting; your lender sets its own threshold and you should ask what it is.</p>
+</div>
+</div>
+
+<div class="note"><strong>Read this before you put it in a loan file.</strong> This is a <em>pre-application screen</em>, not an SBA-compliant business valuation, and we will never describe it as one. Under SBA SOP 50 10 8, when the financed intangible portion of a deal exceeds $250,000 the independent valuation must be <strong>ordered by the lender</strong> from an appraiser holding an ASA, CBA, ABV, CVA, AVA, or BCA credential and independent of loan production. You cannot buy that valuation yourself, from us or from anyone. What you <em>can</em> do is find out, before you spend three weeks and someone else's underwriting fee, whether the deal you are contemplating is likely to clear coverage at all. That is what this section is for.</div>
+
+<!-- ============ SECTION 5: WATERFALL ============ -->
+<h2 id="net-cash">5. What you actually walk away with</h2>
+<p>Sellers negotiate the headline price and then get surprised by the wire. This section is the one most owners read first once they know it exists.</p>
+
+<div class="doc">
+<div class="dh">Report section 5 of 5 &middot; Net cash to seller</div>
+<div class="db">
+<table>
+<tbody>
+<tr><td>Business value &mdash; concluded midpoint</td><td class="num">$882,000</td></tr>
+<tr><td>Plus inventory conveyed at cost</td><td class="num">$38,000</td></tr>
+<tr class="sub"><td>Total consideration</td><td class="num">$920,000</td></tr>
+<tr><td>Less seller note held on standby <span class="src">(not cash at close; collected later, and at risk)</span></td><td class="num neg">&minus;$97,700</td></tr>
+<tr><td>Less intermediary commission at 10% <span class="src">(zero if you sell without a broker &mdash; your input)</span></td><td class="num neg">&minus;$92,000</td></tr>
+<tr><td>Less transaction legal, accounting, escrow</td><td class="num neg">&minus;$14,500</td></tr>
+<tr><td>Less payoff of interest-bearing business debt</td><td class="num neg">&minus;$168,000</td></tr>
+<tr><td>Plus cash retained <span class="src">(excluded from the sale, as is normal)</span></td><td class="num">+$52,000</td></tr>
+<tr><td>Less estimated tax on the gain <span class="src">(illustration only: 20% blended effective rate on an estimated $606,500 gain, at the rate <em>you</em> enter)</span></td><td class="num neg">&minus;$121,300</td></tr>
+<tr class="tot"><td>Estimated net cash at close</td><td class="num">$478,500</td></tr>
+</tbody>
+</table>
+<p><strong>The headline is $882,000. The wire is about $478,500</strong>, plus a $97,700 seller note collected over time if the buyer performs. Fifty-four cents of the headline, at close.</p>
+<p class="src">We are not tax advisers and this is not tax advice. The report uses the effective rate you supply and shows the arithmetic; your CPA supplies the rate. The reason it is in the document at all is that this is the number that decides whether you can actually retire on the deal &mdash; and it is the number no free calculator will ever show you.</p>
+</div>
+</div>
+
+<!-- ============ WHAT IT IS NOT ============ -->
+<h2>What this document is not</h2>
+<p>We would rather lose a $199 sale than have a report bounce out of a loan file or a courtroom. So, plainly:</p>
+<ul>
+<li><strong>It is not a certified or accredited appraisal.</strong> Our &ldquo;Prime Valuation Certification&rdquo; is our own internal standard. It is not an accreditation from any professional body, and we say so on the <a href="https://primebizvalue.com/certification.html">certification page</a> rather than burying it.</li>
+<li><strong>It is not a USPAP-compliant valuation report</strong> and it is not signed by a credentialed appraiser.</li>
+<li><strong>It is not an SBA-compliant independent business valuation.</strong> See the box above &mdash; the lender orders that one, not you.</li>
+<li><strong>It is not admissible for divorce, probate, estate tax, or litigation.</strong> Courts and the IRS require credentialed work (ASA, CVA, ABV). If that is your situation, do not buy this &mdash; <a href="https://primebizvalue.com/contact.html">email us</a> and we will point you to the right kind of professional. We would rather refer you out than take your money for something that will be thrown out.</li>
+<li><strong>It is not an audit.</strong> We do not verify your figures, visit your premises, interview your management, call your landlord, or read your lease. The report is only as good as what you put into it, and it says so on its own first page.</li>
+<li><strong>It is not a guarantee of sale price.</strong> Nobody can give you that. What sells a business is a buyer.</li>
+<li><strong>It is not a listing agreement.</strong> We are not brokers. We do not take a commission, we do not want your listing, and we have no financial interest in your number being high.</li>
+<li><strong>It does not yet model franchise-specific mechanics as a separate engine.</strong> Transfer fees, ROFR windows, remaining agreement term, and territory rights are captured as narrative risk and upside factors today, not as a dedicated franchise model. If you are transferring a franchised unit, that distinction matters and you should know it before you buy.</li>
+</ul>
+
+<!-- ============ WHO IT'S FOR ============ -->
+<h2>Who the second reader usually is</h2>
+<p>Almost nobody buys a valuation for themselves. They buy it because somebody else has to be convinced.</p>
+<table>
+<thead><tr><th>If you are&hellip;</th><th>The section that does the work</th></tr></thead>
+<tbody>
+<tr><td><strong>A franchisee transferring a unit</strong> &mdash; the franchisor's approval and its right of first refusal both run off your price</td><td>The recast worksheet and the multiple derivation. A transfer desk needs to see where a number came from.</td></tr>
+<tr><td><strong>A buyer with an LOI in front of you</strong> &mdash; the only valuation you have been shown was produced by the seller's broker</td><td>The recast, with its documentation-status column. It tells you which add-backs in the seller's package will not survive.</td></tr>
+<tr><td><strong>An SBA borrower before you apply</strong></td><td>The coverage screen &mdash; as a pre-application screen only. Read the box above.</td></tr>
+<tr><td><strong>An owner who just got an unsolicited offer</strong></td><td>The range plus the net-cash waterfall. The offer is a number; this tells you what the number means after debt, fees, and tax.</td></tr>
+<tr><td><strong>An owner deciding whether to sell at all</strong></td><td>The waterfall. Most people are deciding about the wire, not the headline.</td></tr>
+</tbody>
+</table>
+
+<!-- ============ TIERS ============ -->
+<h2>Which report contains which sections</h2>
+<!-- OWNER: confirm this split matches exactly what the product generates today before publishing.
+     If the Valuation Report and Deal Report differ from the table below, edit this table rather than the product,
+     and keep the wording conservative. Do not promise a section the PDF does not contain. -->
+<table>
+<thead><tr><th>Section</th><th>Valuation Report &mdash; $199</th><th>Deal Report &mdash; $799</th></tr></thead>
+<tbody>
+<tr><td>Itemized recast worksheet with documentation status</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Multiple derivation and size-band benchmark</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Valuation range</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Net cash to seller waterfall</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Debt-service coverage / bankability screen</td><td>&mdash;</td><td>Yes</td></tr>
+<tr><td>Balance sheet and working capital review</td><td>&mdash;</td><td>Yes</td></tr>
+<tr><td>Prior-period trend analysis</td><td>&mdash;</td><td>Yes</td></tr>
+<tr><td>Written risk and upside factor commentary</td><td>&mdash;</td><td>Yes</td></tr>
+</tbody>
+</table>
+<p class="src">Not sure which you need? Start with the Valuation Report. If your deal turns out to need the financing and cash-at-close sections, we will offer you the difference after delivery &mdash; never as a second full purchase.</p>
+<h2>Get the document</h2>
+<p>Upload a P&amp;L. The tool parses it, walks you through the add-backs line by line, and produces the sections above. Minutes, not weeks. <strong>No sales call, ever</strong> &mdash; there is nobody here whose job is to phone you, and we do not sell or pass your details to brokers, lenders, or anyone else.</p>
+<p><a class="cta" href="https://primebizvalue.com/tool.html?tier=basic" onclick="if(window.plausible)plausible('cta_start_valuation',{props:{source:'sample_report',sku:'basic'}})">Start with the Valuation Report &mdash; $199</a>&nbsp;&nbsp;<a class="cta alt" href="https://primebizvalue.com/tool.html?tier=detailed" onclick="if(window.plausible)plausible('cta_start_valuation',{props:{source:'sample_report',sku:'detailed'}})">Deal Report &mdash; $799</a></p>
+<p class="src">You will see your valuation range on screen before you are asked to pay for anything.</p>
+
+<div class="disc">
+<strong>Important.</strong> The example on this page is illustrative and fictional. PrimeBizValue reports are informational and directional. They are not a certified appraisal, a formal valuation, an audit, or a fairness opinion, and they are not an SBA-compliant independent business valuation &mdash; under SBA SOP 50 10 8 an independent valuation must be ordered by the lender from a credentialed appraiser (ASA, CBA, ABV, CVA, AVA, or BCA) when the financed intangible portion exceeds $250,000. Nothing here is legal, tax, or investment advice. For court, tax, or formal transaction purposes, engage a credentialed appraiser.
+</div>
+
+</main>
+<footer><div class="wrap">
+&copy; 2026 PrimeBizValue.com &mdash; operated by <strong>Rebellious Franchising LLC</strong>, 110 Front Street, Suite 355, Jupiter, FL 33477<br>
+<a href="https://primebizvalue.com/sample-report.html">Sample report</a> &middot;
+<a href="https://primebizvalue.com/faq.html">FAQ</a> &middot;
+<a href="https://primebizvalue.com/certification.html">Certification</a> &middot;
+<a href="https://primebizvalue.com/confidentiality.html">Confidentiality</a> &middot;
+<a href="https://primebizvalue.com/contact.html">Contact</a>
+</div></footer>
+
+</body>
+</html>

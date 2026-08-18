@@ -1,145 +1,154 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prime Valuation Certification — PrimeBizValue</title>
-<meta name="description" content="What the Prime Valuation Certification standard means and requires.">
+<title>About PrimeBizValue — Our Method and Our Data</title>
+<meta name="description" content="How PrimeBizValue builds valuation reports, where the multiples come from, what we refuse to do, and who operates the company.">
+<link rel="canonical" href="https://primebizvalue.com/about.html">
+<meta property="og:site_name" content="PrimeBizValue">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About PrimeBizValue — Our Method, Our Data, And What We Refuse To Do">
+<meta property="og:description" content="Where our multiples come from, how your P&L is handled, and what we will not do.">
+<meta property="og:url" content="https://primebizvalue.com/about.html">
+<!-- OWNER: fill the placeholders below (legal entity, jurisdiction, founder, address) and then
+     add an Organization JSON-LD block here. Do not publish schema with placeholder values in it. -->
+<style>
+:root{--ink:#0B0E14;--muted:#5B6470;--line:#E6E8EC;--bg:#fff;--accent:#2454FF;--soft:#F7F8FA;}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.65 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--line);padding:14px 0}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-weight:700;letter-spacing:-.2px;text-decoration:none;color:var(--ink)}
+nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:var(--accent)}
+h1{font-size:31px;line-height:1.25;letter-spacing:-.6px;margin:34px 0 10px}
+h2{font-size:22px;letter-spacing:-.3px;margin:38px 0 10px}
+h3{font-size:17px;margin:26px 0 6px}
+p{margin:0 0 14px}
+.lede{font-size:18px;color:var(--muted);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.src{font-size:12px;color:var(--muted)}
+.cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:13px 22px;border-radius:8px;font-weight:600;margin-top:14px}
+.cta.alt{background:#fff;color:var(--accent);border:1px solid var(--accent)}
+.note{background:#fffdf3;border:1px solid #f0e3b8;border-radius:8px;padding:14px;font-size:14.5px;margin:20px 0}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:20px;margin:26px 0}
+.disc{font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:38px;padding-top:16px}
+footer{border-top:1px solid var(--line);margin-top:34px;padding:22px 0;font-size:13px;color:var(--muted)}
+footer a{color:var(--muted)}
+ul{padding-left:20px} li{margin-bottom:7px}
+.num{text-align:right;white-space:nowrap}
+@media(max-width:560px){h1{font-size:26px} nav a{margin-left:12px;font-size:13px} table{font-size:14px} th,td{padding:8px 9px}}
+h1,h2,h3{font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-.02em}
+.logo{font-family:'Space Grotesk',sans-serif}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","name":"About PrimeBizValue","url":"https://primebizvalue.com/about.html","description":"How PrimeBizValue builds valuation reports and who operates the company.","about":{"@type":"Organization","name":"PrimeBizValue","legalName":"Rebellious Franchising LLC","url":"https://primebizvalue.com/","email":"hello@primebizvalue.com","address":{"@type":"PostalAddress","streetAddress":"110 Front Street, Suite 355","addressLocality":"Jupiter","addressRegion":"FL","postalCode":"33477","addressCountry":"US"}}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#FFFFFF;
-    --surface:#F7F8FA;
-    --border:#E6E8EC;
-    --text:#0B0E14;
-    --text-secondary:#5B6470;
-    --text-muted:#8A93A0;
-    --accent:#2454FF;
-    --accent-2:#0033B8;
-    --accent-bg:#EEF2FF;
-    --on-accent:#FFFFFF;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter', -apple-system, sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
-  a{color:inherit;}
-  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
-  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
-  .wrap-wide{max-width:1080px; margin:0 auto; padding:0 24px;}
-
-  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 24px; max-width:1080px; margin:0 auto;}
-  .brand{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.3px; text-decoration:none; color:var(--text);}
-  .brand span{color:var(--accent);}
-  .nav-links{display:flex; gap:26px; align-items:center;}
-  .nav-links a{font-size:14px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
-  .nav-links a:hover{color:var(--text);}
-  .nav-cta{background:var(--text); color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:600; transition:background .15s ease;}
-  .nav-cta:hover{background:#000;}
-  @media (max-width:760px){.nav-links{display:none;}}
-
-  main{padding:24px 0 72px;}
-  h1{font-family:'Space Grotesk', sans-serif; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:700; letter-spacing:-0.02em; margin:0 0 12px;}
-  .kicker{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
-  .updated{font-size:13px; color:var(--text-muted); margin-bottom:36px;}
-  h2{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; margin:34px 0 12px; letter-spacing:-0.01em;}
-  p{font-size:15px; color:var(--text-secondary); margin:0 0 16px;}
-  ul, ol{font-size:15px; color:var(--text-secondary); padding-left:22px; margin:0 0 16px;}
-  li{margin-bottom:6px;}
-  strong{color:var(--text);}
-  .lede{font-size:17px; color:var(--text-secondary); max-width:60ch;}
-
-  details{border:1px solid var(--border); border-radius:10px; padding:16px 18px; margin-bottom:12px; background:var(--surface);}
-  summary{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;}
-  summary::-webkit-details-marker{display:none;}
-  summary::after{content:'+'; font-size:20px; color:var(--accent); font-weight:400; margin-left:12px;}
-  details[open] summary::after{content:'−';}
-  details p{margin-top:12px; margin-bottom:0;}
-
-  .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 26px; margin-bottom:20px;}
-
-  form .field{margin-bottom:16px;}
-  form label{display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px;}
-  form input, form select{width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-family:'Inter',sans-serif; background:#fff;}
-  form input:focus, form select:focus{border-color:var(--accent);}
-  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
-  @media (max-width:600px){.field-row{grid-template-columns:1fr;}}
-  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:18px 0 20px;}
-  .consent-row input{width:auto; margin-top:3px;}
-  .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
-  .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-weight:600; font-size:15px; cursor:pointer; transition:background .15s ease;}
-  .submit-btn:hover{background:var(--accent-2);}
-
-  .contact-card{display:flex; align-items:center; justify-content:space-between; background:var(--text); color:#fff; border-radius:14px; padding:30px 32px; flex-wrap:wrap; gap:16px;}
-  .contact-card h3{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 4px;}
-  .contact-card p{color:rgba(255,255,255,.7); margin:0; font-size:14px;}
-  .contact-card a.email-btn{background:var(--accent); color:#fff; padding:12px 24px; border-radius:9px; text-decoration:none; font-weight:600; font-size:14.5px; white-space:nowrap;}
-
-  footer{padding:32px 0 44px; border-top:1px solid var(--border); margin-top:40px;}
-  .foot-row{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:18px; max-width:1080px; margin:0 auto; padding:0 24px;}
-  .foot-links{display:flex; gap:20px; flex-wrap:wrap;}
-  .foot-links a{font-size:13px; color:var(--text-secondary); text-decoration:none;}
-  .foot-links a:hover{color:var(--text);}
-  footer p{margin:0; font-size:12.5px; color:var(--text-muted);}
-</style>
-
 </head>
 <body>
-<nav>
-  <a href="/" class="brand">Prime<span>BizValue</span></a>
-  <div class="nav-links">
-    <a href="/#how-it-works">How it works</a>
-    <a href="/about.html">About</a>
-    <a href="/certification.html">Certification</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
-  </div>
-  <a href="/tool.html" class="nav-cta">Get your valuation</a>
-</nav>
+<header><div class="wrap">
+  <a class="logo" href="https://primebizvalue.com/">PrimeBizValue</a>
+  <nav><a href="https://primebizvalue.com/">Home</a><a href="https://primebizvalue.com/faq.html">FAQ</a><a href="https://primebizvalue.com/tool.html">Get a valuation</a></nav>
+</div></header>
 
-<main>
-  <div class="wrap">
-    <span class="kicker">Certification Standard</span>
-    <h1>Prime Valuation Certification</h1>
-    <p class="lede" style="margin-bottom:32px;">A mark we put on our own Detailed Reports, and only when they actually earn it. Here's exactly what that means and what it doesn't.</p>
+<main class="wrap">
 
-    <div class="card">
-      <h2 style="margin-top:0;">What it takes to earn the mark</h2>
-      <p>A report carries the Prime Valuation Certification only when it meets all four of these:</p>
-      <ul>
-        <li><strong>Documented recast methodology.</strong> Every add-back and adjustment follows the same consistent process, not ad hoc judgment calls that change report to report.</li>
-        <li><strong>Benchmark-based multiple.</strong> The valuation multiple is drawn from a fixed set of Main Street SDE-size tiers, calibrated against published transaction data (BizBuySell, IBBA/M&amp;A Source Market Pulse), not an arbitrary number.</li>
-        <li><strong>Full deal-reality review.</strong> The report runs through an automated sanity-check panel covering earnings trend, risk and upside factors, and SBA financing bankability (DSCR) before it's presented.</li>
-        <li><strong>Complete transparency.</strong> Every adjustment, add-back, and assumption behind the number is shown in the report itself, nothing is a black box.</li>
-      </ul>
-    </div>
+<h1>About PrimeBizValue</h1>
+<p class="lede">We are asking you to upload your profit and loss statement to a website. That is a real thing to ask a stranger for. This page is everything you should want to know before you do it: who we are, where our numbers come from, what we will not do, and how to reach a person.</p>
 
-    <h2>What this certification is not</h2>
-    <p>This is <strong>PrimeBizValue's own internal standard</strong> — it is not issued, reviewed, or endorsed by any accreditation body, government agency, or professional appraisal organization. It is not equivalent to a certified business appraisal performed by a credentialed appraiser (such as an ASA or CVA holder), and it does not carry any legal or regulatory weight on its own. Think of it the way you'd think of a manufacturer's own quality seal, it's a transparent, consistently-applied internal standard, disclosed honestly as exactly that.</p>
+<h2>What we make</h2>
+<p>One thing: <strong>a valuation document for a small business, produced from your own financials, in minutes.</strong> It contains an itemized recast of your earnings, the derivation of the multiple applied, a valuation range, and a breakdown of what you would actually net at closing &mdash; plus, in the Detailed report, a debt-service coverage screen for buyers who intend to borrow.</p>
+<p>We are deliberately narrow. We work on Main Street businesses &mdash; roughly, businesses worth under $2M. We do not do mid-market M&amp;A, we do not do litigation work, and we do not broker deals.</p>
+<p>If you want to see exactly what you get before you spend anything, we published a complete worked example: <a href="https://primebizvalue.com/sample-report.html">read the sample report</a>.</p>
 
-    <h2>Why it matters in a negotiation</h2>
-    <p>A number without a documented process behind it is easy to wave away. A number that came from a consistent, disclosed methodology, benchmarked against real transaction data, and stress-tested against financing reality, is a different conversation. That's the point of this certification: not to claim an authority we don't have, but to make the rigor behind the number impossible to miss.</p>
+<h2>Why this exists</h2>
+<p>There are more than twenty free business-valuation calculators online. Every one of them is paid for by someone: a broker who wants your listing, a bank that wants your loan, a marketplace that wants its commission. They are not dishonest, but they are not neutral either, and none of them produces a document you can hand to anyone.</p>
+<p>The thing that is genuinely scarce is not a number. It is <strong>a number with its work shown</strong> &mdash; something a franchisor's transfer desk, a lender's credit analyst, a partner, or a buyer's accountant can read, check, and argue with. That is what we sell, and it is the only thing we sell. Nobody here earns a commission on your transaction, because we are not part of your transaction.</p>
 
-    <p style="margin-top:32px;">Only the <a href="/#get-report">Detailed Report</a> carries this certification — the Basic Report gives you the top-line numbers, but not the full sanity-check and financing review this standard requires.</p>
-  </div>
+<h2>Where the multiples come from</h2>
+<p>We do not have a proprietary database and we do not claim one. Our size-band multiples are calibrated to published transaction data that you can go and read yourself:</p>
+<table>
+<thead><tr><th>What we use it for</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Base multiple by cash-flow size band &mdash; 2.0&times; under $500K SDE, 2.5&times; from $500K&ndash;$1M, 2.8&times; from $1M&ndash;$2M</td><td>IBBA / M&amp;A Source <em>Market Pulse</em>, Q1 2026</td></tr>
+<tr><td>Market context &mdash; median sale price $350,000; median cash flow (SDE) $158,950; average sale-price-to-cash-flow multiple 2.61&times;; 94% of asking price achieved; 169&ndash;207 days on market</td><td>BizBuySell 2025 Year in Review and Q4 2025 Insight Report</td></tr>
+<tr><td>Financing structure and coverage assumptions used in the bankability screen</td><td>SBA SOP 50 10 8, effective 1 June 2025 (including the 10% minimum equity injection)</td></tr>
+</tbody>
+</table>
+<p>On top of the size band we apply adjustment factors for earnings trend, owner dependency, customer concentration, recurring revenue, lease position, and documentation quality. <strong>Those weights are ours, not an industry standard, and the report prints every one of them</strong> so you can see what moved your multiple and disagree with it if you think we got it wrong.</p>
+<p class="src">One thing we will not do is publish a single &ldquo;industry multiple.&rdquo; Anyone who tells you every business in your industry sells for the same multiple is guessing, and the guess is usually flattering.</p>
+
+<h2>What we refuse to do</h2>
+<p>This is the honest heart of the page, and the part we would most like you to hold us to.</p>
+<ul>
+<li><strong>We will never call you.</strong> There is no sales team, no &ldquo;valuation advisor,&rdquo; no one whose job is to follow up. You will get your report and the emails required to deliver it, and that is all. Every free valuation tool in this market asks for your phone number and then routes you to a person. We do not want your phone number.</li>
+<li><strong>We will never sell, rent, or pass on your details or your financials</strong> &mdash; not to brokers, not to lenders, not to franchise consultants, not to anyone. Your P&amp;L is not our product.</li>
+<li><strong>We will never claim an accreditation we do not hold.</strong> Our &ldquo;Prime Valuation Certification&rdquo; is our own internal standard. It is not issued or recognised by any professional body. We say that on the <a href="https://primebizvalue.com/certification.html">certification page</a> in plain language rather than hiding it in a footnote.</li>
+<li><strong>We will never imply our report is SBA-compliant.</strong> It is not, and it structurally cannot be. Under SBA SOP 50 10 8, when the financed intangible portion of an acquisition exceeds $250,000, the independent valuation must be <strong>ordered by the lender</strong> from an appraiser holding an ASA, CBA, ABV, CVA, AVA, or BCA credential, independent of loan production. You cannot buy that from us or from any other online tool. What we sell is a pre-application screen &mdash; an early read on whether a deal is likely to clear coverage, before you spend weeks finding out.</li>
+<li><strong>We will not sell into divorce, probate, estate tax, or litigation.</strong> Courts and the IRS require credentialed work. An automated report is not admissible and buying one would waste your money. Email us and we will point you toward the right kind of professional instead.</li>
+<li><strong>We will not inflate a number to win your business.</strong> We have nothing to win. We are not seeking your listing, we take no commission, and we receive no fee, referral payment, or other consideration from any broker, lender, marketplace, or franchisor.
+<!-- OWNER: this sentence must remain literally true. If an affiliate or referral arrangement is ever
+     entered into (e.g. the divorce/probate referral handoff), disclose it here BEFORE it goes live. -->
+</li>
+<li><strong>We will not manufacture social proof.</strong> Which brings us to the next section.</li>
+</ul>
+
+<h2>Why there are no testimonials on this site</h2>
+<div class="card">
+<p>You will notice we display no customer quotes, no star ratings, no &ldquo;trusted by 3,000 business owners,&rdquo; and no logos. That is deliberate. We are a young business and we are not going to invent the one thing that would be easiest to invent. When we have customers who are willing to be quoted by name, with permission, we will publish exactly what they said and nothing more.</p>
+<p>In the meantime, the only honest substitutes for social proof are the ones on this page: <strong>show the method, cite the data, publish the deliverable, and state plainly what the product cannot do.</strong> A complete example of the report is <a href="https://primebizvalue.com/sample-report.html">here</a>. Judge us on that.</p>
+</div>
+
+<h2>How your financials are handled</h2>
+<p>The specifics, without marketing language:</p>
+<ul>
+<li>Your uploaded P&amp;L is parsed by an automated system so the line items can be pre-filled for you. Our AI processing is performed via <strong>Anthropic</strong>.</li>
+<li>Payments are processed by <strong>Stripe</strong>. We never see or store your card details.</li>
+<li>Report delivery and account email is sent through <strong>Resend</strong>.</li>
+<li>We do not sell your data, and we do not use your financials to build a marketing list.</li>
+<li>Retention, deletion, and the full list of subprocessors are set out on the <a href="https://primebizvalue.com/confidentiality.html">confidentiality page</a> and in our <a href="https://primebizvalue.com/privacy.html">privacy policy</a>.</li>
+<li><strong>Deletion on request.</strong> Email <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> from the address you used and ask us to delete your uploaded documents and data. We will confirm when it is done.
+<!-- OWNER: only publish this bullet if you will actually honour it operationally. It is a commitment. -->
+</li>
+</ul>
+<h2>Who we are</h2>
+<!-- OWNER: every placeholder below must be replaced with true information before this page ships.
+     Defect #7 in the audit: there is currently no named human, entity, or address anywhere on the
+     site, while the site asks strangers to upload full financial statements. Publishing a real
+     entity name and a real contact address is the single cheapest trust fix available. -->
+<table>
+<tbody>
+<tr><td>Legal entity</td><td><strong>Rebellious Franchising LLC</strong>, a Florida limited liability company</td></tr>
+<tr><td>Trading as</td><td>PrimeBizValue &middot; primebizvalue.com</td></tr>
+<tr><td>Registered address</td><td>110 Front Street, Suite 355, Jupiter, FL 33477</td></tr>
+<tr><td>Contact</td><td>hello@primebizvalue.com &mdash; a person reads every message. <!-- OWNER: add founder name + one TRUE verifiable line of background here. A named human materially raises trust. Do not invent credentials. --></td></tr>
+<tr><td>Contact</td><td><a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> &mdash; a person reads this, and we answer questions about method before you buy</td></tr>
+</tbody>
+</table>
+<p class="src">We are a small operation. That is not a disclaimer &mdash; it is the reason the report costs $199 instead of $3,000, and the reason nobody will ever call you.</p>
+
+<h2>Have a question first?</h2>
+<p>Ask it. If your situation is one we should not sell into, we will tell you that instead of taking the order. Email <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a>.</p>
+<p><a class="cta" href="https://primebizvalue.com/sample-report.html" onclick="if(window.plausible)plausible('cta_sample_report',{props:{source:'about'}})">See the sample report</a>&nbsp;&nbsp;<a class="cta alt" href="https://primebizvalue.com/tool.html" onclick="if(window.plausible)plausible('cta_start_valuation',{props:{source:'about'}})">Start a valuation</a></p>
+
+<div class="disc">
+<strong>Important.</strong> PrimeBizValue reports are informational and directional. They are not a certified appraisal, a formal valuation, an audit, or a fairness opinion, and they are not an SBA-compliant independent business valuation &mdash; under SBA SOP 50 10 8 an independent valuation must be ordered by the lender from a credentialed appraiser (ASA, CBA, ABV, CVA, AVA, or BCA) when the financed intangible portion exceeds $250,000. Nothing on this site is legal, tax, or investment advice. For court, tax, or formal transaction purposes, engage a credentialed appraiser.
+</div>
+
 </main>
-
-<footer>
-  <div class="foot-row">
-    <p>© 2026 PrimeBizValue.com</p>
-    <div class="foot-links">
-      <a href="/about.html">About</a>
-      <a href="/certification.html">Certification</a>
-      <a href="/faq.html">FAQ</a>
-      <a href="/contact.html">Contact</a>
-      <a href="/join.html">Join our list</a>
-      <a href="/confidentiality.html">Confidentiality</a>
-      <a href="/terms.html">Terms of Service</a>
-      <a href="/privacy.html">Privacy Policy</a>
-    </div>
-  </div>
-</footer>
+<footer><div class="wrap">
+&copy; 2026 PrimeBizValue.com &mdash; operated by <strong>Rebellious Franchising LLC</strong>, 110 Front Street, Suite 355, Jupiter, FL 33477<br>
+<a href="https://primebizvalue.com/sample-report.html">Sample report</a> &middot;
+<a href="https://primebizvalue.com/faq.html">FAQ</a> &middot;
+<a href="https://primebizvalue.com/certification.html">Certification</a> &middot;
+<a href="https://primebizvalue.com/confidentiality.html">Confidentiality</a> &middot;
+<a href="https://primebizvalue.com/contact.html">Contact</a>
+</div></footer>
 
 </body>
 </html>
