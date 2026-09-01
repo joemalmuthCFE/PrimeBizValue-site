@@ -1,0 +1,217 @@
+/* ============================================================
+   PrimeBizValue — shared theme layer
+   Loaded after each page's own <style>, so it layers on top
+   without replacing anything. Edit this one file to restyle
+   the whole site.
+   ============================================================ */
+
+:root{
+  --pbv-accent:#2454FF;
+  --pbv-accent-2:#0033B8;
+  --pbv-violet:#7A5CFF;
+  --pbv-teal:#00A3CC;
+  --pbv-warm:#C4682C;
+}
+
+/* ---- 1. Ambient colour field -------------------------------
+   Anchored to the document rather than the viewport, so the
+   page moves through a colour sequence as you scroll.
+------------------------------------------------------------- */
+
+html{ background:#FFFFFF; }
+
+body{
+  position:relative;
+  background:transparent !important;
+}
+
+body::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(1000px 680px at 86% 1%,  rgba(36,84,255,.24),  transparent 62%),
+    radial-gradient(820px 600px at 2% 10%,   rgba(122,92,255,.16), transparent 60%),
+    radial-gradient(900px 640px at 98% 25%,  rgba(0,163,204,.13),  transparent 62%),
+    radial-gradient(960px 700px at 4% 40%,   rgba(36,84,255,.19),  transparent 62%),
+    radial-gradient(880px 620px at 94% 55%,  rgba(196,104,44,.12), transparent 60%),
+    radial-gradient(940px 680px at 6% 70%,   rgba(122,92,255,.17), transparent 62%),
+    radial-gradient(900px 640px at 96% 85%,  rgba(0,163,204,.12),  transparent 62%),
+    radial-gradient(980px 700px at 12% 99%,  rgba(36,84,255,.18),  transparent 62%);
+}
+
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  pointer-events:none;
+  background-image:radial-gradient(rgba(30,50,110,.075) 1px, transparent 1px);
+  background-size:23px 23px;
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.18) 45%, transparent 88%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,.18) 45%, transparent 88%);
+}
+
+/* keep page furniture above the field */
+nav, main, footer, header, section{ position:relative; }
+
+/* ---- 2. Sticky, frosted navigation -------------------------
+   nav::before is stretched to the full viewport width so the
+   frosted bar spans edge to edge without a wrapper element.
+------------------------------------------------------------- */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+nav::before{
+  content:'';
+  position:absolute;
+  inset:0 calc(50% - 50vw);
+  z-index:-1;
+  border-bottom:1px solid transparent;
+  transition:background .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+html.pbv-stuck nav::before{
+  background:rgba(255,255,255,.82);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  backdrop-filter:saturate(180%) blur(14px);
+  border-bottom-color:rgba(11,20,38,.08);
+  box-shadow:0 8px 26px -22px rgba(11,20,38,.7);
+}
+
+/* ---- 3. Scroll progress ------------------------------------ */
+
+.pbv-progress{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:2px;
+  z-index:60;
+  pointer-events:none;
+}
+
+.pbv-progress i{
+  display:block;
+  height:100%;
+  width:100%;
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  background:linear-gradient(90deg, var(--pbv-accent), var(--pbv-violet));
+}
+
+/* ---- 4. Surfaces sit on the field, not on flat white ------- */
+
+.card,
+details,
+.price-card,
+.price-card-basic{
+  transition:transform .22s cubic-bezier(.16,.84,.32,1),
+             box-shadow .22s ease,
+             border-color .22s ease,
+             background .22s ease;
+}
+
+details{ background:rgba(255,255,255,.78); }
+details:hover{ border-color:#CFDAF3; }
+details[open]{ border-color:#C6D4F6; background:rgba(255,255,255,.94); }
+details summary{ transition:color .18s ease; }
+details:hover summary{ color:var(--pbv-accent-2); }
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 32px -24px rgba(11,20,38,.5);
+}
+
+/* ---- 5. Buttons and links get some life -------------------- */
+
+.nav-cta,
+.cta-primary,
+.submit-btn,
+.fr-btn,
+.fr-btn-ghost{
+  transition:transform .18s cubic-bezier(.16,.84,.32,1),
+             box-shadow .18s ease,
+             background .15s ease,
+             border-color .18s ease;
+}
+
+.nav-cta:hover{ transform:translateY(-1px); }
+
+.cta-primary:hover,
+.submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 28px -14px rgba(36,84,255,.75);
+}
+
+.nav-links a{ transition:color .16s ease; }
+
+/* ---- 6. Forms ---------------------------------------------- */
+
+form input:focus,
+form select:focus,
+form textarea:focus{
+  border-color:var(--pbv-accent);
+  box-shadow:0 0 0 3px rgba(36,84,255,.15);
+}
+
+/* ---- 7. Footer sits on the field --------------------------- */
+
+footer{
+  border-top:1px solid rgba(36,84,255,.10);
+  background:rgba(255,255,255,.42);
+}
+
+.foot-links a{ transition:color .16s ease; }
+.foot-links a:hover{ color:var(--pbv-accent); }
+
+/* ---- 8. Section rhythm on content pages -------------------- */
+
+main h2{ position:relative; }
+
+main h2::before{
+  content:'';
+  display:block;
+  width:26px;
+  height:3px;
+  border-radius:2px;
+  background:var(--pbv-accent);
+  margin-bottom:14px;
+}
+
+/* pages that set their own eyebrow keep it */
+main h2[data-eyebrow]::before{
+  content:attr(data-eyebrow);
+  width:max-content;
+  max-width:100%;
+  height:auto;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--pbv-accent);
+  background:none;
+  border-left:3px solid var(--pbv-accent);
+  border-radius:0;
+  padding-left:11px;
+  margin-bottom:16px;
+  line-height:1.3;
+}
+
+/* ---- 9. Respect reduced motion ----------------------------- */
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  .card:hover,
+  .nav-cta:hover,
+  .cta-primary:hover,
+  .submit-btn:hover,
+  .fr-btn:hover,
+  .fr-btn-ghost:hover{ transform:none; }
+  .pbv-progress i{ transition:none; }
+}
