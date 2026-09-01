@@ -118,8 +118,16 @@
   .fr-model .fr-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px;}
   .fr-model p{font-size:14.5px; margin:0;}
 
-  .fr-pricing-line{display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; font-size:15px; color:var(--text-secondary); margin-top:14px;}
-  .fr-pricing-line strong{font-family:'Space Grotesk',sans-serif; font-size:17px;}
+  .fr-table-scroll{overflow-x:auto; border:1px solid var(--border); border-radius:12px; margin-top:6px;}
+  .fr-table{width:100%; border-collapse:collapse; font-size:14.5px; min-width:560px;}
+  .fr-table th{text-align:left; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.09em; text-transform:uppercase; color:var(--text-muted); font-weight:500; padding:14px 18px; background:var(--surface); border-bottom:1px solid var(--border);}
+  .fr-table td{padding:16px 18px; border-bottom:1px solid var(--border); color:var(--text-secondary); vertical-align:middle;}
+  .fr-table tr:last-child td{border-bottom:0;}
+  .fr-table td.num{font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; color:var(--text); white-space:nowrap; text-align:right;}
+  .fr-table td.strike{color:var(--text-muted); font-weight:500; text-decoration:line-through;}
+  .fr-table td.pay{color:var(--accent);}
+  .fr-table th:not(:first-child){text-align:right;}
+  .fr-econ-note{font-size:13.5px; color:var(--text-muted); margin-top:12px;}
 
   .fr-form-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:26px 28px; margin-top:20px;}
   .fr-status{font-size:14px; margin-top:14px; min-height:20px;}
@@ -153,7 +161,7 @@
       <div class="fr-cta-row">
         <a href="#talk" class="fr-btn">Talk about your system</a>
         <a href="/tool.html" class="fr-btn-ghost">See the tool</a>
-        <span class="fr-cta-note">No fee to the brand. No integration. No contract.</span>
+        <span class="fr-cta-note">No fee to the brand. No integration. And you earn on every report.</span>
       </div>
     </section>
 
@@ -234,27 +242,63 @@
           <p>Every order placed under your brand's code is tracked separately, so you can see the volume your system is generating instead of guessing at it.</p>
         </div>
       </li>
+      <li class="fr-step">
+        <div>
+          <h3>You get paid quarterly</h3>
+          <p>A statement of every order under your code, and a payment for your share of it. W-9 on file, ACH or check, no minimum to hit before you see money.</p>
+        </div>
+      </li>
     </ol>
+
+    <h2>What your brand earns</h2>
+    <p>Partner brands get both sides of the deal. Your franchisees pay less than the public price, and your brand earns a share of every report sold under your code. Nothing to set up, no minimum to hit, no fee either direction.</p>
+
+    <div class="fr-table-scroll">
+      <table class="fr-table">
+        <thead>
+          <tr>
+            <th>Report</th>
+            <th>Public price</th>
+            <th>Your franchisees pay</th>
+            <th>Your brand earns</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Recast summary and valuation range</td>
+            <td class="num strike">$199</td>
+            <td class="num">$159</td>
+            <td class="num pay">$40</td>
+          </tr>
+          <tr>
+            <td>Full worksheet, SBA and DSCR analysis, closing breakdown, Prime Valuation Certification</td>
+            <td class="num strike">$799</td>
+            <td class="num">$639</td>
+            <td class="num pay">$160</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fr-econ-note">A standing 20% discount for your owners, and 25% of what they pay comes back to your brand. Paid quarterly against a statement of every order under your code.</p>
+
+    <div class="card">
+      <h3>What that adds up to over a year</h3>
+      <p>A 500-unit system sees roughly 20 transfers a year at the industry rate. On a realistic mix of tiers, that's somewhere between <strong>$800 and $3,200</strong> back to the brand annually. A 5,000-unit platform lands closer to <strong>$9,000 to $36,000</strong>.</p>
+      <p>Let's be straight about what that is: it will not move your P&amp;L. What it does is pay for the resale program that produces it, which turns a cost center into something near break-even. The real return is the transfers that close instead of stalling, and the units that stay open paying royalties.</p>
+    </div>
 
     <h2>Two ways brands run it</h2>
     <div class="fr-models">
       <div class="fr-model">
         <span class="fr-tag">Most common</span>
-        <h3>Franchisee pays, brand discounts</h3>
-        <p>Your code gives your owners a standing discount off the public price. Costs the brand nothing, and the owner has skin in the game, which tends to mean they actually read the report.</p>
+        <h3>Franchisee pays, brand earns</h3>
+        <p>Your owners use the code and get 20% off. Costs the brand nothing, generates revenue on every report, and the owner has skin in the game, which tends to mean they actually read the thing.</p>
       </div>
       <div class="fr-model">
         <span class="fr-tag">Higher adoption</span>
         <h3>Brand sponsors the report</h3>
-        <p>You cover the report for any franchisee entering the transfer process. Effectively a fixed, small line item against protecting a royalty stream, and every seller in your system starts from a real number.</p>
+        <p>You cover it for any franchisee entering the transfer process. Your 25% share comes back the same way, so the true cost to the brand is about <strong>$119</strong> a summary or <strong>$479</strong> a full report, and every seller in your system starts from a real number.</p>
       </div>
-    </div>
-
-    <div class="fr-pricing-line">
-      <span>Public pricing:</span>
-      <strong>$199</strong> <span>recast summary and valuation range</span>
-      <span>&middot;</span>
-      <strong>$799</strong> <span>full worksheet, SBA and DSCR analysis, closing breakdown, Prime Valuation Certification</span>
     </div>
 
     <h2>Questions we usually get</h2>
@@ -282,6 +326,16 @@
     <details>
       <summary>What does it cost the brand to set up?</summary>
       <p>Nothing. There's no partner fee, no minimum volume, no contract term, and no technical integration. If it isn't producing value for your system, tell us and we'll switch the code off.</p>
+    </details>
+
+    <details>
+      <summary>How do we handle this in our FDD?</summary>
+      <p>Most brands treat a partner share like any other supplier rebate and disclose it in Item 8, alongside the other revenue the franchisor receives in connection with franchisee purchases. We're not your counsel and we won't pretend to be, so run the structure past your franchise attorney and tell us how they want it papered. If the disclosure is a problem for your system, we'll happily run your code as a pure franchisee discount with no share back to the brand.</p>
+    </details>
+
+    <details>
+      <summary>How and when do you pay?</summary>
+      <p>Quarterly, on a statement listing every order placed under your code with the amount collected and your share of each. Payment by ACH or check once we have a W-9 on file. There's no minimum to clear before you get paid, and no expiration on the code.</p>
     </details>
 
     <h2 id="talk">Let's talk about your system</h2>
@@ -441,4 +495,3 @@
 
 </body>
 </html>
-
