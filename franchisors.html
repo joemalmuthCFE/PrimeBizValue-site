@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Franchisors — PrimeBizValue</title>
+<meta name="description" content="A standardized, SBA-aware opinion of value for every franchisee in your system who is thinking about selling. Partner codes, no cost to the brand.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F7F8FA;
+    --border:#E6E8EC;
+    --text:#0B0E14;
+    --text-secondary:#5B6470;
+    --text-muted:#8A93A0;
+    --accent:#2454FF;
+    --accent-2:#0033B8;
+    --accent-bg:#EEF2FF;
+    --on-accent:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter', -apple-system, sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+  .wrap-wide{max-width:1080px; margin:0 auto; padding:0 24px;}
+
+  nav{display:flex; align-items:center; justify-content:space-between; padding:22px 24px; max-width:1080px; margin:0 auto;}
+  .brand{font-family:'Space Grotesk', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.3px; text-decoration:none; color:var(--text);}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex; gap:26px; align-items:center;}
+  .nav-links a{font-size:14px; color:var(--text-secondary); text-decoration:none; font-weight:500;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a.active{color:var(--text); font-weight:600;}
+  .nav-cta{background:var(--text); color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:600; transition:background .15s ease;}
+  .nav-cta:hover{background:#000;}
+  @media (max-width:760px){.nav-links{display:none;}}
+
+  main{padding:24px 0 72px;}
+  h1{font-family:'Space Grotesk', sans-serif; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:700; letter-spacing:-0.02em; margin:0 0 12px;}
+  .kicker{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:14px;}
+  h2{font-family:'Space Grotesk', sans-serif; font-size:22px; font-weight:700; margin:44px 0 14px; letter-spacing:-0.015em;}
+  h3{font-family:'Space Grotesk', sans-serif; font-size:16px; font-weight:600; margin:0 0 8px; letter-spacing:-0.01em;}
+  p{font-size:15px; color:var(--text-secondary); margin:0 0 16px;}
+  ul, ol{font-size:15px; color:var(--text-secondary); padding-left:22px; margin:0 0 16px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--text);}
+  .lede{font-size:17px; color:var(--text-secondary); max-width:60ch;}
+
+  details{border:1px solid var(--border); border-radius:10px; padding:16px 18px; margin-bottom:12px; background:var(--surface);}
+  summary{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15.5px; color:var(--text); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+'; font-size:20px; color:var(--accent); font-weight:400; margin-left:12px;}
+  details[open] summary::after{content:'\2212';}
+  details p{margin-top:12px; margin-bottom:0;}
+
+  .card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px 26px; margin-bottom:20px;}
+
+  form .field{margin-bottom:16px;}
+  form label{display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px;}
+  form input, form select{width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:8px; font-size:14.5px; font-family:'Inter',sans-serif; background:#fff;}
+  form input:focus, form select:focus{border-color:var(--accent);}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:600px){.field-row{grid-template-columns:1fr;}}
+  .consent-row{display:flex; gap:10px; align-items:flex-start; margin:18px 0 20px;}
+  .consent-row input{width:auto; margin-top:3px;}
+  .consent-row p{font-size:12.5px; color:var(--text-muted); margin:0; line-height:1.55;}
+  .submit-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 28px; border-radius:9px; border:none; font-size:15px; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; transition:background .15s ease;}
+  .submit-btn:hover{background:var(--accent-2);}
+  .submit-btn[disabled]{opacity:.6; cursor:default;}
+
+  footer{border-top:1px solid var(--border); padding:28px 0 40px; margin-top:40px;}
+  .foot-row{max-width:1080px; margin:0 auto; padding:0 24px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;}
+  footer p{font-size:13px; color:var(--text-muted); margin:0;}
+  .foot-links{display:flex; gap:18px; flex-wrap:wrap;}
+  .foot-links a{font-size:13px; color:var(--text-secondary); text-decoration:none;}
+  .foot-links a:hover{color:var(--text);}
+
+  /* ---- page-specific ---- */
+
+  .fr-hero{padding-top:14px; margin-bottom:34px;}
+  .fr-hero .lede{max-width:62ch;}
+
+  .fr-cta-row{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:24px;}
+  .fr-btn{display:inline-block; background:var(--accent); color:#fff; padding:13px 26px; border-radius:9px; text-decoration:none; font-size:15px; font-weight:600;}
+  .fr-btn:hover{background:var(--accent-2);}
+  .fr-btn-ghost{display:inline-block; background:#fff; color:var(--text); border:1px solid var(--border); padding:12px 24px; border-radius:9px; text-decoration:none; font-size:15px; font-weight:600;}
+  .fr-btn-ghost:hover{border-color:var(--text);}
+  .fr-cta-note{font-size:13.5px; color:var(--text-muted);}
+
+  .fr-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:32px 0 8px; background:var(--surface);}
+  .fr-stat{padding:20px 22px; border-right:1px solid var(--border);}
+  .fr-stat:last-child{border-right:0;}
+  .fr-stat-n{font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; letter-spacing:-0.03em; color:var(--text); line-height:1.1;}
+  .fr-stat-l{font-size:13px; color:var(--text-secondary); margin-top:6px; line-height:1.45;}
+  .fr-stat-src{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-muted); margin-top:8px;}
+  @media (max-width:700px){.fr-stats{grid-template-columns:1fr;} .fr-stat{border-right:0; border-bottom:1px solid var(--border);} .fr-stat:last-child{border-bottom:0;}}
+
+  .fr-cost{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:8px;}
+  @media (max-width:700px){.fr-cost{grid-template-columns:1fr;}}
+  .fr-cost-item{border:1px solid var(--border); border-radius:12px; padding:20px 22px; background:#fff;}
+  .fr-cost-item h3{margin-bottom:6px;}
+  .fr-cost-item p{font-size:14.5px; margin:0;}
+
+  .fr-steps{counter-reset:frstep; margin:0; padding:0; list-style:none;}
+  .fr-step{counter-increment:frstep; display:grid; grid-template-columns:34px 1fr; gap:16px; padding:18px 0; border-bottom:1px solid var(--border);}
+  .fr-step:last-child{border-bottom:0;}
+  .fr-step::before{content:counter(frstep); font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:500; color:var(--accent); background:var(--accent-bg); border-radius:7px; width:28px; height:28px; display:flex; align-items:center; justify-content:center;}
+  .fr-step p{margin:0; font-size:14.5px;}
+
+  .fr-models{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:700px){.fr-models{grid-template-columns:1fr;}}
+  .fr-model{border:1px solid var(--border); border-radius:12px; padding:22px 24px; background:var(--surface);}
+  .fr-model .fr-tag{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px;}
+  .fr-model p{font-size:14.5px; margin:0;}
+
+  .fr-pricing-line{display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; font-size:15px; color:var(--text-secondary); margin-top:14px;}
+  .fr-pricing-line strong{font-family:'Space Grotesk',sans-serif; font-size:17px;}
+
+  .fr-form-card{background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:26px 28px; margin-top:20px;}
+  .fr-status{font-size:14px; margin-top:14px; min-height:20px;}
+  .fr-status.ok{color:var(--accent-2); font-weight:600;}
+  .fr-status.err{color:#B3261E; font-weight:600;}
+  .fr-disclaimer{font-size:12.5px; color:var(--text-muted); margin-top:26px; line-height:1.55;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="brand">Prime<span>BizValue</span></a>
+  <div class="nav-links">
+    <a href="/#how-it-works">How it works</a>
+    <a href="/franchisors.html" class="active">For Franchisors</a>
+    <a href="/certification.html">Certification</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+  <a href="/tool.html" class="nav-cta">Get your valuation</a>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <section class="fr-hero">
+      <div class="kicker">For Franchisors</div>
+      <h1>Your franchisees are pricing their exits on guesswork</h1>
+      <p class="lede">A seller picks a number from what a neighbor got three years ago. The listing sits. The buyer's lender runs the debt service and walks. Six months later the unit goes dark and the royalty goes with it. None of that is a market problem. It's a math problem, and it's fixable for less than the cost of one empty store.</p>
+
+      <div class="fr-cta-row">
+        <a href="#talk" class="fr-btn">Talk about your system</a>
+        <a href="/tool.html" class="fr-btn-ghost">See the tool</a>
+        <span class="fr-cta-note">No fee to the brand. No integration. No contract.</span>
+      </div>
+    </section>
+
+    <div class="fr-stats">
+      <div class="fr-stat">
+        <div class="fr-stat-n">4.1%</div>
+        <div class="fr-stat-l">of franchised units transfer in a year. In a 500-unit system that's roughly 20 owners who need a defensible number.</div>
+        <div class="fr-stat-src">FRANdata, 2024</div>
+      </div>
+      <div class="fr-stat">
+        <div class="fr-stat-n">60%</div>
+        <div class="fr-stat-l">of franchise systems now run a formal resale program. Most still price units by eye.</div>
+        <div class="fr-stat-src">Franchise Update Media, 2024</div>
+      </div>
+      <div class="fr-stat">
+        <div class="fr-stat-n">$2,500+</div>
+        <div class="fr-stat-l">what a broker opinion of value typically runs, and up past $10,000 for a formal appraisal. Most single-unit sellers pay it once, or skip it entirely.</div>
+        <div class="fr-stat-src">Market range</div>
+      </div>
+    </div>
+
+    <h2>What a mispriced resale actually costs you</h2>
+    <p>Every franchise development leader knows this list. It's worth seeing it written down, because the cost lands on the brand, not on the seller who set the price.</p>
+
+    <div class="fr-cost">
+      <div class="fr-cost-item">
+        <h3>Deals die in underwriting</h3>
+        <p>An asking price the cash flow can't service doesn't fail at the offer stage. It fails weeks later at the lender, after everyone has spent time and legal fees on it.</p>
+      </div>
+      <div class="fr-cost-item">
+        <h3>Stale listings become your comps</h3>
+        <p>An overpriced unit sitting on the market for nine months teaches every other owner in your system what their store is "worth." One bad number poisons the whole conversation.</p>
+      </div>
+      <div class="fr-cost-item">
+        <h3>Units go dark instead of transferring</h3>
+        <p>A seller who can't get their number often stops trying. The store closes, the territory opens, and you are back to selling a new franchise instead of transferring a running one.</p>
+      </div>
+      <div class="fr-cost-item">
+        <h3>Your team becomes the appraiser</h3>
+        <p>Somebody on your side ends up building a valuation in a spreadsheet, for free, under pressure, with no methodology to point at when the seller disagrees.</p>
+      </div>
+    </div>
+
+    <h2>What your franchisees get</h2>
+    <p>The same report, run the same way, every time. That consistency is the point: when two owners in your system get a number, the numbers were produced by identical logic, and neither one can argue that the other got special treatment.</p>
+    <ul>
+      <li><strong>A documented recast.</strong> Add-backs applied by a consistent process, not ad hoc judgment that shifts from deal to deal.</li>
+      <li><strong>A benchmarked multiple.</strong> Drawn from fixed SDE-size tiers calibrated against published transaction data, not a number somebody liked.</li>
+      <li><strong>An SBA reality check.</strong> Buyer financing and DSCR run before the deal goes to a lender, so the asking price is tested against the debt it has to service.</li>
+      <li><strong>A closing cash-to-seller breakdown.</strong> What the owner actually walks away with, which is the number they care about and rarely see until it's too late.</li>
+      <li><strong>A "presented by" line.</strong> The report carries your brand's name where it's prepared and presented, so it arrives as part of your resale process rather than as a random website.</li>
+    </ul>
+
+    <h2>How the partner program works</h2>
+
+    <ol class="fr-steps">
+      <li class="fr-step">
+        <div>
+          <h3>We issue your brand a code</h3>
+          <p>A unique discount code tied to your system. It runs indefinitely until you ask us to switch it off.</p>
+        </div>
+      </li>
+      <li class="fr-step">
+        <div>
+          <h3>You put it in front of your owners</h3>
+          <p>Resale packet, intranet, transfer checklist, exit conversation, annual meeting. Wherever your sellers already look. No portal to build, no system to integrate.</p>
+        </div>
+      </li>
+      <li class="fr-step">
+        <div>
+          <h3>Your franchisees get a discounted report</h3>
+          <p>They upload a P&amp;L, the tool recasts it, and the report comes back on screen and by email. Ten minutes, not three weeks.</p>
+        </div>
+      </li>
+      <li class="fr-step">
+        <div>
+          <h3>We report activity under your code</h3>
+          <p>Every order placed under your brand's code is tracked separately, so you can see the volume your system is generating instead of guessing at it.</p>
+        </div>
+      </li>
+    </ol>
+
+    <h2>Two ways brands run it</h2>
+    <div class="fr-models">
+      <div class="fr-model">
+        <span class="fr-tag">Most common</span>
+        <h3>Franchisee pays, brand discounts</h3>
+        <p>Your code gives your owners a standing discount off the public price. Costs the brand nothing, and the owner has skin in the game, which tends to mean they actually read the report.</p>
+      </div>
+      <div class="fr-model">
+        <span class="fr-tag">Higher adoption</span>
+        <h3>Brand sponsors the report</h3>
+        <p>You cover the report for any franchisee entering the transfer process. Effectively a fixed, small line item against protecting a royalty stream, and every seller in your system starts from a real number.</p>
+      </div>
+    </div>
+
+    <div class="fr-pricing-line">
+      <span>Public pricing:</span>
+      <strong>$199</strong> <span>recast summary and valuation range</span>
+      <span>&middot;</span>
+      <strong>$799</strong> <span>full worksheet, SBA and DSCR analysis, closing breakdown, Prime Valuation Certification</span>
+    </div>
+
+    <h2>Questions we usually get</h2>
+
+    <details>
+      <summary>Is this an appraisal?</summary>
+      <p>No, and we say so plainly on every report. This is an opinion of value built on a documented, repeatable methodology. It is designed to get a seller to a defensible starting number and to test that number against what a lender will actually finance. It is not a certified appraisal and does not replace one where a formal appraisal is required.</p>
+    </details>
+
+    <details>
+      <summary>What happens to our franchisees' financial data?</summary>
+      <p>It's retained for the purpose of producing and supporting the report, and it is not sold or shared externally beyond the service providers needed to run the service. Every user accepts that commitment before uploading anything. The full policy is on our <a href="/confidentiality.html">Confidentiality</a> and <a href="/privacy.html">Privacy Policy</a> pages.</p>
+    </details>
+
+    <details>
+      <summary>Do you give our brand the underlying data?</summary>
+      <p>We report activity under your code, not your franchisees' individual financials. If you want unit-level reporting, that's a conversation to have with your owners first, not something we'll hand over by default.</p>
+    </details>
+
+    <details>
+      <summary>Are you going to broker our resales?</summary>
+      <p>No. We produce the number and stop there. We don't list units, we don't take a commission on a transfer, and we have no stake in whether a deal closes. That independence is the reason the number is worth anything in a negotiation.</p>
+    </details>
+
+    <details>
+      <summary>What does it cost the brand to set up?</summary>
+      <p>Nothing. There's no partner fee, no minimum volume, no contract term, and no technical integration. If it isn't producing value for your system, tell us and we'll switch the code off.</p>
+    </details>
+
+    <h2 id="talk">Let's talk about your system</h2>
+    <p>Tell us the brand and roughly how many units you have, and we'll come back with what your transfer volume likely looks like and what a partner code would do for it.</p>
+
+    <div class="fr-form-card">
+      <form id="franchisorForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="firstName">First Name*</label>
+            <input type="text" id="firstName" name="firstName" required>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name*</label>
+            <input type="text" id="lastName" name="lastName" required>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="email">Work Email*</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">Mobile Phone*</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="brand">Brand or system name*</label>
+            <input type="text" id="brand" name="brand" required>
+          </div>
+          <div class="field">
+            <label for="units">Approximate units</label>
+            <select id="units" name="units">
+              <option value="">Please select</option>
+              <option>Under 50</option>
+              <option>50 – 200</option>
+              <option>200 – 500</option>
+              <option>500 – 1,500</option>
+              <option>1,500+</option>
+              <option>Multi-brand platform</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="state">State*</label>
+          <select id="state" name="state" required>
+            <option value="">Please select</option>
+            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
+            <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
+            <option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option>
+            <option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option>
+            <option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option>
+            <option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
+            <option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option>
+            <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option>
+            <option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
+            <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+            <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option>
+            <option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option>
+            <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+          </select>
+        </div>
+
+        <div class="consent-row">
+          <input type="checkbox" id="consent" name="consent" required>
+          <p>By pressing Submit, you agree that PrimeBizValue may call, text, or email you at the number and address provided, including for business purposes related to your inquiry. This contact may use automated or pre-recorded/artificial voice technology. Message and data rates may apply. You don't need to consent as a condition of any purchase, and you may opt out at any time. You also agree to our <a href="/privacy.html" target="_blank">Privacy Policy</a>.</p>
+        </div>
+
+        <button type="submit" class="submit-btn" id="franchisorSubmitBtn">Start the conversation</button>
+        <div class="fr-status" id="franchisorStatus" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <p class="fr-disclaimer">PrimeBizValue reports are opinions of value produced from information supplied by the user. They are for informational purposes only and are not a certified appraisal or financial, legal, or investment advice.</p>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-row">
+    <p>&copy; 2026 PrimeBizValue.com</p>
+    <div class="foot-links">
+      <a href="/about.html">About</a>
+      <a href="/franchisors.html">For Franchisors</a>
+      <a href="/certification.html">Certification</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/join.html">Join our list</a>
+      <a href="/confidentiality.html">Confidentiality</a>
+      <a href="/terms.html">Terms of Service</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('franchisorForm');
+  var btn = document.getElementById('franchisorSubmitBtn');
+  var status = document.getElementById('franchisorStatus');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    status.className = 'fr-status';
+    status.textContent = '';
+
+    if (!document.getElementById('consent').checked) {
+      status.className = 'fr-status err';
+      status.textContent = 'Please agree to be contacted before submitting.';
+      return;
+    }
+
+    btn.disabled = true;
+    var original = btn.textContent;
+    btn.textContent = 'Sending...';
+
+    var payload = {
+      firstName: form.firstName.value.trim(),
+      lastName: form.lastName.value.trim(),
+      email: form.email.value.trim(),
+      phone: form.phone.value.trim(),
+      state: form.state.value,
+      interest: "I'm a franchisor or franchise brand",
+      consent: true,
+      source: 'franchisors-page',
+      brand: form.brand.value.trim(),
+      units: form.units.value
+    };
+
+    try {
+      var res = await fetch('/api/join-list', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error('Request failed with status ' + res.status);
+
+      form.reset();
+      status.className = 'fr-status ok';
+      status.textContent = 'Got it. We’ll be in touch shortly to talk through your system.';
+    } catch (err) {
+      status.className = 'fr-status err';
+      status.textContent = 'Something went wrong sending that. Please email hello@primebizvalue.com and we’ll pick it up from there.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
+
