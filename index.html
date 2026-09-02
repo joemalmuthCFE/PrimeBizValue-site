@@ -228,6 +228,11 @@
   .fr-strip-cta{display:inline-block; background:var(--text); color:#fff; padding:13px 26px; border-radius:9px; text-decoration:none; font-size:15px; font-weight:600; white-space:nowrap;}
   .fr-strip-cta:hover{background:#000;}
   @media (max-width:760px){.fr-strip-inner{flex-direction:column; align-items:flex-start; gap:20px;}}
+
+  .p-feat{list-style:none; padding:0; margin:0 0 26px; text-align:left; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .p-feat li{font-size:13.5px; color:var(--text-secondary); line-height:1.45; padding-left:22px; position:relative;}
+  .p-feat li::before{content:''; position:absolute; left:4px; top:7px; width:6px; height:6px; border-radius:50%; background:var(--accent);}
+  .price-card-basic .p-desc{flex:none;}
 </style>
 <link rel="stylesheet" href="/theme.css">
 </head>
@@ -324,7 +329,13 @@
         <p class="p-lbl">Basic Report</p>
         <p class="p-amt">$199</p>
         <p class="p-desc">Your recast top-line numbers — revenue, gross profit, SDE, and Adjusted EBITDA — plus your estimated valuation range and the multiple behind it.</p>
-        <a href="/tool.html?tier=basic" class="cta-primary">Get the basic report</a>
+        <ul class="p-feat">
+            <li>Full recast: revenue, gross profit, SDE and Adjusted EBITDA</li>
+            <li>Your valuation range, and the multiple behind it</li>
+            <li>On screen and in your inbox, instantly</li>
+            <li>Upgrade to the full report later for the difference</li>
+          </ul>
+          <a href="/tool.html?tier=basic" class="cta-primary">Get the basic report</a>
       </div>
       <div class="price-card">
         <span class="badge-popular">Most thorough</span>
