@@ -1083,7 +1083,7 @@ render();
 });
 
 function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function fmt(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+function fmt(n){ const v = Math.round(Number(n)||0); return v < 0 ? '($' + Math.abs(v).toLocaleString('en-US') + ')' : '$' + v.toLocaleString('en-US'); }
 
 function computeAndRenderTape(){
 const sum = arr => arr.reduce((s,r)=>s+(Number(r.amount)||0),0);
