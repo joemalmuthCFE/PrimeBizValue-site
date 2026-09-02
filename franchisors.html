@@ -179,6 +179,20 @@
   .fr-table th.pay-h{background:#E2E9FD; color:var(--accent);}
   .fr-table th:not(:first-child){text-align:right;}
   .fr-econ-note{font-size:13.5px; color:var(--text-muted); margin-top:12px;}
+  .fr-price{display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; background:linear-gradient(160deg,var(--ink-panel),#16213F); border-radius:16px; padding:30px 34px; margin-top:22px; color:#fff; position:relative; overflow:hidden;}
+  .fr-price::before{content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(480px 240px at 12% -20%, rgba(78,123,255,.34), transparent 66%);}
+  .fr-price > *{position:relative;}
+  .fr-price-tag{flex:0 0 190px;}
+  .fr-price-amt{font-family:'Space Grotesk',sans-serif; font-size:44px; font-weight:700; letter-spacing:-.02em; line-height:1;}
+  .fr-price-per{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#8FADFF; margin-top:10px;}
+  .fr-price-body{flex:1 1 340px;}
+  .fr-price-body h3{font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; margin:0 0 12px; color:#fff;}
+  .fr-incl{list-style:none; margin:0; padding:0;}
+  .fr-incl li{position:relative; padding-left:24px; margin-bottom:9px; font-size:14px; color:rgba(255,255,255,.8); line-height:1.6;}
+  .fr-incl li::before{content:'\2713'; position:absolute; left:0; top:0; color:#8FADFF; font-weight:700; font-size:13px;}
+  .fr-incl li strong{color:#fff; font-weight:600;}
+  .fr-price-foot{font-size:12.5px; color:rgba(255,255,255,.52); margin:16px 0 0; line-height:1.6;}
+  @media (max-width:640px){ .fr-price{padding:24px 22px; gap:18px;} .fr-price-amt{font-size:36px;} }
   .fr-chip-gold{display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); background:var(--gold-bg); border:1px solid #EEDFB8; padding:3px 8px; border-radius:999px; margin-left:8px; vertical-align:1px;}
 
   .card.fr-highlight{background:linear-gradient(175deg,#EDF3FF,#FBFCFF 72%); border-color:#D6E0FA; border-left:3px solid var(--accent);}
@@ -207,7 +221,7 @@
 
   /* figures run wider than the prose column on large screens */
   @media (min-width:1040px){
-    .fr-stats, .fr-cost, .fr-models, .fr-table-scroll, .fr-browser, .fr-steps, .card.fr-highlight{margin-left:-58px; margin-right:-58px;}
+    .fr-stats, .fr-cost, .fr-models, .fr-table-scroll, .fr-browser, .fr-steps, .card.fr-highlight, .fr-price{margin-left:-58px; margin-right:-58px;}
     .fr-econ-note{margin-left:-58px; margin-right:-58px;}
   }
 
@@ -277,7 +291,7 @@
       <div class="fr-cta-row">
         <a href="#talk" class="fr-btn">Talk about your system<span class="arw">&rarr;</span></a>
         <a href="/tool.html" class="fr-btn-ghost">See the tool</a>
-        <span class="fr-cta-note">No fee to the brand. No integration. And you earn on every report.</span>
+        <span class="fr-cta-note">$2,500 one time. No contract, no minimums, no integration.</span>
       </div>
     </section>
 
@@ -348,38 +362,38 @@
     <ol class="fr-steps">
       <li class="fr-step">
         <div>
-          <h3>We issue your brand a code</h3>
-          <p>A unique discount code tied to your system. It runs indefinitely until you ask us to switch it off.</p>
+          <h3>We build your page</h3>
+          <p>Your logo, your colors, your language about your transfer process, at primebizvalue.com/yourbrand. That's what the setup fee pays for, and it's usually live within a week of getting your brand assets.</p>
         </div>
       </li>
       <li class="fr-step">
         <div>
           <h3>You put it in front of your owners</h3>
-          <p>Resale packet, intranet, transfer checklist, exit conversation, annual meeting. Wherever your sellers already look. No portal to build, no system to integrate. Or skip the code entirely and send them a branded page of your own, which is covered further down.</p>
+          <p>Resale packet, intranet, transfer checklist, exit conversation, annual meeting. Wherever your sellers already look. One link, nothing to build, nothing to integrate on your side.</p>
         </div>
       </li>
       <li class="fr-step">
         <div>
-          <h3>Your franchisees get a discounted report</h3>
-          <p>They upload a P&amp;L, the tool recasts it, and the report comes back on screen and by email. Ten minutes, not three weeks.</p>
+          <h3>Your franchisees get 30% off, automatically</h3>
+          <p>They upload a P&amp;L, the tool recasts it, and the report comes back on screen and by email. Ten minutes, not three weeks. The discount is baked into the page, so there's no code to remember and nothing to type wrong at checkout.</p>
         </div>
       </li>
       <li class="fr-step">
         <div>
-          <h3>We report activity under your code</h3>
-          <p>Every order placed under your brand's code is tracked separately, so you can see the volume your system is generating instead of guessing at it.</p>
+          <h3>We report activity under your brand</h3>
+          <p>Every valuation run through your page is tracked separately, so you can see the volume your system is generating instead of guessing at it.</p>
         </div>
       </li>
       <li class="fr-step">
         <div>
-          <h3>You get paid quarterly</h3>
-          <p>A statement of every order under your code, and a payment for your share of it. W-9 on file, ACH or check, no minimum to hit before you see money.</p>
+          <h3>You see the exits coming</h3>
+          <p>An owner quietly running their numbers is an owner thinking about the door. Activity on your page is an early signal, often months before anyone calls a broker who has never heard of your brand. What you do with that head start is the whole point of the program.</p>
         </div>
       </li>
     </ol>
 
-    <h2 data-eyebrow="The economics">What your brand earns</h2>
-    <p>Partner brands get both sides of the deal. Your franchisees pay less than the public price, and your brand earns a share of every report sold under your code. Nothing to set up, no minimum to hit, no fee either direction.</p>
+    <h2 data-eyebrow="The program">What it costs, and what your owners pay</h2>
+    <p>One setup fee, paid once, and your system is live. After that your franchisees pay 30% below the public price for as long as the page exists. No money moves back to the brand, which keeps this a straightforward vendor relationship instead of something your franchise counsel has to think hard about.</p>
 
     <div class="fr-table-scroll">
       <table class="fr-table">
@@ -388,44 +402,61 @@
             <th>Report</th>
             <th>Public price</th>
             <th>Your franchisees pay</th>
-            <th class="pay-h">Your brand earns</th>
+            <th class="pay-h">They save</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Recast summary and valuation range</td>
             <td class="num strike">$199</td>
-            <td class="num">$159</td>
-            <td class="num pay">$40</td>
+            <td class="num">$139</td>
+            <td class="num pay">$60</td>
           </tr>
           <tr>
             <td>Full worksheet, SBA and DSCR analysis, closing breakdown <span class="fr-chip-gold">Prime Certified</span></td>
             <td class="num strike">$799</td>
-            <td class="num">$639</td>
-            <td class="num pay">$160</td>
+            <td class="num">$559</td>
+            <td class="num pay">$240</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="fr-econ-note">A standing 20% discount for your owners, and 25% of what they pay comes back to your brand. Paid quarterly against a statement of every order under your code.</p>
+    <p class="fr-econ-note">A standing 30% discount for every owner in your system, with no expiration and no cap on how many use it.</p>
+
+    <div class="fr-price">
+      <div class="fr-price-tag">
+        <div class="fr-price-amt">$2,500</div>
+        <div class="fr-price-per">One time &middot; no renewal</div>
+      </div>
+      <div class="fr-price-body">
+        <h3>What the setup fee covers</h3>
+        <ul class="fr-incl">
+          <li><strong>Your branded valuation page</strong>, built at your own address with your logo, colors, and copy written for your transfer process.</li>
+          <li><strong>A standing 30% discount</strong> for every franchisee in your system, with no expiration and no volume cap.</li>
+          <li><strong>Unlimited free preliminary valuations.</strong> Any owner can run their numbers on screen at no charge, whether or not they ever buy a report.</li>
+          <li><strong>Activity reporting</strong> on what your system is generating, so transfer interest stops being something you find out about last.</li>
+        </ul>
+        <p class="fr-price-foot">No contract term, no minimum volume, no per-seat licensing, and nothing to renew. A single broker opinion of value runs about the same as the entire program.</p>
+      </div>
+    </div>
 
     <div class="card fr-highlight">
-      <h3>What that adds up to over a year</h3>
-      <p>A 500-unit system sees roughly 20 transfers a year at the industry rate. On a realistic mix of tiers, that's somewhere between <strong>$800 and $3,200</strong> back to the brand annually. A 5,000-unit platform lands closer to <strong>$9,000 to $36,000</strong>.</p>
-      <p>Let's be straight about what that is: it will not move your P&amp;L. What it does is pay for the resale program that produces it, which turns a cost center into something near break-even. The real return is the transfers that close instead of stalling, and the units that stay open paying royalties.</p>
+      <h3>Let's be honest about what this is worth</h3>
+      <p>$2,500 is not a hard number to justify, but it is a number, so it should buy something real. Here's the case: one transfer that dies at the lender costs you a unit. Not a fee, a unit, and every royalty dollar it would have paid for the rest of the term. Against that, the program is rounding error.</p>
+      <p>The mechanism is unglamorous and it works. Sellers who start from a documented number ask for a price the cash flow can actually service. Deals priced that way survive underwriting. That's it. That's the whole product.</p>
     </div>
 
     <h2 data-eyebrow="The options">Two ways brands run it</h2>
     <div class="fr-models">
       <div class="fr-model">
         <span class="fr-tag">Most common</span>
-        <h3>Franchisee pays, brand earns</h3>
-        <p>Your owners use the code and get 20% off. Costs the brand nothing, generates revenue on every report, and the owner has skin in the game, which tends to mean they actually read the thing.</p>
+        <h3>Franchisee pays their own way</h3>
+        <p>Your owners go to your page and pay the discounted price themselves. Costs the brand nothing beyond setup, and the seller has skin in the game, which tends to mean they actually read the thing.</p>
       </div>
       <div class="fr-model featured">
         <span class="fr-tag">Higher adoption</span>
         <h3>Brand sponsors the report</h3>
-        <p>You cover it for any franchisee entering the transfer process. Your 25% share comes back the same way, so the true cost to the brand is about <strong>$119</strong> a summary or <strong>$479</strong> a full report, and every seller in your system starts from a real number.</p>
+        <p>You cover it for any franchisee entering the transfer process, at <strong>$139</strong> a summary or <strong>$559</strong> a full report. Costs more, and it's the version that actually works: every seller in your system starts from a real number instead of only the ones who volunteered to pay for one.</p>
       </div>
     </div>
 
@@ -435,8 +466,8 @@
   <div class="band">
   <div class="wrap">
 
-    <h2 data-eyebrow="Going further">Or give your owners a page of their own</h2>
-    <p>Here's the honest failure mode of any code program: the code never reaches anybody. It sits in a PDF nobody opens, gets typed wrong at checkout, or dies with the field consultant who was supposed to hand it out. A link doesn't have that problem. Partner brands can opt for a custom branded page instead, at their own address.</p>
+    <h2 data-eyebrow="What you get">A page that belongs to your brand</h2>
+    <p>Here's the honest failure mode of any discount-code program: the code never reaches anybody. It sits in a PDF nobody opens, gets typed wrong at checkout, or dies with the field consultant who was supposed to hand it out. A link doesn't have that problem, which is why the setup fee builds you a page instead of issuing you a code.</p>
 
     <div class="fr-browser">
       <div class="fr-brandbar">
@@ -453,7 +484,7 @@
         <div class="fr-mock-h">Thinking about selling your location?</div>
         <div class="fr-mock-line"></div>
         <div class="fr-mock-line short"></div>
-        <span class="fr-mock-btn">Get my valuation — 20% off applied</span>
+        <span class="fr-mock-btn">Get my valuation — 30% off applied</span>
         <div class="fr-mock-cap">Illustration only. Your page, your brand.</div>
       </div>
     </div>
@@ -465,15 +496,15 @@
       </div>
       <div class="fr-cost-item">
         <h3>The discount is already applied</h3>
-        <p>Your code is baked into the page. Nothing to remember, nothing to type, nothing entered wrong at checkout. They click, they upload, they get their number at your price.</p>
+        <p>The 30% is baked into the page. Nothing to remember, nothing to type, nothing entered wrong at checkout. They click, they upload, they get their number at your price.</p>
       </div>
       <div class="fr-cost-item">
         <h3>Copy written for your system</h3>
         <p>We'll speak to your owners about your transfer process in your language, instead of making them translate generic small-business advice into franchise reality.</p>
       </div>
       <div class="fr-cost-item">
-        <h3>Included, and quick</h3>
-        <p>No charge for partner brands. All we need from you is a logo and your brand colors, and it's usually live within a week.</p>
+        <h3>Live in about a week</h3>
+        <p>This is what the $2,500 builds. All we need from you is a logo, your brand colors, and a look at how you describe your transfer process. Nothing to install and nothing for your IT team to approve.</p>
       </div>
     </div>
 
@@ -497,7 +528,7 @@
 
     <details>
       <summary>Do you give our brand the underlying data?</summary>
-      <p>We report activity under your code, not your franchisees' individual financials. If you want unit-level reporting, that's a conversation to have with your owners first, not something we'll hand over by default.</p>
+      <p>No. You get activity on your page &mdash; how many owners are running numbers and at what cadence &mdash; not their individual financials. That's still genuinely useful as an early read on transfer interest, and it's the version your franchisees will accept. If you want unit-level detail, that's a conversation to have with your owners first, not something we'll hand over by default.</p>
     </details>
 
     <details>
@@ -506,18 +537,23 @@
     </details>
 
     <details>
-      <summary>What does it cost the brand to set up?</summary>
-      <p>Nothing. There's no partner fee, no minimum volume, no contract term, and no technical integration. If it isn't producing value for your system, tell us and we'll switch the code off.</p>
+      <summary>What does it cost the brand?</summary>
+      <p>$2,500, once, and that's the end of it. No renewal, no annual license, no minimum volume, no per-user fee, and no technical integration. If the program stops being useful to your system, you stop pointing owners at it and you owe us nothing further.</p>
     </details>
 
     <details>
       <summary>How do we handle this in our FDD?</summary>
-      <p>Most brands treat a partner share like any other supplier rebate and disclose it in Item 8, alongside the other revenue the franchisor receives in connection with franchisee purchases. We're not your counsel and we won't pretend to be, so run the structure past your franchise attorney and tell us how they want it papered. If the disclosure is a problem for your system, we'll happily run your code as a pure franchisee discount with no share back to the brand.</p>
+      <p>This is deliberately built to be the easy version. No money flows from us to the brand, so there's no supplier rebate for you to report as revenue received in connection with franchisee purchases. You're paying a vendor, the same as any other. That said, how you present us to your owners still matters: a supplier you require is treated differently from one you simply recommend, so run it past your franchise counsel and tell us how they want it worded. We'll follow their lead on the language.</p>
     </details>
 
     <details>
-      <summary>How and when do you pay?</summary>
-      <p>Quarterly, on a statement listing every order placed under your code with the amount collected and your share of each. Payment by ACH or check once we have a W-9 on file. There's no minimum to clear before you get paid, and no expiration on the code.</p>
+      <summary>What if our franchisees don't use it?</summary>
+      <p>Then you spent $2,500 and learned something, which is a cheaper way to test a resale program than most of the alternatives. But adoption is mostly a distribution problem, not a demand problem. The systems where this works put the link in the transfer checklist, so it reaches an owner at the moment they're actually thinking about selling rather than six months earlier at a conference. We'll tell you what we've seen work and what hasn't.</p>
+    </details>
+
+    <details>
+      <summary>Does the brand get a say in the number?</summary>
+      <p>No, and you shouldn't want one. The methodology is fixed and applied identically to every business that runs through it, which is exactly why a seller can't argue that another owner in your system got a friendlier valuation. The moment a franchisor could lean on the output, the number stops being worth anything in a negotiation &mdash; including to you.</p>
     </details>
 
   </div>
@@ -527,7 +563,7 @@
   <div class="wrap">
 
     <h2 id="talk" data-eyebrow="Next step">Let's talk about your system</h2>
-    <p>Tell us the brand and roughly how many units you have, and we'll come back with what your transfer volume likely looks like and what a partner code would do for it.</p>
+    <p>Tell us the brand and roughly how many units you have, and we'll come back with what your transfer volume likely looks like and what the program would do for it.</p>
 
     <div class="fr-form-card">
       <form id="franchisorForm">
