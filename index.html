@@ -184,13 +184,13 @@
   .price-card-basic{
     background:#fff; border:1px solid var(--border); border-radius:16px;
     padding:40px 32px; text-align:center; display:flex; flex-direction:column;
-    opacity:.82;
+    
   }
-  .price-card-basic .p-lbl{font-size:13.5px; color:var(--text-muted); margin:0 0 8px;}
-  .price-card-basic .p-amt{font-family:'Space Grotesk',sans-serif; font-size:34px; font-weight:600; margin:0 0 10px; letter-spacing:-0.02em; color:var(--text-secondary);}
-  .price-card-basic .p-desc{font-size:13.5px; color:var(--text-muted); margin:0 0 26px; flex:1;}
-  .price-card-basic .cta-primary{background:var(--surface); color:var(--text-secondary); border:1px solid var(--border); box-shadow:none; font-weight:500;}
-  .price-card-basic .cta-primary:hover{background:#EDEFF2;}
+  .price-card-basic .p-lbl{font-size:14px; color:var(--text-secondary); margin:0 0 8px; font-weight:500;}
+  .price-card-basic .p-amt{font-family:'Space Grotesk',sans-serif; font-size:38px; font-weight:700; margin:0 0 10px; letter-spacing:-0.02em; color:var(--text);}
+  .price-card-basic .p-desc{font-size:14px; color:var(--text-secondary); margin:0 0 26px; flex:1;}
+  .price-card-basic .cta-primary{background:#fff; color:var(--accent); border:1.5px solid var(--accent); box-shadow:none; font-weight:600;}
+  .price-card-basic .cta-primary:hover{background:var(--accent-bg);}
   .badge-popular{
     display:inline-block; background:var(--accent-bg); color:var(--accent); font-size:11.5px; font-weight:700;
     letter-spacing:0.04em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:14px;
@@ -219,6 +219,15 @@
     .steps{grid-template-columns:1fr;}
     .nav-links{display:none;}
   }
+
+  .fr-strip{background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:44px 0; margin-top:64px;}
+  .fr-strip-inner{display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .fr-strip-kicker{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:10px;}
+  .fr-strip-h{font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.015em; margin:0 0 8px; color:var(--text);}
+  .fr-strip-p{font-size:15px; color:var(--text-secondary); margin:0; max-width:56ch;}
+  .fr-strip-cta{display:inline-block; background:var(--text); color:#fff; padding:13px 26px; border-radius:9px; text-decoration:none; font-size:15px; font-weight:600; white-space:nowrap;}
+  .fr-strip-cta:hover{background:#000;}
+  @media (max-width:760px){.fr-strip-inner{flex-direction:column; align-items:flex-start; gap:20px;}}
 </style>
 <link rel="stylesheet" href="/theme.css">
 </head>
@@ -246,8 +255,8 @@
         <h1>Know what your business is really worth</h1>
         <p class="sub">Upload your financials and get a professional-grade SDE and EBITDA valuation in minutes, not weeks.</p>
         <div class="cta-row">
-          <a href="#get-report" class="cta-primary">Start my valuation</a>
-          <span class="cta-note">One-time report. No subscription.</span>
+          <a href="/tool.html" class="cta-primary">Start my valuation</a>
+          <span class="cta-note">See your number free. Pay only if you want the report.</span>
         </div>
       </div>
 
@@ -335,6 +344,17 @@
         <a href="/tool.html?tier=detailed" class="cta-primary">Get the detailed report</a>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="fr-strip">
+  <div class="wrap fr-strip-inner">
+    <div>
+      <div class="fr-strip-kicker">Run a franchise system?</div>
+      <h2 class="fr-strip-h">Your franchisees are pricing their exits on guesswork</h2>
+      <p class="fr-strip-p">Roughly 4% of franchised units transfer every year. Give those owners a standardized, SBA-aware number instead of a neighbor's rumor, and earn on every report. No fee to the brand.</p>
+    </div>
+    <a href="/franchisors.html" class="fr-strip-cta">See the partner program</a>
   </div>
 </section>
 
