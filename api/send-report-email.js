@@ -1,59 +1,60 @@
-// /api/send-report-email — sends the finished report to the customer, with a
-// quiet BCC copy to hello@primebizvalue.com. Uses Resend's plain HTTP API
-// (no extra npm dependency needed, same pattern as the Anthropic proxy).
+// /api/send-report-email — delivers the purchased report to the customer with
+// a quiet internal BCC, records the buyer as a CRM contact, and puts the
+// CAN-SPAM footer (postal address + preference link) on the message.
 //
-// This is called from the browser right after a payment is verified — the
-// browser already has the fully-rendered report HTML (buildReportHTML's
-// output), so we just hand that same HTML to Resend as the email body
-// instead of rebuilding the report server-side.
+// Called from the browser right after a payment is verified. The browser
+// already holds the fully rendered report HTML, so we hand that to Resend
+// rather than rebuilding it server-side.
+
+const { supabase, validEmail, upsertLead, sendEmail, INTERNAL_BCC } = require('./_lib');
 
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    res.status(500).json({ error: 'Server is missing RESEND_API_KEY. Add it in Vercel project settings.' });
-    return;
-  }
-
-  const { customerEmail, reportHtml, businessName, tier } = req.body || {};
-  if (!customerEmail || !reportHtml) {
-    res.status(400).json({ error: 'Missing customerEmail or reportHtml in request body.' });
-    return;
+  const { customerEmail, reportHtml, businessName, tier, marketingConsent, consentText, sessionId } = req.body || {};
+  if (!validEmail(customerEmail) || !reportHtml) {
+    return res.status(400).json({ error: 'Missing customerEmail or reportHtml in request body.' });
   }
 
   const tierLabel = tier === 'basic' ? 'Basic' : 'Detailed';
   const subject = `Your ${tierLabel} Valuation Report${businessName ? ' — ' + businessName : ''}`;
+  const db = supabase();
 
+  // 1. Buyer becomes a CRM record. Purchase = transactional relationship;
+  //    marketing_consent is only true if they ticked the box on the tool.
+  let lead = null;
   try {
-    const resp = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        from: 'PrimeBizValue <reports@primebizvalue.com>',
-        to: [customerEmail],
-        bcc: ['hello@primebizvalue.com'], // quiet internal copy — invisible to the customer
-        subject,
-        html: reportHtml,
-      }),
+    const now = new Date().toISOString();
+    const r = await upsertLead(db, {
+      email: customerEmail,
+      source: 'purchase',
+      tags: ['customer', tier === 'basic' ? 'basic-buyer' : 'detailed-buyer'],
+      consent: true,
+      marketing_consent: marketingConsent === true,
+      consent_text: marketingConsent === true && consentText ? String(consentText).slice(0, 2000) : null,
+      consent_at: marketingConsent === true ? now : null,
+      consent_page: '/tool.html',
+      company: businessName || null,
     });
-
-    if (!resp.ok) {
-      const bodyText = await resp.text().catch(() => '');
-      console.error('Resend send failed:', resp.status, bodyText);
-      res.status(resp.status).json({ error: 'Email send failed', detail: bodyText.slice(0, 500) });
-      return;
+    lead = r.lead;
+    if (sessionId) {
+      await db.from('orders').update({ lead_id: lead.id, business_name: businessName || null })
+        .eq('stripe_session_id', sessionId);
     }
+  } catch (e) {
+    // never let CRM bookkeeping block report delivery
+    console.error('CRM upsert on purchase failed:', e.message || e);
+  }
 
+  // 2. Send the report. Transactional, so it goes regardless of marketing status.
+  try {
+    await sendEmail(db, {
+      to: customerEmail, subject, html: reportHtml, kind: 'report',
+      lead, marketing: false, bcc: INTERNAL_BCC,
+    });
     res.status(200).json({ sent: true });
   } catch (err) {
     console.error('send-report-email error:', err);
-    res.status(500).json({ error: 'Server error sending email', detail: String(err) });
+    res.status(500).json({ error: 'Email send failed', detail: String(err.message || err).slice(0, 300) });
   }
 };
