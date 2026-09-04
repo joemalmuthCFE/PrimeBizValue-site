@@ -1,0 +1,36 @@
+# PrimeBizValue
+
+> PrimeBizValue.com produces fast, documented business valuations for owners of small and franchised businesses, priced at a fraction of a broker's opinion of value. Upload a P&L, get a free on-screen estimate in minutes; buy a Basic ($199) or Detailed ($799) report for the documented recast, SBA financing analysis, and closing breakdown.
+
+## What it does
+
+- Recasts a profit-and-loss statement into Seller's Discretionary Earnings (SDE) and Adjusted EBITDA using a documented, repeatable add-back worksheet.
+- Applies a benchmark multiple from fixed Main Street SDE-size tiers, adjusted for earnings trend, risk, and upside factors.
+- Runs an SBA 7(a) debt-service coverage (DSCR) check so the price is tested against what a lender will finance.
+- Produces a closing cash-to-seller estimate after inventory, debt payoff, closing costs, broker fees, and capital gains.
+- Offers franchisors a branded valuation page for their franchisees ($2,500 one-time setup, 30% off reports for every owner in the system).
+
+## Key pages
+
+- [Home](https://primebizvalue.com/): overview, pricing, how it works
+- [Free valuation tool](https://primebizvalue.com/tool.html): upload a P&L and get an estimate
+- [Sample Detailed Report](https://primebizvalue.com/sample-report.html): a complete, unredacted example built on fictional financials
+- [For Franchisors](https://primebizvalue.com/franchisors.html): the partner program for franchise systems
+- [Prime Valuation Certification](https://primebizvalue.com/certification.html): the four-part standard every Detailed Report meets
+- [FAQ](https://primebizvalue.com/faq.html)
+- [About](https://primebizvalue.com/about.html)
+
+## Definitions the site uses
+
+- **SDE (Seller's Discretionary Earnings):** net profit plus owner salary, owner payroll taxes, depreciation, amortization, interest, and documented discretionary or one-time expenses. The standard earnings measure for owner-operated Main Street businesses.
+- **Adjusted EBITDA:** SDE minus a market-rate replacement management salary. Used when the buyer will not operate the business.
+- **DSCR (Debt Service Coverage Ratio):** post-close cash flow divided by annual loan payments. SBA lenders typically want 1.25x or better.
+- **Multiple tiers:** Main Street — Low (SDE under $75k, 0–1.5x), Typical ($75k–$250k, 1.6–3.4x), High ($250k–$2M, 3.4–4.0x), Top Tier ($2M+, 4.1–5.0x).
+
+## What it is not
+
+Not a certified appraisal, not a broker, not a lender, and not financial, legal, or tax advice. Reports state this plainly. Uploaded financials are retained only to produce and support the valuation and are not sold.
+
+## Contact
+
+hello@primebizvalue.com

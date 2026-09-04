@@ -2,11 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
 window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
-<title>P&amp;L Recast — SDE / EBITDA Tool</title>
+<title>Free Business Valuation Tool — SDE &amp; EBITDA Recast | PrimeBizValue</title>
+<meta name="description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free on screen; documented reports from $199.">
+<!-- pbv:seo -->
+<link rel="canonical" href="https://primebizvalue.com/tool.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232454FF'/%3E%3Cpath d='M20 46V18h13.5c7.2 0 11.5 4 11.5 9.9 0 6-4.3 10-11.5 10H27V46h-7zm7-14.3h6c3.4 0 5.2-1.6 5.2-3.8 0-2.3-1.8-3.8-5.2-3.8h-6v7.6z' fill='%23fff'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#2454FF">
+<meta property="og:site_name" content="PrimeBizValue">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://primebizvalue.com/tool.html">
+<meta property="og:title" content="Free Business Valuation Tool — SDE &amp; EBITDA Recast | PrimeBizValue">
+<meta property="og:description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free on screen; documented reports from $199.">
+<meta property="og:image" content="https://primebizvalue.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Business Valuation Tool — SDE &amp; EBITDA Recast | PrimeBizValue">
+<meta name="twitter:description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free on screen; documented reports from $199.">
+<meta name="twitter:image" content="https://primebizvalue.com/og.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PrimeBizValue", "url": "https://primebizvalue.com/", "logo": "https://primebizvalue.com/og.png", "email": "hello@primebizvalue.com", "description": "Fast, documented business valuations for owners of small and franchised businesses. Upload a P&L, get a free estimate; buy a Basic or Detailed report for the full recast, SBA financing analysis, and closing breakdown.", "contactPoint": [{"@type": "ContactPoint", "contactType": "customer support", "email": "hello@primebizvalue.com", "availableLanguage": "English"}]}</script>
+<!-- /pbv:seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -38,6 +58,10 @@ header.top .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(-
 
 .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start;}
 @media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.grid > *{min-width:0;}
+.card{min-width:0;overflow-x:auto;}
+.card table{max-width:100%;}
+@media(max-width:600px){.wrap{padding:8px 14px 70px;} .card{padding:16px 14px;} h1{font-size:26px;}}
 
 .card{background:#fff;border:1px solid var(--hairline);border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 1px 2px rgba(11,14,20,0.03), 0 8px 24px -18px rgba(11,14,20,0.18);}
 .card h2{font-family:'Space Grotesk',sans-serif;font-size:17.5px;margin:0 0 6px;color:var(--ink);display:flex;align-items:center;gap:10px;letter-spacing:-.01em;}
@@ -108,6 +132,20 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 .comp-row input{border:1px solid var(--hairline);border-radius:7px;padding:6px 7px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
 .comp-row input[type=text]{font-family:'Inter',sans-serif;}
 
+.capbox{margin-top:12px;background:#EEF2FF;border:1px solid #C9D6FF;border-radius:14px;padding:18px 20px;}
+.capbox h3{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;margin:0 0 4px;color:#0B0E14;letter-spacing:-.01em;}
+.capbox p{font-size:12.5px;color:#5B6470;margin:0 0 12px;line-height:1.5;}
+.capbox .row{display:flex;gap:8px;flex-wrap:wrap;}
+.capbox input[type=email]{flex:1 1 220px;padding:10px 12px;border:1.5px solid #C9D6FF;border-radius:9px;font-size:14px;font-family:'Inter',sans-serif;background:#fff;}
+.capbox input[type=email]:focus{outline:none;border-color:#2454FF;box-shadow:0 0 0 3px rgba(36,84,255,.15);}
+.capbox button{padding:10px 18px;border:none;border-radius:9px;background:#2454FF;color:#fff;font-weight:600;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+.capbox button:disabled{opacity:.6;cursor:default;}
+.capbox .opt{display:flex;gap:9px;align-items:flex-start;margin-top:10px;font-size:11.5px;color:#5B6470;line-height:1.5;}
+.capbox .opt input{margin-top:3px;flex-shrink:0;}
+.capbox .st{font-size:12.5px;margin-top:8px;min-height:16px;}
+.capbox .st.ok{color:#15803D;font-weight:600;} .capbox .st.err{color:#DC2626;}
+.mkt-row{display:flex;gap:9px;align-items:flex-start;margin-top:8px;font-size:11.5px;color:#5B6470;line-height:1.5;grid-column:1 / -1;}
+.mkt-row input{margin-top:3px;flex-shrink:0;}
 .valbox{background:var(--ink);color:#fff;border-radius:16px;padding:26px 26px 22px;margin-top:14px;position:relative;overflow:hidden;box-shadow:0 24px 48px -22px rgba(11,14,20,0.4);}
 .valbox::before{content:'';position:absolute;inset:0;background:radial-gradient(380px 220px at 15% -15%, rgba(36,84,255,0.3), transparent 70%);pointer-events:none;}
 .valbox > *{position:relative;}
@@ -174,6 +212,7 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 <div><div class="section-label">Presented by</div><input type="text" id="rdPresentedBy" placeholder="Your name / title" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
 <div><div class="section-label">Report date</div><input type="date" id="rdReportDate" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
 <div style="grid-column:1 / -1;"><div class="section-label">Email* — for payment receipt &amp; report delivery</div><input type="email" id="rdEmail" placeholder="you@example.com" style="width:100%;padding:7px 8px;border:1px solid var(--hairline);border-radius:6px;font-size:12.5px;"></div>
+<label class="mkt-row"><input type="checkbox" id="rdMkt"><span id="rdMktText">Send me occasional emails about selling, financing, and valuing a business. Optional, and never a condition of purchase. Unsubscribe with one click.</span></label>
 </div>
 </div>
 
@@ -327,6 +366,17 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#FF8A8A;" id="pctCostsOut">—</div>
 <div class="lbl" style="margin-top:12px;">= Possible net cash to seller at closing</div>
 <div class="range" id="totalRange" style="color:#8FADFF;">—</div>
+</div>
+
+<div class="capbox" id="capBox" hidden>
+<h3>Email me this valuation</h3>
+<p>So the number lives somewhere other than this tab. One email, sent now, with your range and what's behind it.</p>
+<div class="row">
+<input type="email" id="capEmail" placeholder="you@example.com" autocomplete="email">
+<button type="button" id="capBtn">Send it</button>
+</div>
+<label class="opt"><input type="checkbox" id="capMkt"><span id="capMktText">Also send me a short series on what makes a business price survive a lender's review (3 emails, then we stop). Unsubscribe any time.</span></label>
+<div class="st" id="capStatus"></div>
 </div>
 
 <div id="reportCtaWrap" style="margin-top:20px;">
@@ -1365,6 +1415,7 @@ $('barFill').style.left = '0%';
 $('barFill').style.width = figure>0 ? '100%' : '0%';
 
 state._valuation = {basis, figure, base, lowMult, highMult, trendAdj, riskAdj, upsideAdj, lowVal, highVal, midVal, inv, closingCosts, debtCashNet, pctCostsTotal, netLow, netHigh};
+try{ var cb=$('capBox'); if(cb){ cb.hidden = !(figure > 0); var ce=$('capEmail'); if(ce && !ce.value && state.reportInfo.email) ce.value = state.reportInfo.email; } }catch(e){}
 renderDscrPreview();
 }
 
@@ -1562,6 +1613,9 @@ customerEmail: email,
 reportHtml: html,
 businessName: state.reportInfo.businessName || '',
 tier: tier,
+marketingConsent: !!($('rdMkt') && $('rdMkt').checked),
+consentText: ($('rdMkt') && $('rdMkt').checked) ? $('rdMktText').innerText : '',
+sessionId: (new URLSearchParams(window.location.search)).get('session_id') || null,
 })
 });
 if(!resp.ok){
@@ -1913,6 +1967,25 @@ This is an unofficial, directional estimate — not a certified business valuati
 </div>
 </body></html>`;
 }
+
+$('capBtn').addEventListener('click', async ()=>{
+const st = $('capStatus'), btn = $('capBtn');
+const email = ($('capEmail').value||'').trim();
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ st.className='st err'; st.textContent='Enter a valid email address.'; return; }
+if(!state._valuation || !(state._valuation.figure > 0)){ st.className='st err'; st.textContent='Run a valuation first.'; return; }
+btn.disabled = true; st.className='st'; st.textContent='Sending…';
+try{
+const v = state._valuation, c = state._computed || {};
+const resp = await fetch('/api/send-valuation-summary', { method:'POST', headers:{'Content-Type':'application/json'},
+body: JSON.stringify({ email: email, businessName: state.reportInfo.businessName || '',
+valuation: { low: v.lowVal + v.inv, high: v.highVal + v.inv, sde: c.sde, revenue: c.revenue },
+marketingConsent: $('capMkt').checked, consentText: $('capMkt').checked ? $('capMktText').innerText : '', page: location.pathname }) });
+const j = await resp.json().catch(()=>({}));
+if(!resp.ok) throw new Error(j.error || ('HTTP ' + resp.status));
+st.className='st ok'; st.textContent='Sent. Check your inbox (and spam, the first time).';
+if(!state.reportInfo.email){ state.reportInfo.email = email; $('rdEmail').value = email; }
+}catch(e){ st.className='st err'; st.textContent = e.message || 'Could not send — try again.'; btn.disabled = false; }
+});
 
 $('saveDeal').addEventListener('click', async ()=>{
 if(!state._computed){ return; }
