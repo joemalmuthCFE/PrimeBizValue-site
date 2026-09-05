@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner onboarding — PrimeBizValue</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#FFFFFF;--surface:#F7F8FA;--border:#E6E8EC;--text:#0B0E14;--text-secondary:#5B6470;--text-muted:#8A93A0;--accent:#2454FF;--accent-2:#1B44D9;--accent-bg:#EEF2FF;--ink:#0B1426;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;max-width:1080px;margin:0 auto;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700;letter-spacing:-0.3px;text-decoration:none;color:var(--text);}
+  .brand span{color:var(--accent);}
+  main{max-width:720px;margin:28px auto 90px;padding:0 24px;}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 8px;line-height:1.15;}
+  .lede{font-size:16px;color:var(--text-secondary);margin:0 0 22px;}
+  .codebox{background:var(--ink);color:#fff;border-radius:14px;padding:22px 24px;margin:0 0 24px;position:relative;overflow:hidden;}
+  .codebox::before{content:'';position:absolute;inset:0;background:radial-gradient(420px 220px at 12% -20%,rgba(78,123,255,.34),transparent 66%);pointer-events:none;}
+  .codebox > *{position:relative;}
+  .codebox .l{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FADFF;}
+  .codebox .c{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;letter-spacing:.06em;margin:6px 0 4px;word-break:break-all;}
+  .codebox .s{font-size:13px;color:rgba(255,255,255,.7);}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px 28px;}
+  .card h2{font-family:'Space Grotesk',sans-serif;font-size:18px;margin:0 0 4px;letter-spacing:-.01em;}
+  .card .sub{font-size:13.5px;color:var(--text-secondary);margin:0 0 18px;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:600px){.row{grid-template-columns:1fr;} .card{padding:22px 18px;}}
+  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+  .field.full{grid-column:1 / -1;}
+  label{font-size:12.5px;font-weight:600;color:var(--text);}
+  label .opt{font-weight:400;color:var(--text-muted);}
+  input[type=text],input[type=email],input[type=tel],input[type=url],input[type=number],textarea{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:14px;background:#fff;color:var(--text);}
+  input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(36,84,255,.15);}
+  textarea{min-height:120px;resize:vertical;line-height:1.5;}
+  .colors{display:flex;gap:10px;align-items:center;}
+  .colors input[type=color]{width:44px;height:40px;border:1px solid var(--border);border-radius:8px;background:#fff;padding:2px;cursor:pointer;}
+  .hint{font-size:11.5px;color:var(--text-muted);}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--text-secondary);line-height:1.5;margin:6px 0 16px;}
+  .consent input{margin-top:3px;flex-shrink:0;}
+  .btn{display:inline-block;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:13px 26px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;}
+  .btn:hover{background:var(--accent-2);}
+  .btn[disabled]{opacity:.6;cursor:default;}
+  .status{font-size:13.5px;margin-top:10px;min-height:18px;}
+  .status.err{color:#DC2626;} .status.ok{color:#15803D;font-weight:600;}
+  .done{background:var(--accent-bg);border:1px solid #C9D6FF;border-radius:12px;padding:18px 20px;font-size:14px;color:#1F3A8F;}
+  .done a{color:var(--accent);font-weight:600;}
+  footer{text-align:center;font-size:12.5px;color:var(--text-muted);padding:20px;}
+  footer a{color:var(--text-muted);}
+</style>
+<link rel="stylesheet" href="/theme.css">
+</head>
+<body>
+<nav><a href="/" class="brand">Prime<span>BizValue</span></a></nav>
+<main>
+  <div id="loading"><h1>Confirming your payment…</h1><p class="lede">One moment.</p></div>
+
+  <div id="unpaid" hidden>
+    <h1>We couldn't confirm that payment.</h1>
+    <p class="lede">If your card was charged, email <a href="mailto:hello@primebizvalue.com?subject=Partner%20program%20setup">hello@primebizvalue.com</a> with the receipt and we'll finish setup by hand, same day. Otherwise, <a href="/franchisors.html#start">start the program here</a>.</p>
+  </div>
+
+  <div id="paid" hidden>
+    <h1>You're in. Let's build your page.</h1>
+    <p class="lede">Setup fee received. Your franchisee discount code is below and works right now; the two-minute form after it gives us what we need for your branded valuation page.</p>
+
+    <div class="codebox">
+      <div class="l">Your franchisee discount code</div>
+      <div class="c" id="code">Being issued…</div>
+      <div class="s">30% off every report, every time. Franchisees type it in the "Add promotion code" box at checkout on <strong style="color:#fff;">primebizvalue.com/tool</strong>. Custom $199 &rarr; $139 &middot; Prime Certified $799 &rarr; $559.</div>
+    </div>
+
+    <div class="card" id="formCard">
+      <h2>Brand details</h2>
+      <p class="sub">Everything here can be changed later by replying to your welcome email. Fields marked optional can wait.</p>
+      <form id="onboardForm" novalidate>
+        <div class="row">
+          <div class="field"><label for="brand">Brand name</label><input type="text" id="brand" maxlength="120" required></div>
+          <div class="field"><label for="units">Units in system <span class="opt">(approx.)</span></label><input type="number" id="units" min="1" max="100000" placeholder="e.g. 140"></div>
+          <div class="field"><label for="contactName">Your name</label><input type="text" id="contactName" autocomplete="name" maxlength="120"></div>
+          <div class="field"><label for="email">Contact email</label><input type="email" id="email" autocomplete="email" required></div>
+          <div class="field"><label for="phone">Phone <span class="opt">(optional)</span></label><input type="tel" id="phone" autocomplete="tel" maxlength="40"></div>
+          <div class="field"><label for="website">Franchise website <span class="opt">(optional)</span></label><input type="url" id="website" placeholder="https://" maxlength="300"></div>
+          <div class="field full"><label for="logoUrl">Logo <span class="opt">(link to a PNG/SVG, or leave blank and reply to the welcome email with the file)</span></label><input type="url" id="logoUrl" placeholder="https://yourbrand.com/logo.png" maxlength="500"></div>
+          <div class="field"><label>Primary brand color</label><div class="colors"><input type="color" id="primaryColor" value="#2454FF"><input type="text" id="primaryHex" value="#2454FF" maxlength="9" style="max-width:120px;"></div></div>
+          <div class="field"><label>Secondary color <span class="opt">(optional)</span></label><div class="colors"><input type="color" id="secondaryColor" value="#0B1426"><input type="text" id="secondaryHex" value="#0B1426" maxlength="9" style="max-width:120px;"></div></div>
+          <div class="field full"><label for="transferProcess">Your transfer / resale process <span class="opt">(goes on every report a franchisee of yours buys)</span></label><textarea id="transferProcess" maxlength="6000" placeholder="Who a franchisee should contact first, the transfer fee, right of first refusal, training requirements for the buyer, approval timeline, anything else a seller should know before they list."></textarea><div class="hint">Plain language is best; we'll format it. You can paste from your manual.</div></div>
+          <div class="field full"><label for="notes">Anything else <span class="opt">(optional)</span></label><textarea id="notes" maxlength="4000" style="min-height:70px;" placeholder="Preferred URL slug, sub-brands that need their own code, who else should get the welcome email…"></textarea></div>
+        </div>
+        <label class="consent"><input type="checkbox" id="consent"><span id="consentText">Keep me posted by email about program updates, franchisee activity in my system, and new features. If I gave a mobile number, PrimeBizValue may call or text me about the program; calls and texts may use automated technology. Up to 4 messages a month, message and data rates may apply, reply STOP to cancel or HELP for help. Consent is not a condition of purchase; every email includes an unsubscribe link. <a href="/privacy.html">Privacy Policy</a>.</span></label>
+        <button type="submit" class="btn" id="submitBtn">Save and send my welcome email</button>
+        <div class="status" id="status"></div>
+      </form>
+    </div>
+
+    <div class="done" id="done" hidden>
+      <strong>Saved.</strong> Your welcome email is on its way with the code and next steps. Expect a proof of your branded page within two business days; reply to that email with any changes. Meanwhile, <a href="/sample-report.html">here's what your franchisees will receive</a>.
+    </div>
+  </div>
+</main>
+<footer>Questions: <a href="mailto:hello@primebizvalue.com">hello@primebizvalue.com</a> &middot; <a href="/terms.html">Terms</a> &middot; <a href="/privacy.html">Privacy</a></footer>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var sessionId = new URLSearchParams(location.search).get('session_id');
+  function show(id){ ['loading','unpaid','paid'].forEach(function(k){ $(k).hidden = (k !== id); }); }
+
+  // color pickers <-> hex fields
+  [['primaryColor','primaryHex'],['secondaryColor','secondaryHex']].forEach(function(pair){
+    $(pair[0]).addEventListener('input', function(){ $(pair[1]).value = this.value; });
+    $(pair[1]).addEventListener('input', function(){ if(/^#[0-9a-f]{6}$/i.test(this.value)) $(pair[0]).value = this.value; });
+  });
+
+  async function load(){
+    if(!sessionId){ show('unpaid'); return; }
+    try{
+      var r = await fetch('/api/partner-onboard?session_id=' + encodeURIComponent(sessionId));
+      var j = await r.json();
+      if(!j.paid){ show('unpaid'); return; }
+      $('code').textContent = (j.partner && j.partner.code) || 'Being issued — it will be in your welcome email';
+      if(j.brand) $('brand').value = j.brand;
+      if(j.email) $('email').value = j.email;
+      if(j.partner && j.partner.onboarded){ $('formCard').hidden = true; $('done').hidden = false; }
+      show('paid');
+    }catch(e){ show('unpaid'); }
+  }
+  load();
+
+  $('onboardForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var st = $('status'), btn = $('submitBtn');
+    st.className = 'status'; st.textContent = '';
+    var brand = $('brand').value.trim(), email = $('email').value.trim();
+    if(!brand){ st.className='status err'; st.textContent='Brand name is required.'; $('brand').focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ st.className='status err'; st.textContent='Enter a valid contact email.'; $('email').focus(); return; }
+    btn.disabled = true; st.textContent = 'Saving…';
+    try{
+      var r = await fetch('/api/partner-onboard', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+        session_id: sessionId, brand: brand, contactName: $('contactName').value.trim(), email: email, phone: $('phone').value.trim(),
+        units: $('units').value, website: $('website').value.trim(), logoUrl: $('logoUrl').value.trim(),
+        primaryColor: $('primaryHex').value.trim(), secondaryColor: $('secondaryHex').value.trim(),
+        transferProcess: $('transferProcess').value.trim(), notes: $('notes').value.trim(),
+        consent: $('consent').checked, consentText: $('consent').checked ? $('consentText').innerText : ''
+      })});
+      var j = await r.json().catch(function(){ return {}; });
+      if(!r.ok) throw new Error(j.error || ('HTTP ' + r.status));
+      if(j.code) $('code').textContent = j.code;
+      $('formCard').hidden = true; $('done').hidden = false; $('done').scrollIntoView({behavior:'smooth', block:'center'});
+    }catch(err){ btn.disabled = false; st.className='status err'; st.textContent = err.message || 'Could not save. Email hello@primebizvalue.com and we will finish by hand.'; }
+  });
+})();
+</script>
+<script src="/theme.js" defer></script>
+</body>
+</html>

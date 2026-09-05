@@ -137,6 +137,43 @@ select
   (select count(*) from leads where interest ilike '%franchisor%')                 as franchisor_leads;
 
 -- ─────────────────────────────────────────────────────────────
+-- Franchisor Partner Program (self-serve, $2,500 setup + 30% code)
+-- ─────────────────────────────────────────────────────────────
+alter table partners add column if not exists contact_name       text;
+alter table partners add column if not exists contact_email      text;
+alter table partners add column if not exists contact_phone      text;
+alter table partners add column if not exists units              text;
+alter table partners add column if not exists website            text;
+alter table partners add column if not exists logo_url           text;
+alter table partners add column if not exists primary_color      text;
+alter table partners add column if not exists secondary_color    text;
+alter table partners add column if not exists transfer_process   text;
+alter table partners add column if not exists notes              text;
+alter table partners add column if not exists status             text default 'active';
+alter table partners add column if not exists stripe_session_id  text;
+alter table partners add column if not exists setup_fee_paid_at  timestamptz;
+alter table partners add column if not exists setup_fee_amount   numeric;
+alter table partners add column if not exists onboarded_at       timestamptz;
+create unique index if not exists partners_session_uidx on partners (stripe_session_id) where stripe_session_id is not null;
+
+-- business_snapshot gains partner counts (re-created below with the extra columns)
+create or replace view business_snapshot as
+select
+  (select count(*) from orders)                                                    as total_orders,
+  (select coalesce(sum(amount_charged),0) from orders)                             as total_revenue,
+  (select count(*) from orders where created_at > now() - interval '30 days')      as orders_30d,
+  (select coalesce(sum(amount_charged),0) from orders where created_at > now() - interval '30 days') as revenue_30d,
+  (select count(*) from leads)                                                     as total_leads,
+  (select count(*) from leads where created_at > now() - interval '7 days')        as leads_7d,
+  (select count(*) from leads where source = 'free-valuation')                     as free_valuations,
+  (select count(*) from marketable_leads)                                          as marketable,
+  (select count(*) from leads where unsubscribed_at is not null)                   as unsubscribed,
+  (select count(*) from leads where interest ilike '%franchisor%')                 as franchisor_leads,
+  (select count(*) from orders where tier = 'summary')                             as summary_orders,
+  (select count(*) from partners where setup_fee_paid_at is not null)              as paid_partners,
+  (select count(*) from partners where setup_fee_paid_at is not null and onboarded_at is null) as partners_awaiting_onboarding;
+
+-- ─────────────────────────────────────────────────────────────
 -- Dedupe helper: only if the unique index above refused to build
 -- ─────────────────────────────────────────────────────────────
 -- delete from leads a using leads b

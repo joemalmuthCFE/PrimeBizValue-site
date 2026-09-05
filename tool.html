@@ -8,7 +8,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 <title>Free Business Valuation Tool — SDE &amp; EBITDA Recast | PrimeBizValue</title>
-<meta name="description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free on screen; documented reports from $199.">
+<meta name="description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free SDE/EBITDA recast; your value range from $19.99, documented reports from $199.">
 <!-- pbv:seo -->
 <link rel="canonical" href="https://primebizvalue.com/tool.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232454FF'/%3E%3Cpath d='M20 46V18h13.5c7.2 0 11.5 4 11.5 9.9 0 6-4.3 10-11.5 10H27V46h-7zm7-14.3h6c3.4 0 5.2-1.6 5.2-3.8 0-2.3-1.8-3.8-5.2-3.8h-6v7.6z' fill='%23fff'/%3E%3C/svg%3E">
@@ -17,15 +17,15 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://primebizvalue.com/tool.html">
 <meta property="og:title" content="Free Business Valuation Tool — SDE &amp; EBITDA Recast | PrimeBizValue">
-<meta property="og:description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free on screen; documented reports from $199.">
+<meta property="og:description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free SDE/EBITDA recast; your value range from $19.99, documented reports from $199.">
 <meta property="og:image" content="https://primebizvalue.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Free Business Valuation Tool — SDE &amp; EBITDA Recast | PrimeBizValue">
-<meta name="twitter:description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free on screen; documented reports from $199.">
+<meta name="twitter:description" content="Upload a P&amp;L, tax return, or spreadsheet and see your estimated business value in minutes. Free SDE/EBITDA recast; your value range from $19.99, documented reports from $199.">
 <meta name="twitter:image" content="https://primebizvalue.com/og.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PrimeBizValue", "url": "https://primebizvalue.com/", "logo": "https://primebizvalue.com/og.png", "email": "hello@primebizvalue.com", "description": "Fast, documented business valuations for owners of small and franchised businesses. Upload a P&L, get a free estimate; buy a Basic or Detailed report for the full recast, SBA financing analysis, and closing breakdown.", "contactPoint": [{"@type": "ContactPoint", "contactType": "customer support", "email": "hello@primebizvalue.com", "availableLanguage": "English"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PrimeBizValue", "url": "https://primebizvalue.com/", "logo": "https://primebizvalue.com/og.png", "email": "hello@primebizvalue.com", "description": "Fast, documented business valuations for owners of small and franchised businesses. Upload a P&L, get a free SDE/EBITDA recast; a one-page Summary Report ($19.99) gives the value range, and the Custom ($199) and Prime Certified ($799) reports add the full recast, SBA financing analysis, and closing breakdown.", "contactPoint": [{"@type": "ContactPoint", "contactType": "customer support", "email": "hello@primebizvalue.com", "availableLanguage": "English"}]}</script>
 <!-- /pbv:seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -152,6 +152,15 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 .valbox .range{font-family:'Space Grotesk',sans-serif;font-size:27px;font-weight:700;color:#fff;letter-spacing:-.01em;}
 .valbox .lbl{font-size:11.5px;color:rgba(255,255,255,.55);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;font-family:'IBM Plex Mono',monospace;}
 .bar-wrap{margin-top:12px;}
+.locked-val{filter:blur(7px);user-select:none;pointer-events:none;opacity:.75;}
+.unlock-box{margin-top:12px;background:rgba(255,255,255,.07);border:1px solid rgba(143,173,255,.45);border-radius:12px;padding:14px 16px;}
+.unlock-box .t{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+.unlock-box .d{font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.5;margin-bottom:10px;}
+.unlock-box .d strong{color:#fff;}
+.unlock-btn{display:block;width:100%;padding:13px 16px;border:none;border-radius:10px;background:#2454FF;color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 24px -10px rgba(36,84,255,.9);}
+.unlock-btn:hover{background:#1B44D9;}
+.unlock-btn:disabled{opacity:.55;cursor:default;}
+.unlock-box .fine{font-size:11px;color:rgba(255,255,255,.5);margin-top:8px;line-height:1.45;}
 .bar-track{position:relative;height:7px;background:rgba(255,255,255,.15);border-radius:6px;}
 .bar-fill{position:absolute;height:7px;background:linear-gradient(90deg, var(--ledger-green), #8FADFF);border-radius:6px;}
 
@@ -280,7 +289,7 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 </div>
 
 <div class="card" id="trendHistoryCard" style="display:none;">
-<h2><span class="step-badge">2d</span> Prior-period figures <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— optional, powers the multi-year trend table on the Detailed report</span></h2>
+<h2><span class="step-badge">2d</span> Prior-period figures <span style="font-weight:400;font-size:11.5px;color:var(--ink-soft);">— optional, powers the multi-year trend table on the Prime Certified report</span></h2>
 <p class="sub">If you have top-line revenue and SDE for the prior year or two, enter them here. Skip anything you don't have — the trend table only appears in the report if at least one prior period is filled in.</p>
 <table>
 <thead><tr><th>Period</th><th class="num">Revenue</th><th class="num">SDE</th></tr></thead>
@@ -356,6 +365,12 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 <div class="bar-wrap">
 <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
 </div>
+<div class="unlock-box" id="unlockBox" hidden>
+<div class="t">Your value range is ready.</div>
+<div class="d">The Summary Report puts it on one page: <strong>the estimated range</strong>, the SDE/EBITDA it's built on, the multiple applied and every adjustment that moved it. On screen now, in your inbox in a minute.</div>
+<button type="button" class="unlock-btn" id="unlockBtn">Unlock my value range — $19.99</button>
+<div class="fine">Secure checkout by Stripe. Directional estimate, not a certified appraisal. Want the documented version instead? The Custom Report ($199) and Prime Certified Opinion of Value ($799) are below.</div>
+</div>
 <div class="lbl" style="margin-top:12px;">+ Inventory at cost</div>
 <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;" id="inventoryOut">—</div>
 <div class="lbl" style="margin-top:12px;">+ Cash − long-term debt (from balance sheet)</div>
@@ -369,8 +384,8 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 </div>
 
 <div class="capbox" id="capBox" hidden>
-<h3>Email me this valuation</h3>
-<p>So the number lives somewhere other than this tab. One email, sent now, with your range and what's behind it.</p>
+<h3 id="capTitle">Email me my recast</h3>
+<p id="capLede">So the numbers live somewhere other than this tab. One email, sent now, with your SDE and EBITDA on a buyer's basis.</p>
 <div class="row">
 <input type="email" id="capEmail" placeholder="you@example.com" autocomplete="email">
 <button type="button" id="capBtn">Send it</button>
@@ -395,7 +410,7 @@ td input:focus, textarea:focus{outline:1.5px solid var(--gold);border-radius:3px
 <strong style="color:#F3D68A;font-family:'Space Grotesk',sans-serif;">This report carries the Prime Valuation Certification</strong> — the same rigor as a broker opinion of value ($2,500–$10,000+), fully documented and benchmarked, for $799.
 </div>
 </div>
-<button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed" style="margin-top:0;border-radius:0 0 12px 12px;">Upgrade to Certified Prime Report — $799</button>
+<button class="report-cta tier-gold" id="genReportDetailed" data-tier="detailed" style="margin-top:0;border-radius:0 0 12px 12px;">Prime Certified Opinion of Value — $799</button>
 </div>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
@@ -417,7 +432,7 @@ This is an unofficial, directional estimate built from the numbers entered, a fi
 <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #D8D2C2;flex-shrink:0;">
 <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;">Itemized report</span>
 <div>
-<button class="small" id="reportUpgradeBtn" style="display:none;background:linear-gradient(135deg,#E8C158,#B8860B);color:#241B02;">Upgrade to Certified Prime — $600</button>
+<button class="small" id="reportUpgradeBtn" style="display:none;background:linear-gradient(135deg,#E8C158,#B8860B);color:#241B02;">Upgrade to Prime Certified — $600</button>
 <button class="small" id="reportPrintBtn">Print / Save as PDF</button>
 <button class="small ghost" id="reportCloseBtn">Close</button>
 </div>
@@ -509,9 +524,10 @@ return v;
 }
 
 let isPaidThisSession = false;
+const TESTING_FREE_DETAILED = false;
 
 let preselectedTier = (new URLSearchParams(window.location.search)).get('tier');
-if (preselectedTier !== 'basic' && preselectedTier !== 'detailed') preselectedTier = null;
+if (preselectedTier !== 'basic' && preselectedTier !== 'detailed' && preselectedTier !== 'summary') preselectedTier = null;
 
 function applyTierPreselection(){
 $('genReportBasic').classList.remove('recommended');
@@ -1394,8 +1410,12 @@ const p = state.pctCosts || {};
 const pctCostsTotal = midVal * ((Number(p.brokerFeePct)||0) + (Number(p.fedCapGainsPct)||0) + (Number(p.stateCapGainsPct)||0) + (Number(p.ddHaircutPct)||0)) / 100;
 
 const pickNote = state.baseCompManual ? 'Manually selected' : 'Auto-selected';
-$('multRange').textContent = `${pickNote} tier: ${base.name} (SDE ${fmt(state._computed.sde)} → ${base.low}x–${base.high}x), adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
 const headlineLow = lowVal + inv, headlineHigh = highVal + inv;
+const netLow = lowVal + inv + debtCashNet - closingCosts - pctCostsTotal;
+const netHigh = highVal + inv + debtCashNet - closingCosts - pctCostsTotal;
+const open = rangeUnlocked();
+if(open){
+$('multRange').textContent = `${pickNote} tier: ${base.name} (SDE ${fmt(state._computed.sde)} → ${base.low}x–${base.high}x), adjusted to ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x`;
 $('valRange').textContent = figure > 0 ? `${fmt(headlineLow)} – ${fmt(headlineHigh)}` : '—';
 if(figure > 0 && inv > 0){
 $('valRangeSub').textContent = `Based on ${basis.toUpperCase()} of ${fmt(figure)} × ${lowMult.toFixed(2)}x–${highMult.toFixed(2)}x = ${fmt(lowVal)}–${fmt(highVal)} (income approach), plus ${fmt(inv)} inventory at cost`;
@@ -1404,13 +1424,20 @@ $('valRangeSub').textContent = `Based on ${basis.toUpperCase()} of ${fmt(figure)
 } else {
 $('valRangeSub').textContent = '';
 }
+$('totalRange').textContent = figure > 0 ? `${fmt(netLow)} – ${fmt(netHigh)}` : '—';
+} else {
+// Free tier: the recast is free, the range is the $19.99 Summary Report.
+$('multRange').textContent = figure > 0 ? `${pickNote} tier: ${base.name} (SDE ${fmt(state._computed.sde)}) — adjusted multiple in your Summary Report` : '—';
+$('valRange').textContent = figure > 0 ? '$•••,••• – $•••,•••' : '—';
+$('valRangeSub').textContent = figure > 0 ? `Based on ${basis.toUpperCase()} of ${fmt(figure)} × the adjusted Main Street multiple for this tier` : '';
+$('totalRange').textContent = figure > 0 ? '$•••,••• – $•••,•••' : '—';
+}
+['valRange','totalRange'].forEach(id=>{ $(id).classList.toggle('locked-val', !open && figure > 0); });
+try{ $('unlockBox').hidden = open || !(figure > 0); }catch(e){}
 $('inventoryOut').textContent = fmt(inv);
 $('debtCashOut').textContent = fmt(debtCashNet);
 $('closingCostsOut').textContent = fmt(closingCosts);
 $('pctCostsOut').textContent = fmt(pctCostsTotal);
-const netLow = lowVal + inv + debtCashNet - closingCosts - pctCostsTotal;
-const netHigh = highVal + inv + debtCashNet - closingCosts - pctCostsTotal;
-$('totalRange').textContent = figure > 0 ? `${fmt(netLow)} – ${fmt(netHigh)}` : '—';
 $('barFill').style.left = '0%';
 $('barFill').style.width = figure>0 ? '100%' : '0%';
 
@@ -1436,16 +1463,18 @@ return {dealPrice, loanAmount, monthlyPayment, annualDebtService, availableSDE, 
 function renderDscrPreview(){
 }
 
-const TESTING_FREE_DETAILED = false;
 
 function ownsDetailed(){ return isPaidThisSession && (paidTier === 'detailed' || paidTier === 'upgrade'); }
 function ownsBasicOnly(){ return isPaidThisSession && paidTier === 'basic'; }
+function ownsSummaryOnly(){ return isPaidThisSession && paidTier === 'summary'; }
+// Any purchase this session opens the range; the free tier sees the recast only.
+function rangeUnlocked(){ return TESTING_FREE_DETAILED || (isPaidThisSession && !!paidTier); }
 
 function updateReportButtonLabels(){
 if(ownsBasicOnly() || ownsDetailed()){
 $('genReportBasic').textContent = 'View your Custom Report';
 } else if(preselectedTier === 'detailed'){
-$('genReportBasic').textContent = 'Downgrade to Basic Report — $199';
+$('genReportBasic').textContent = 'Or the Custom Report — $199';
 } else {
 $('genReportBasic').textContent = 'Get your Custom Report — $199';
 }
@@ -1453,12 +1482,21 @@ $('genReportBasic').textContent = 'Get your Custom Report — $199';
 if(ownsDetailed()){
 $('genReportDetailed').textContent = 'View your Certified Prime Report';
 } else if(ownsBasicOnly()){
-$('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $600';
+$('genReportDetailed').textContent = 'Upgrade to Prime Certified — $600';
 } else if(preselectedTier === 'detailed'){
-$('genReportDetailed').textContent = 'Finalize your Certified Report — $799';
+$('genReportDetailed').textContent = 'Finalize your Prime Certified Opinion of Value — $799';
 } else {
-$('genReportDetailed').textContent = 'Upgrade to Certified Prime Report — $799';
+$('genReportDetailed').textContent = 'Prime Certified Opinion of Value — $799';
 }
+try{
+var ub = $('unlockBtn');
+if(ub) ub.textContent = preselectedTier === 'summary' ? 'Finalize my Summary Report — $19.99' : 'Unlock my value range — $19.99';
+var ct = $('capTitle'), cl = $('capLede');
+if(ct && cl){
+if(rangeUnlocked()){ ct.textContent = 'Email me this valuation'; cl.textContent = 'So the number lives somewhere other than this tab. One email, sent now, with your range and what\'s behind it.'; }
+else { ct.textContent = 'Email me my recast'; cl.textContent = 'So the numbers live somewhere other than this tab. One email, sent now, with your SDE and EBITDA on a buyer\'s basis.'; }
+}
+}catch(e){}
 
 const nextStepBadge = document.querySelector('.next-step-badge');
 if(nextStepBadge) nextStepBadge.style.display = ownsDetailed() ? 'none' : 'flex';
@@ -1491,19 +1529,28 @@ startCheckout('detailed');
 $('reportCloseBtn').addEventListener('click', () => {
 $('reportOverlay').style.display = 'none';
 });
+$('unlockBtn').addEventListener('click', () => {
+if(!state._computed || !state._valuation){ $('checkoutStatus').textContent = 'Parse or enter P&L figures first.'; return; }
+if(rangeUnlocked()){ openReportOverlay('summary'); return; }
+$('unlockBtn').disabled = true;
+startCheckout('summary').finally(()=>{ $('unlockBtn').disabled = false; });
+});
 $('reportPrintBtn').addEventListener('click', () => {
 try{ $('reportFrame').contentWindow.print(); }catch(e){ }
 });
 
 function openReportOverlay(tier){
 if(!state._computed || !state._valuation) return false;
-const html = buildReportHTML(tier || 'detailed');
+const html = tier === 'summary' ? buildSummaryHTML() : buildReportHTML(tier || 'detailed');
 $('reportFrame').srcdoc = html;
 $('reportOverlay').style.display = 'block';
-$('reportUpgradeBtn').style.display = (tier === 'basic' && !ownsDetailed()) ? 'inline-block' : 'none';
+const showUp = (tier === 'basic' && !ownsDetailed()) || tier === 'summary';
+$('reportUpgradeBtn').style.display = showUp ? 'inline-block' : 'none';
+$('reportUpgradeBtn').textContent = tier === 'summary' ? 'Get the Custom Report — $199' : 'Upgrade to Prime Certified — $600';
+$('reportUpgradeBtn').dataset.next = tier === 'summary' ? 'basic' : 'upgrade';
 return true;
 }
-$('reportUpgradeBtn').addEventListener('click', () => startCheckout('upgrade'));
+$('reportUpgradeBtn').addEventListener('click', () => startCheckout($('reportUpgradeBtn').dataset.next || 'upgrade'));
 
 async function startCheckout(tier){
 const email = (state.reportInfo.email || '').trim();
@@ -1561,7 +1608,7 @@ const r = await fetch('/api/verify-session?session_id=' + encodeURIComponent(ses
 const data = await r.json();
 if(data.paid){
 isPaidThisSession = true;
-const rawTier = (data.tier === 'detailed' || data.tier === 'basic' || data.tier === 'upgrade') ? data.tier : 'basic';
+const rawTier = (data.tier === 'detailed' || data.tier === 'basic' || data.tier === 'upgrade' || data.tier === 'summary') ? data.tier : 'basic';
 paidTier = rawTier;
 const effectiveTier = (rawTier === 'upgrade') ? 'detailed' : rawTier;
 updateReportButtonLabels();
@@ -1572,7 +1619,8 @@ state = JSON.parse(pending.value);
 render();
 }
 }catch(e){ console.error('Could not restore pending deal after payment', e); }
-$('parseStatus').textContent = 'Payment confirmed — here\'s your report.';
+renderValuation();
+$('parseStatus').textContent = effectiveTier === 'summary' ? 'Payment confirmed — your value range is unlocked and your Summary Report is below.' : 'Payment confirmed — here\'s your report.';
 openReportOverlay(effectiveTier);
 if(rawTier === 'upgrade'){
 reportEmailSent = false;
@@ -1604,7 +1652,7 @@ return;
 reportEmailSent = true;
 $('checkoutStatus').textContent = 'Emailing your report to ' + email + '…';
 try{
-const html = buildReportHTML(tier, true);
+const html = tier === 'summary' ? buildSummaryHTML(true) : buildReportHTML(tier, true);
 const resp = await fetch('/api/send-report-email', {
 method:'POST',
 headers:{'Content-Type':'application/json'},
@@ -1629,6 +1677,94 @@ $('checkoutStatus').textContent = 'Report emailed to ' + email + '.';
 console.error('sendReportEmail error:', e);
 $('checkoutStatus').textContent = 'Payment confirmed — your report is open below. (Emailing a copy failed — you can still print/save it from the report window.)';
 }
+}
+
+// The $19.99 Summary Report: one page. Range, recast, multiple, adjustments,
+// and what would change the number. Same numbers the full reports use.
+function buildSummaryHTML(forEmail){
+const c = state._computed, v = state._valuation;
+const businessName = state.reportInfo.businessName || 'Untitled business';
+const today = new Date(state.reportInfo.reportDate || Date.now()).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+const basisLabel = v.basis === 'sde' ? "Seller's Discretionary Earnings (SDE)" : 'Adjusted EBITDA';
+const inv = v.inv || 0;
+const risks = Object.keys(state.adjustments.risk||{}).filter(k=>state.adjustments.risk[k]).map(k=>({label:RISK_LABELS[k]||k, w:state.weights.risk[k]||0}));
+const ups = Object.keys(state.adjustments.upside||{}).filter(k=>state.adjustments.upside[k]).map(k=>({label:UPSIDE_LABELS[k]||k, w:state.weights.upside[k]||0}));
+const trendLabel = TREND_LABELS[state.adjustments.trend] || 'Steady';
+const sign = (n)=> (n>0?'+':'') + Number(n).toFixed(2) + 'x';
+const adjRows = [`<tr><td>Base tier: ${escapeHtml(v.base.name)}</td><td class="num">${v.base.low}x – ${v.base.high}x</td></tr>`,
+`<tr><td>Earnings trend: ${escapeHtml(trendLabel)}</td><td class="num">${sign(v.trendAdj)}</td></tr>`]
+.concat(risks.map(r=>`<tr><td>Risk: ${escapeHtml(r.label)}</td><td class="num">${sign(r.w)}</td></tr>`))
+.concat(ups.map(r=>`<tr><td>Upside: ${escapeHtml(r.label)}</td><td class="num">${sign(r.w)}</td></tr>`))
+.concat([`<tr class="result"><td>Adjusted multiple applied</td><td class="num">${v.lowMult.toFixed(2)}x – ${v.highMult.toFixed(2)}x</td></tr>`]).join('');
+const addbacks = state.opex.filter(o=>o.addback);
+const topAddbacks = addbacks.slice().sort((a,b)=>Math.abs(b.amount)-Math.abs(a.amount)).slice(0,5);
+return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escapeHtml(businessName)} — Summary Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#fff;color:#0B0E14;font-family:'Inter',-apple-system,sans-serif;line-height:1.55;}
+.page{max-width:760px;margin:0 auto;padding:34px 36px 40px;}
+.brand{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0B0E14;padding-bottom:12px;margin-bottom:22px;}
+.word{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;} .word span{color:#2454FF;}
+.badge{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:20px;background:#EEF2FF;color:#2454FF;}
+h1{font-family:'Space Grotesk',sans-serif;font-size:26px;letter-spacing:-.02em;margin:0 0 2px;}
+.meta{font-size:12.5px;color:#5B6470;margin-bottom:18px;}
+.hero{background:#0B0E14;color:#fff;border-radius:14px;padding:22px 24px;margin:0 0 22px;}
+.hero .l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8FADFF;font-weight:600;}
+.hero .r{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;letter-spacing:-.01em;margin:6px 0 4px;}
+.hero .s{font-size:13px;color:rgba(255,255,255,.72);}
+h2{font-family:'Space Grotesk',sans-serif;font-size:15px;margin:22px 0 8px;letter-spacing:-.01em;}
+table{width:100%;border-collapse:collapse;font-size:13px;} td{padding:7px 4px;border-bottom:1px solid #E6E8EC;vertical-align:top;} td.num{text-align:right;font-family:'IBM Plex Mono',monospace;white-space:nowrap;}
+tr.result td{font-weight:700;border-top:2px solid #0B0E14;border-bottom:none;}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;} @media(max-width:600px){.grid{grid-template-columns:1fr;}}
+.box{background:#F7F8FA;border:1px solid #E6E8EC;border-radius:12px;padding:14px 16px;font-size:13px;}
+.box strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:14px;margin-bottom:4px;}
+.next{background:#EEF2FF;border:1px solid #C9D6FF;border-radius:12px;padding:16px 18px;margin-top:22px;font-size:13px;color:#1F3A8F;}
+.next a{color:#2454FF;font-weight:600;}
+.fine{font-size:11px;color:#8A93A0;margin-top:22px;line-height:1.6;border-top:1px solid #E6E8EC;padding-top:12px;}
+@media print{.page{padding:10px 0;} .noprint{display:none;}}
+</style></head><body><div class="page">
+${forEmail?'':'<div class="noprint" style="text-align:right;margin-bottom:10px;"><button onclick="window.print()" style="padding:8px 16px;border-radius:8px;border:none;background:#2454FF;color:#fff;font-family:Inter,sans-serif;font-weight:600;font-size:13px;cursor:pointer;">Print / Save as PDF</button></div>'}
+<div class="brand"><div class="word">Prime<span>BizValue</span></div><span class="badge">Summary Report</span></div>
+<h1>${escapeHtml(businessName)}</h1>
+<div class="meta">Summary of estimated value &middot; ${today}${state.reportInfo.preparedFor?` &middot; Prepared for ${escapeHtml(state.reportInfo.preparedFor)}`:''}</div>
+<div class="hero">
+<div class="l">Estimated business value</div>
+<div class="r">${fmt(v.lowVal + inv)} – ${fmt(v.highVal + inv)}</div>
+<div class="s">${basisLabel} of <strong style="color:#fff;">${fmt(v.figure)}</strong> × ${v.lowMult.toFixed(2)}x–${v.highMult.toFixed(2)}x${inv>0?` = ${fmt(v.lowVal)}–${fmt(v.highVal)}, plus ${fmt(inv)} inventory at cost`:''}</div>
+</div>
+<div class="grid">
+<div>
+<h2 style="margin-top:0;">Earnings on a buyer's basis</h2>
+<table>
+<tr><td>Revenue</td><td class="num">${fmt(c.revenue)}</td></tr>
+<tr><td>Net income as reported</td><td class="num">${fmt(c.netIncome)}</td></tr>
+<tr><td>Owner compensation, interest, depreciation, taxes</td><td class="num">${fmt(c.basicSBA - c.netIncome + state.below.taxes)}</td></tr>
+<tr><td>Discretionary add-backs (${addbacks.length} line${addbacks.length===1?'':'s'})</td><td class="num">${fmt(c.sdeWorksheetTotal + c.addBackTotal)}</td></tr>
+<tr class="result"><td>Seller's Discretionary Earnings</td><td class="num">${fmt(c.sde)}</td></tr>
+<tr class="result"><td>Adjusted EBITDA</td><td class="num">${fmt(c.ebitda)}</td></tr>
+</table>
+${topAddbacks.length?`<div style="font-size:11.5px;color:#5B6470;margin-top:8px;">Largest add-backs: ${topAddbacks.map(a=>escapeHtml(a.name)+' ('+fmt(a.amount)+')').join(', ')}.</div>`:''}
+</div>
+<div>
+<h2 style="margin-top:0;">How the multiple was set</h2>
+<table>${adjRows}</table>
+</div>
+</div>
+<h2>Net cash to seller, before taxes on the gain</h2>
+<table>
+<tr><td>Estimated value (midpoint)</td><td class="num">${fmt(v.midVal + inv)}</td></tr>
+<tr><td>+ Cash − long-term debt (balance sheet)</td><td class="num">${fmt(v.debtCashNet)}</td></tr>
+<tr><td>− Anticipated closing costs</td><td class="num">${fmt(v.closingCosts)}</td></tr>
+<tr><td>− Capital gains &amp; transaction fees (as entered)</td><td class="num">${fmt(v.pctCostsTotal)}</td></tr>
+<tr class="result"><td>Possible net cash to seller at closing</td><td class="num">${fmt(v.netLow)} – ${fmt(v.netHigh)}</td></tr>
+</table>
+<div class="grid" style="margin-top:18px;">
+<div class="box"><strong>What moves this number up</strong>Documented add-backs a lender accepts, three years of tax returns that show the profit, a transferable lease with options, and revenue that doesn't depend on the owner's personal relationships.</div>
+<div class="box"><strong>What a buyer's lender will check first</strong>Whether SDE covers the loan payment at this price with at least 1.25x to spare. Roughly nine in ten Main Street sales are SBA financed; if the price doesn't clear that test, the deal dies in underwriting.</div>
+</div>
+<div class="next"><strong>Next step.</strong> This page gives you the number. The Custom Report ($199) documents it: the full itemized recast with every add-back explained, and a sanity-check panel. The Prime Certified Opinion of Value ($799) adds SBA financing and debt-coverage analysis and a closing breakdown a buyer's lender will respect. <a href="https://primebizvalue.com/sample-report.html">Read a complete sample</a> or return to <a href="https://primebizvalue.com/tool.html">your valuation</a> to upgrade; nothing expires.</div>
+<div class="fine">This Summary Report is an unofficial, directional estimate built from the figures entered, a fixed set of Main Street SDE-based multiple tiers, and adjustment factors for earnings trend and risk/upside. It is not a certified business valuation, appraisal, fairness opinion, or offer of financing, and it has not been reviewed by a CPA, business appraiser, or lender. Add-back judgment calls and adjustment weights materially change the result and should be backed by documentation before use in any negotiation, financing application, or tax, legal, or regulatory matter. Nothing here is legal, tax, or financial advice. PrimeBizValue &middot; primebizvalue.com &middot; hello@primebizvalue.com</div>
+</div></body></html>`;
 }
 
 function buildReportHTML(tier, forEmail){
@@ -1801,7 +1937,7 @@ ${sectionBanner('A','RECAST SUMMARY')}
 <tr class="result"><td>Adjusted EBITDA</td><td class="num">${fmt(c.ebitda)}</td></tr>
 </table>
 <div class="upgrade-box">
-<p><strong>This is your top-line summary.</strong> The Detailed Report ($799) adds the full itemized recast worksheet with every add-back explained and documented, a sanity-check panel, SBA financing/DSCR analysis, and a closing cash-to-seller breakdown.</p>
+<p><strong>This is your top-line summary.</strong> The Prime Certified Opinion of Value ($799) adds the full itemized recast worksheet with every add-back explained and documented, a sanity-check panel, SBA financing/DSCR analysis, and a closing cash-to-seller breakdown.</p>
 </div>
 `;
 const sectionCFinancing = isDetailed ? `
@@ -1850,11 +1986,11 @@ ${sectionBanner('D','CASH TO SELLER AT CLOSE')}
 
 ` : `
 <div class="upgrade-box" style="margin-top:20px;">
-<p>Want the SBA financing analysis and a closing cash-to-seller breakdown? Upgrade to the Detailed Report.</p>
+<p>Want the SBA financing analysis and a closing cash-to-seller breakdown? Upgrade to the Prime Certified Opinion of Value.</p>
 </div>
 `;
 
-return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escapeHtml(businessName)} — ${isDetailed?'Detailed':'Basic'} Valuation Report</title>
+return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${escapeHtml(businessName)} — ${isDetailed?'Prime Certified Opinion of Value':'Custom Valuation Report'}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1898,7 +2034,7 @@ ${forEmail ? '' : `<div class="noprint" style="position:sticky;top:0;background:
 
 <div class="brandbar" style="box-sizing:border-box;width:100%;max-width:100%;">
 <div class="word">Prime<span>BizValue</span></div>
-<span class="tierbadge">${isDetailed?'Prime Certified Detailed Report':'Basic Report'}</span>
+<span class="tierbadge">${isDetailed?'Prime Certified Opinion of Value':'Custom Report'}</span>
 </div>
 
 <div class="cover" style="box-sizing:border-box;width:100%;max-width:100%;overflow-wrap:break-word;">
@@ -1978,7 +2114,7 @@ try{
 const v = state._valuation, c = state._computed || {};
 const resp = await fetch('/api/send-valuation-summary', { method:'POST', headers:{'Content-Type':'application/json'},
 body: JSON.stringify({ email: email, businessName: state.reportInfo.businessName || '',
-valuation: { low: v.lowVal + v.inv, high: v.highVal + v.inv, sde: c.sde, revenue: c.revenue },
+valuation: rangeUnlocked() ? { low: v.lowVal + v.inv, high: v.highVal + v.inv, sde: c.sde, ebitda: c.ebitda, revenue: c.revenue } : { sde: c.sde, ebitda: c.ebitda, revenue: c.revenue },
 marketingConsent: $('capMkt').checked, consentText: $('capMkt').checked ? $('capMktText').innerText : '', page: location.pathname }) });
 const j = await resp.json().catch(()=>({}));
 if(!resp.ok) throw new Error(j.error || ('HTTP ' + resp.status));

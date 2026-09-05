@@ -25,7 +25,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 <meta name="twitter:title" content="For Franchisors — A valuation program for your franchisees | PrimeBizValue">
 <meta name="twitter:description" content="Give every owner in your system a standardized, SBA-aware opinion of value. $2,500 one-time setup, 30% off reports for your franchisees, no money back to the brand, no Item 8 rebate to disclose.">
 <meta name="twitter:image" content="https://primebizvalue.com/og.png">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PrimeBizValue", "url": "https://primebizvalue.com/", "logo": "https://primebizvalue.com/og.png", "email": "hello@primebizvalue.com", "description": "Fast, documented business valuations for owners of small and franchised businesses. Upload a P&L, get a free estimate; buy a Basic or Detailed report for the full recast, SBA financing analysis, and closing breakdown.", "contactPoint": [{"@type": "ContactPoint", "contactType": "customer support", "email": "hello@primebizvalue.com", "availableLanguage": "English"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "PrimeBizValue", "url": "https://primebizvalue.com/", "logo": "https://primebizvalue.com/og.png", "email": "hello@primebizvalue.com", "description": "Fast, documented business valuations for owners of small and franchised businesses. Upload a P&L, get a free SDE/EBITDA recast; a one-page Summary Report ($19.99) gives the value range, and the Custom ($199) and Prime Certified ($799) reports add the full recast, SBA financing analysis, and closing breakdown.", "contactPoint": [{"@type": "ContactPoint", "contactType": "customer support", "email": "hello@primebizvalue.com", "availableLanguage": "English"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "PrimeBizValue Franchisor Partner Program", "provider": {"@type": "Organization", "name": "PrimeBizValue"}, "serviceType": "Franchise resale valuation program", "description": "A branded valuation page for a franchise system's owners, a standing 30% discount on reports, unlimited free preliminary valuations, and activity reporting. One-time setup fee, no renewal.", "offers": {"@type": "Offer", "price": "2500.00", "priceCurrency": "USD", "url": "https://primebizvalue.com/franchisors.html#talk"}}</script>
 <!-- /pbv:seo -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -215,6 +215,19 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   .fr-incl li::before{content:'\2713'; position:absolute; left:0; top:0; color:#8FADFF; font-weight:700; font-size:13px;}
   .fr-incl li strong{color:#fff; font-weight:600;}
   .fr-price-foot{font-size:12.5px; color:rgba(255,255,255,.52); margin:16px 0 0; line-height:1.6;}
+  .fr-start{flex-basis:100%; margin-top:6px; padding-top:20px; border-top:1px solid rgba(255,255,255,.14);}
+  .fr-start h3{font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; margin:0 0 6px; color:#fff;}
+  .fr-start p{font-size:13px; color:rgba(255,255,255,.7); margin:0 0 12px; line-height:1.55;}
+  .fr-start-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .fr-start-row input{flex:1 1 200px; padding:12px 14px; border:1px solid rgba(255,255,255,.22); border-radius:9px; background:rgba(255,255,255,.08); color:#fff; font-family:'Inter',sans-serif; font-size:14px;}
+  .fr-start-row input::placeholder{color:rgba(255,255,255,.45);}
+  .fr-start-row input:focus{outline:none; border-color:#8FADFF; box-shadow:0 0 0 3px rgba(143,173,255,.25);}
+  .fr-start-btn{flex:0 0 auto; background:#fff; color:#0B1426; border:none; border-radius:9px; padding:12px 22px; font-family:'Inter',sans-serif; font-weight:700; font-size:15px; cursor:pointer; box-shadow:0 10px 22px -12px rgba(255,255,255,.6);}
+  .fr-start-btn:hover{background:#EEF2FF;}
+  .fr-start-btn[disabled]{opacity:.6; cursor:default;}
+  .fr-start-fine{font-size:11.5px; color:rgba(255,255,255,.5); margin-top:10px; line-height:1.55;}
+  .fr-start-fine a{color:rgba(255,255,255,.75);}
+  .fr-start-status{font-size:13px; margin-top:8px; min-height:16px; color:#FFB4B4;}
   @media (max-width:640px){ .fr-price{padding:24px 22px; gap:18px;} .fr-price-amt{font-size:36px;} }
   .fr-chip-gold{display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:500; letter-spacing:0.09em; text-transform:uppercase; color:var(--gold); background:var(--gold-bg); border:1px solid #EEDFB8; padding:3px 8px; border-radius:999px; margin-left:8px; vertical-align:1px;}
 
@@ -313,8 +326,8 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <p class="lede">A seller picks a number from what a neighbor got three years ago. The listing sits. The buyer's lender runs the debt service and walks. Six months later the unit goes dark and the royalty goes with it. None of that is a market problem. It's a math problem, and it's fixable for less than the cost of one empty store.</p>
 
       <div class="fr-cta-row">
-        <a href="#talk" class="fr-btn">Talk about your system<span class="arw">&rarr;</span></a>
-        <a href="/tool.html" class="fr-btn-ghost">See the tool</a>
+        <a href="#start" class="fr-btn">Start the program &mdash; $2,500<span class="arw">&rarr;</span></a>
+        <a href="#talk" class="fr-btn-ghost">Talk about your system first</a>
         <span class="fr-cta-note">$2,500 one time. No contract, no minimums, no integration.</span>
       </div>
     </section>
@@ -464,6 +477,17 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <li><strong>Activity reporting</strong> on what your system is generating, so transfer interest stops being something you find out about last.</li>
         </ul>
         <p class="fr-price-foot">No contract term, no minimum volume, no per-seat licensing, and nothing to renew. A single broker opinion of value runs about the same as the entire program.</p>
+      </div>
+      <div class="fr-start" id="start">
+        <h3>Start the program now</h3>
+        <p>Pay the setup fee, and your franchisee discount code is issued the moment the payment clears. A two-minute onboarding form collects your logo, colors, and transfer process; your branded page follows within two business days.</p>
+        <div class="fr-start-row">
+          <input type="text" id="startBrand" placeholder="Brand name" autocomplete="organization" maxlength="120">
+          <input type="email" id="startEmail" placeholder="Work email for the receipt and code" autocomplete="email">
+          <button type="button" class="fr-start-btn" id="startBtn">Start the program &mdash; $2,500</button>
+        </div>
+        <div class="fr-start-status" id="startStatus"></div>
+        <p class="fr-start-fine">Secure checkout by Stripe. One-time fee, no renewal. By purchasing you agree to the <a href="/terms.html">Terms of Service</a>; reports remain directional estimates, not certified appraisals. Prefer to talk first? <a href="#talk">Start the conversation below.</a></p>
       </div>
     </div>
 
@@ -748,6 +772,31 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 
 <script>
 (function () {
+  // Self-serve: setup fee -> Stripe Checkout -> partner-onboarding.html
+  var sb = document.getElementById('startBtn'), ss = document.getElementById('startStatus');
+  if (sb) sb.addEventListener('click', async function () {
+    var brand = (document.getElementById('startBrand').value || '').trim();
+    var email = (document.getElementById('startEmail').value || '').trim();
+    ss.textContent = '';
+    if (!brand) { ss.textContent = 'Enter your brand name.'; document.getElementById('startBrand').focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { ss.textContent = 'Enter a valid work email.'; document.getElementById('startEmail').focus(); return; }
+    sb.disabled = true; ss.style.color = 'rgba(255,255,255,.7)'; ss.textContent = 'Redirecting to secure checkout…';
+    try {
+      var r = await fetch('/api/create-checkout-session', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier: 'partner', customerEmail: email, brand: brand }) });
+      var j = await r.json().catch(function () { return {}; });
+      if (!r.ok || !j.url) throw new Error(j.error || ('HTTP ' + r.status));
+      window.location.href = j.url;
+    } catch (e) {
+      sb.disabled = false; ss.style.color = '#FFB4B4';
+      ss.textContent = 'Could not start checkout: ' + (e.message || e) + '. Email hello@primebizvalue.com and we will send an invoice instead.';
+    }
+  });
+  if (new URLSearchParams(location.search).get('checkout') === 'cancelled' && ss) {
+    ss.style.color = 'rgba(255,255,255,.8)'; ss.textContent = 'Checkout cancelled — you were not charged. Whenever you are ready.';
+    var st = document.getElementById('start'); if (st) st.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   var form = document.getElementById('franchisorForm');
   var btn = document.getElementById('franchisorSubmitBtn');
   var status = document.getElementById('franchisorStatus');

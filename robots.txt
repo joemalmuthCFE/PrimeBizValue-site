@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /unsubscribe.html
+Disallow: /partner-onboarding.html
 
 Sitemap: https://primebizvalue.com/sitemap.xml

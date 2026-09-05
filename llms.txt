@@ -1,6 +1,6 @@
 # PrimeBizValue
 
-> PrimeBizValue.com produces fast, documented business valuations for owners of small and franchised businesses, priced at a fraction of a broker's opinion of value. Upload a P&L, get a free on-screen estimate in minutes; buy a Basic ($199) or Detailed ($799) report for the documented recast, SBA financing analysis, and closing breakdown.
+> PrimeBizValue.com produces fast, documented business valuations for owners of small and franchised businesses, priced at a fraction of a broker's opinion of value. Upload a P&L, get a free on-screen SDE/EBITDA recast in minutes; the Summary Report ($19.99) gives the estimated value range on one page, and the Custom ($199) and Prime Certified Opinion of Value ($799) reports add the documented recast, SBA financing analysis, and closing breakdown. Franchisors can join the Partner Program ($2,500 one-time) for a standing 30% discount for their franchisees.
 
 ## What it does
 
@@ -14,9 +14,9 @@
 
 - [Home](https://primebizvalue.com/): overview, pricing, how it works
 - [Free valuation tool](https://primebizvalue.com/tool.html): upload a P&L and get an estimate
-- [Sample Detailed Report](https://primebizvalue.com/sample-report.html): a complete, unredacted example built on fictional financials
+- [Sample Prime Certified Report](https://primebizvalue.com/sample-report.html): a complete, unredacted example built on fictional financials
 - [For Franchisors](https://primebizvalue.com/franchisors.html): the partner program for franchise systems
-- [Prime Valuation Certification](https://primebizvalue.com/certification.html): the four-part standard every Detailed Report meets
+- [Prime Valuation Certification](https://primebizvalue.com/certification.html): the four-part standard every Prime Certified Opinion of Value meets
 - [FAQ](https://primebizvalue.com/faq.html)
 - [About](https://primebizvalue.com/about.html)
 
