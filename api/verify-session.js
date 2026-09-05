@@ -25,6 +25,8 @@ module.exports = async (req, res) => {
       paid: session.payment_status === 'paid',
       email: session.customer_details?.email || null,
       tier: session.metadata?.tier || null,
+      brand: session.metadata?.brand || null,
+      amount_total: session.amount_total != null ? session.amount_total / 100 : null,
     });
   } catch (err) {
     console.error('verify-session error:', err);

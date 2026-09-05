@@ -16,8 +16,9 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Missing customerEmail or reportHtml in request body.' });
   }
 
-  const tierLabel = tier === 'basic' ? 'Basic' : 'Detailed';
-  const subject = `Your ${tierLabel} Valuation Report${businessName ? ' — ' + businessName : ''}`;
+  const LABELS = { summary: 'Summary Report', basic: 'Custom Valuation Report', detailed: 'Prime Certified Opinion of Value' };
+  const tierKey = LABELS[tier] ? tier : 'detailed';
+  const subject = `Your ${LABELS[tierKey]}${businessName ? ' — ' + businessName : ''}`;
   const db = supabase();
 
   // 1. Buyer becomes a CRM record. Purchase = transactional relationship;
@@ -28,7 +29,7 @@ module.exports = async (req, res) => {
     const r = await upsertLead(db, {
       email: customerEmail,
       source: 'purchase',
-      tags: ['customer', tier === 'basic' ? 'basic-buyer' : 'detailed-buyer'],
+      tags: ['customer', `${tierKey}-buyer`],
       consent: true,
       marketing_consent: marketingConsent === true,
       consent_text: marketingConsent === true && consentText ? String(consentText).slice(0, 2000) : null,
