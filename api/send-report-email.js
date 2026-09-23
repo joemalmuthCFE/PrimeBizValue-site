@@ -12,8 +12,24 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { customerEmail, reportHtml, businessName, tier, marketingConsent, consentText, sessionId } = req.body || {};
+  if (!sessionId) return res.status(401).json({ error: 'Paid session required' });
+  const Stripe = require('stripe');
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   if (!validEmail(customerEmail) || !reportHtml) {
     return res.status(400).json({ error: 'Missing customerEmail or reportHtml in request body.' });
+  }
+
+  let paid;
+  try { paid = await stripe.checkout.sessions.retrieve(sessionId); }
+  catch (_) { return res.status(401).json({ error: 'Could not verify paid session' }); }
+  const paidTier = paid.metadata?.tier === 'upgrade' ? 'detailed' : paid.metadata?.tier;
+  const requestedTier = tier === 'upgrade' ? 'detailed' : tier;
+  if (paid.payment_status !== 'paid' || !['summary','basic','detailed'].includes(paidTier) || paidTier !== requestedTier) {
+    return res.status(403).json({ error: 'Report tier is not authorized by this payment' });
+  }
+  const paidEmail = String(paid.customer_details?.email || paid.customer_email || '').trim().toLowerCase();
+  if (paidEmail && paidEmail !== String(customerEmail).trim().toLowerCase()) {
+    return res.status(403).json({ error: 'Customer email does not match paid session' });
   }
 
   const LABELS = { summary: 'Summary Report', basic: 'Custom Valuation Report', detailed: 'Prime Certified Opinion of Value' };

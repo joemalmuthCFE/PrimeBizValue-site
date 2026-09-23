@@ -185,32 +185,38 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </main>
 <script>
-  document.getElementById('contactForm').addEventListener('submit', function(e){
+  document.getElementById('contactForm').addEventListener('submit', async function(e){
     e.preventDefault();
     const f = e.target;
+    const status = document.getElementById('contactStatus');
+    const submit = f.querySelector('button[type="submit"]');
+    const consentText = f.cOptIn.checked ? (f.querySelector('label[for="cOptIn"]')?.innerText || '') : '';
     const data = {
       name: f.cName.value,
       email: f.cEmail.value,
       phone: f.cPhone.value,
       reason: f.cReason.value,
       message: f.cMessage.value,
-      optIn: f.cOptIn.checked ? 'Yes' : 'No'
+      marketingConsent: f.cOptIn.checked,
+      consentText
     };
-    // Interim capture method — no database or inbox-routing backend wired up
-    // yet (that's Stage 4). This sends the submission straight to your inbox
-    // until real backend handling is built, at which point this should POST
-    // to an API route instead.
-    const subject = encodeURIComponent('PrimeBizValue contact form: ' + data.reason);
-    const body = encodeURIComponent(
-      'Name: ' + data.name + '\n' +
-      'Email: ' + data.email + '\n' +
-      'Phone: ' + data.phone + '\n' +
-      'Reason: ' + data.reason + '\n' +
-      'Opted in to list: ' + data.optIn + '\n\n' +
-      'Message:\n' + data.message
-    );
-    window.location.href = 'mailto:hello@primebizvalue.com?subject=' + subject + '&body=' + body;
-    document.getElementById('contactStatus').textContent = 'Opening your email client to send this in — if nothing opens, email us directly at hello@primebizvalue.com.';
+    submit.disabled = true;
+    status.textContent = 'Sending…';
+    try {
+      const resp = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      });
+      if(!resp.ok) throw new Error('HTTP ' + resp.status);
+      f.reset();
+      status.textContent = 'Message sent. We’ll get back to you at the email you provided.';
+    } catch (err) {
+      console.error('Contact form error:', err);
+      status.textContent = 'We could not send that message. Please email hello@primebizvalue.com directly.';
+    } finally {
+      submit.disabled = false;
+    }
   });
 </script>
 
