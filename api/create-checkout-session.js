@@ -67,6 +67,7 @@ module.exports = async (req, res) => {
       // on the partner setup fee itself.
       allow_promotion_codes: !isPartner,
       customer_email: customerEmail || undefined,
+      payment_intent_data: customerEmail ? { receipt_email: customerEmail } : undefined,
       metadata, // authoritative record of which tier was actually paid for
       // Opts out of Stripe's "Managed Payments" (merchant-of-record) feature.
       managed_payments: { enabled: false },
