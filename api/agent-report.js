@@ -93,7 +93,11 @@ module.exports = async (req, res) => {
     }
   }
 
-  const degraded = Object.keys(out).some(k => k.endsWith('_error'));
+  // Core reporting failures should fail the monitor. Optional subsystem failures
+  // remain HTTP 200 but are explicit in the payload so one degraded dependency
+  // does not make every scheduled consumer treat the entire endpoint as dead.
+  const coreFailure = Boolean(out.snapshot_error || out.activity_error);
+  const degraded = coreFailure || Boolean(out.stripe_error || out.detail_error);
   out.status = degraded ? 'degraded' : 'ok';
-  res.status(degraded ? 503 : 200).json(out);
+  res.status(coreFailure ? 503 : 200).json(out);
 };
