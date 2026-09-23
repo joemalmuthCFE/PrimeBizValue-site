@@ -1,6 +1,7 @@
 -- PrimeBizValue — CRM + compliance migration (September 2026)
 -- Run once in Supabase: SQL Editor -> New query -> paste -> Run.
--- Every statement is idempotent; re-running is safe.
+-- Run against a backup/staging copy first; existing base orders/partners tables are required.
+BEGIN;
 
 -- ─────────────────────────────────────────────────────────────
 -- 1. leads: turn the opt-in list into a real CRM record
@@ -122,20 +123,6 @@ where l.marketing_consent = true
   and l.last_valuation_at is not null
   and not exists (select 1 from orders o where lower(o.customer_email) = lower(l.email));
 
--- the numbers that matter, one row
-create or replace view business_snapshot as
-select
-  (select count(*) from orders)                                                    as total_orders,
-  (select coalesce(sum(amount_charged),0) from orders)                             as total_revenue,
-  (select count(*) from orders where created_at > now() - interval '30 days')      as orders_30d,
-  (select coalesce(sum(amount_charged),0) from orders where created_at > now() - interval '30 days') as revenue_30d,
-  (select count(*) from leads)                                                     as total_leads,
-  (select count(*) from leads where created_at > now() - interval '7 days')        as leads_7d,
-  (select count(*) from leads where source = 'free-valuation')                     as free_valuations,
-  (select count(*) from marketable_leads)                                          as marketable,
-  (select count(*) from leads where unsubscribed_at is not null)                   as unsubscribed,
-  (select count(*) from leads where interest ilike '%franchisor%')                 as franchisor_leads;
-
 -- ─────────────────────────────────────────────────────────────
 -- Franchisor Partner Program (self-serve, $2,500 setup + 30% code)
 -- ─────────────────────────────────────────────────────────────
@@ -178,3 +165,5 @@ select
 -- ─────────────────────────────────────────────────────────────
 -- delete from leads a using leads b
 --  where lower(a.email) = lower(b.email) and a.created_at < b.created_at;
+
+COMMIT;
