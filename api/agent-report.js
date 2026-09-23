@@ -1,8 +1,8 @@
 // /api/agent-report — the single read-only snapshot the scheduled agents
 // (ops, accounting, customer service, chief of staff) pull each run.
 //
-//   GET /api/agent-report                → aggregates only, no personal data
-//   GET /api/agent-report?key=…&detail=1 → adds recent leads/orders/failures
+// All requests require AGENT_KEY (Bearer header preferred; legacy key supported).
+// GET /api/agent-report?detail=1 adds recent leads/orders/failures.
 //
 // The keyed detail view exists so the customer-service agent can see who
 // bought and who asked for a valuation without anyone handing an agent a
@@ -15,7 +15,14 @@ module.exports = async (req, res) => {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
   res.setHeader('Cache-Control', 'no-store');
 
-  const db = supabase();
+  const supplied = (req.headers || {}).authorization;
+  const key = supplied && supplied.startsWith('Bearer ') ? supplied.slice(7) : (req.query || {}).key;
+  if (!process.env.AGENT_KEY || key !== process.env.AGENT_KEY) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  let db;
+  try { db = supabase(); }
+  catch (_) { return res.status(503).json({ error: 'Reporting database unavailable' }); }
   const out = { generated_at: new Date().toISOString(), site: 'primebizvalue.com' };
 
   try {
@@ -33,6 +40,10 @@ module.exports = async (req, res) => {
       db.from('orders').select('tier, amount_charged, created_at').gte('created_at', since7),
       db.from('leads').select('source').gte('created_at', since7),
     ]);
+    for (const [name, result] of Object.entries({ email_events: ev7, email_failures: evFail, nurture_queue: nq, orders: o7, leads: l7src })) {
+      if (result.error) throw new Error(`${name}: ${result.error.message}`);
+    }
+    if (nq.count == null) throw new Error('nurture_queue: count unavailable');
     const byKind = {}; (ev7.data || []).forEach(r => { byKind[r.kind] = (byKind[r.kind] || 0) + 1; });
     const bySrc = {}; (l7src.data || []).forEach(r => { bySrc[r.source || 'unknown'] = (bySrc[r.source || 'unknown'] || 0) + 1; });
     out.email_7d = byKind;
@@ -66,7 +77,6 @@ module.exports = async (req, res) => {
   } catch (e) { out.stripe_error = String(e.message || e).slice(0, 200); }
 
   // Detail (customer-service agent): recent people, keyed
-  const key = req.query && req.query.key;
   if (req.query && req.query.detail === '1') {
     if (!process.env.AGENT_KEY || key !== process.env.AGENT_KEY) {
       out.detail = 'forbidden';
@@ -77,10 +87,13 @@ module.exports = async (req, res) => {
           db.from('orders').select('customer_email, tier, amount_charged, business_name, created_at').gte('created_at', since7).order('created_at', { ascending: false }).limit(50),
           db.from('leads').select('email, first_name, interest, source, brand, units, marketing_consent, last_valuation_low, last_valuation_high, created_at').gte('created_at', since7).order('created_at', { ascending: false }).limit(100),
         ]);
+        if (orders.error || leads.error) throw new Error('Detail query failed');
         out.detail = { orders_7d: orders.data || [], leads_7d: leads.data || [] };
       } catch (e) { out.detail_error = String(e.message || e); }
     }
   }
 
-  res.status(200).json(out);
+  const degraded = Object.keys(out).some(k => k.endsWith('_error'));
+  out.status = degraded ? 'degraded' : 'ok';
+  res.status(degraded ? 503 : 200).json(out);
 };

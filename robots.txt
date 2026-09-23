@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Allow: /api/agent-report
 Disallow: /api/
 Disallow: /unsubscribe.html
 Disallow: /partner-onboarding.html
