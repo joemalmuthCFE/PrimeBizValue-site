@@ -25,6 +25,34 @@ for (const fail of [true,false]) test(`report database failure=${fail} remains d
  assert.equal(res.code,fail?503:200);
  if(fail){assert.equal(res.body.orders_7d,undefined);assert.ok(res.body.activity_error);}else assert.equal(res.body.orders_7d.count,0);
 });
+test('Stripe-only degradation remains available to scheduled consumers', async()=>{
+  function Stripe(){
+    this.balance={retrieve:async()=>{throw Error('stripe unavailable')}};
+    this.payouts={list:async()=>({data:[]})};
+    this.disputes={list:async()=>({data:[]})};
+    this.charges={list:async()=>({data:[]})};
+  }
+  const handler=load('api/agent-report.js',{stripe:Stripe,'./_lib':{supabase:()=>database(false)}},{AGENT_KEY:'secret',STRIPE_SECRET_KEY:'test'});
+  const res=response();await handler({method:'GET',headers:{authorization:'Bearer secret'},query:{}},res);
+  assert.equal(res.code,200);assert.equal(res.body.status,'degraded');assert.ok(res.body.stripe_error);
+  assert.equal(res.body.orders_7d.count,0);
+});
+function databaseWithDetailFailure(){
+  let ordersCalls=0; let leadsCalls=0;
+  return {from(name){
+    if(name==='orders') ordersCalls += 1;
+    if(name==='leads') leadsCalls += 1;
+    const isDetailFailure=(name==='orders'&&ordersCalls>1)||(name==='leads'&&leadsCalls>1);
+    const result={data:name==='business_snapshot'?{}:[],count:0,error:isDetailFailure?{message:'detail unavailable'}:null};
+    const chain=new Proxy({}, {get(_, prop){if(prop==='then')return (ok)=>Promise.resolve(result).then(ok);return ()=>chain}});return chain;
+  }};
+}
+test('detail-only degradation does not take aggregate monitors dark', async()=>{
+  const handler=load('api/agent-report.js',{stripe:function(){},'./_lib':{supabase:()=>databaseWithDetailFailure()}},{AGENT_KEY:'secret'});
+  const res=response();await handler({method:'GET',headers:{authorization:'Bearer secret'},query:{detail:'1'}},res);
+  assert.equal(res.code,200);assert.equal(res.body.status,'degraded');assert.ok(res.body.detail_error);
+  assert.equal(res.body.orders_7d.count,0);
+});
 test('checkout rejects missing, inherited and invalid tiers without contacting Stripe',async()=>{
  let calls=0;function Stripe(){this.checkout={sessions:{create:async()=>{calls++;return {url:'test'}}}}}
  const handler=load('api/create-checkout-session.js',{stripe:Stripe});
