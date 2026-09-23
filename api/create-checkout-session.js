@@ -33,7 +33,10 @@ module.exports = async (req, res) => {
 
   try {
     const { customerEmail, tier, brand } = req.body || {};
-    const key = TIERS[tier] ? tier : 'detailed'; // default to detailed only if tier is missing/invalid
+    if (typeof tier !== 'string' || !Object.prototype.hasOwnProperty.call(TIERS, tier)) {
+      return res.status(400).json({ error: 'Invalid product tier' });
+    }
+    const key = tier;
     const selected = TIERS[key];
     const site = (process.env.SITE_URL || 'https://primebizvalue.com').replace(/\/$/, '');
 
