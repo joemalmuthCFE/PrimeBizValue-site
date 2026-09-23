@@ -60,7 +60,8 @@ module.exports = async (req, res) => {
         }
       }
       const validTiers = ['summary', 'basic', 'detailed', 'upgrade', 'partner'];
-      const tier = validTiers.includes(full.metadata?.tier) ? full.metadata.tier : 'detailed';
+      const tier = full.metadata?.tier;
+      if (!validTiers.includes(tier)) throw new Error(`Unknown checkout tier: ${String(tier)}`);
 
       const amountCharged = (full.amount_total || 0) / 100;
       const discountAmount = discounts.reduce((sum, d) => sum + (d.amount || 0), 0) / 100;
@@ -83,13 +84,8 @@ module.exports = async (req, res) => {
         amount_charged: amountCharged,
         discount_amount: discountAmount,
       });
-      if (insertError) {
-        // Supabase errors are often returned, not thrown — log this
-        // explicitly or a silent rejection here looks identical to success.
-        console.error('Supabase insert failed:', insertError);
-      } else {
-        console.log('Order logged to Supabase:', session.id);
-      }
+      if (insertError) throw new Error(`Supabase order insert failed: ${insertError.message || insertError}`);
+      console.log('Order logged to Supabase:', session.id);
 
       // Franchisor Partner Program: the setup fee just cleared. Provision the
       // partner record now so the onboarding page has something to attach to,
@@ -103,9 +99,9 @@ module.exports = async (req, res) => {
         }
       }
     } catch (err) {
-      // Log and still return 200 — we don't want Stripe endlessly retrying
-      // a webhook over a logging issue once the payment itself succeeded.
-      console.error('Order logging failed:', err);
+      // Fail closed so Stripe retries transient fulfillment/database failures.
+      console.error('Webhook processing failed:', err);
+      return res.status(500).json({ error: 'Webhook processing failed' });
     }
   }
 
